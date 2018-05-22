@@ -8,13 +8,11 @@
     grid-column: span 12 / auto;
     background-color: blue;
   }
-
-  .content {
+  .nav {
     grid-column: span 12 / auto;
     background-color: blue;
   }
-
-  .right {
+  .content {
     grid-column: span 12 / auto;
     background-color: blue;
   }
