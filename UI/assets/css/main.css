@@ -1,0 +1,24 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-gap: 10px;
+}
+.header {
+  grid-column: span 12 / auto;
+  background-color: blue;
+}
+
+.content {
+  grid-column: span 8 / auto;
+  background-color: blue;
+}
+
+.right {
+  grid-column: span 4 / auto;
+  background-color: blue;
+}
+
+.footer {
+  grid-column: span 12 / auto;
+  background-color: blue;
+}
