@@ -1,3 +1,23 @@
+@import "compass/css3";
+
+@import 'https://fonts.googleapis.com/css?family=Montserrat:300, 400, 700';
+
+html {
+  background: rgb(242, 246, 248);
+  color: #34495e;
+  font-family: Poppins, sans-serif;
+  min-height: 100%;
+}
+/* h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #bdc3c7;
+} */
+
+/* CSS Grid initial setup */
 .grid {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -6,11 +26,47 @@
   margin-left: auto;
   max-width: 960px;
 }
-.header {
-  grid-column: span 12 / auto;
-  background-color: blue;
+/* Where the logo is */
+.top-left {
+  grid-column: span 8 / auto;
+  text-align: left;
+  width: 45%;
+  padding-top: 50px;
+  padding-bottom: 10px;
+  color: #34495e;
+}
+/* Where the social icons are */
+.top-right {
+  grid-column: span 4 / auto;
+  text-align: right;
+  padding-top: 50px;
+  padding-bottom: 10px;
+  color: #34495e;
+}
+.social-icons {
+  text-decoration: none;
+  color: #34495e;
+}
+/* Font awesome social icons space between */
+i {
+  padding: 15px;
+  transition: all 200ms ease-out;
 }
 
+/* Animate social icons on hover */
+i:hover {
+  transition: all 200ms ease-in;
+  transform: scale(2);
+}
+/* Ease out after hover */
+.logo {
+  transition: all 300ms ease-out;
+}
+/* Animate Logo on hover */
+.logo:hover {
+  transition: all 200ms ease-in;
+  transform: scale(1.5);
+}
 .nav {
   grid-column: span 4 / auto;
   background-color: blue;
