@@ -14,9 +14,10 @@ html {
   margin-left: auto;
   max-width: 960px;
   background: rgb(242, 246, 248);
-  box-shadow: 0 0 80px 0 rgba(18, 51, 160, 0.1);
+  box-shadow: 0 0 80px 0 rgba(15, 28, 73, 0.138);
   padding: 10px 10px 0;
   border-radius: 1%;
+  padding: 10px 5px 10px 5px;
 }
 /* The card sort of view */
 .card {
@@ -115,5 +116,11 @@ i:hover {
 
 .footer {
   grid-column: span 12 / auto;
-  background-color: blue;
+  background: rgb(242, 246, 248);
+  box-shadow: 0 0 80px 0 rgba(15, 28, 73, 0.138);
+  padding: 10px 10px 0;
+  border-radius: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
