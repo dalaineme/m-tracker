@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <!-- Google fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Acme">
   <!-- Font Awesome icons -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
     crossorigin="anonymous">
@@ -21,11 +21,14 @@
 
 <body>
   <div class="grid">
+    <!-- Start of Header with logo-->
     <div class="top-left">
       <a href="">
         <img class="logo" src="assets/images/logo.png" width="100%" alt="Maintenance Tracker">
       </a>
     </div>
+    <!-- End of Header with logo-->
+    <!-- Start of Header with Social Icons-->
     <div class="top-right">
       <a class="social-icons" href="">
         <i class="fab fa-facebook-f"></i>
@@ -40,8 +43,26 @@
         <i class="fab fa-slack-hash"></i>
       </a>
     </div>
-    <div class="nav">Nav</div>
-    <div class="content">Content</div>
+    <!-- End of Header with Social Icons-->
+    <div class="nav">
+      <ul class="nav-menu">
+        <li class="nav-menu-items">
+          <a href="#">
+            <i class="fas fa-home"></i>Home</a>
+        </li>
+        <li class="nav-menu-items">
+          <a href="#">
+            <i class="fas fa-sign-in-alt"></i>
+            Login</a>
+        </li>
+        <li class="nav-menu-items">
+          <a href="#">
+            <i class="fas fa-user-plus"></i>
+            Register</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card content">Content</div>
     <div class="footer">Footer</div>
   </div>
 </body>

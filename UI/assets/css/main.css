@@ -1,19 +1,9 @@
-@import 'https://fonts.googleapis.com/css?family=Montserrat:300, 400, 700';
-
 html {
   background: rgb(242, 246, 248);
   color: #34495e;
-  font-family: Poppins, sans-serif;
+  font-family: "Acme", serif;
   min-height: 100%;
 }
-/* h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  color: #bdc3c7;
-} */
 
 /* CSS Grid initial setup */
 .grid {
@@ -23,6 +13,19 @@ h6 {
   margin-right: auto;
   margin-left: auto;
   max-width: 960px;
+  background: rgb(242, 246, 248);
+  box-shadow: 0 0 80px 0 rgba(18, 51, 160, 0.1);
+  padding: 10px 10px 0;
+  border-radius: 1%;
+}
+/* The card sort of view */
+.card {
+  display: block;
+  min-height: 400px;
+  background: rgb(242, 246, 248);
+  box-shadow: 0 0 80px 0 rgba(15, 28, 73, 0.138);
+  padding: 20px 20px 0;
+  border-radius: 1%;
 }
 /* Where the logo is */
 .top-left {
@@ -50,7 +53,6 @@ i {
   padding: 15px;
   transition: all 200ms ease-out;
 }
-
 /* Animate social icons on hover */
 i:hover {
   transition: all 200ms ease-in;
@@ -65,14 +67,50 @@ i:hover {
   transition: all 200ms ease-in;
   transform: scale(1.5);
 }
+/* Nav section */
 .nav {
-  grid-column: span 4 / auto;
-  background-color: blue;
+  grid-column: span 3 / auto;
 }
-
+/* ul li elements */
+.nav-menu .nav-menu-items {
+  height: 50px;
+  width: 100%;
+  background: rgba(15, 29, 73, 0.707);
+  display: block;
+  position: relative;
+  right: 30px;
+  margin: 5px 10px;
+  border-radius: 5px;
+  transition: all 200ms ease-out;
+}
+/* Anchor tag - menu links */
+.nav-menu-items a {
+  color: #fff;
+  display: block;
+  height: 100%;
+  width: 100%;
+  padding: 0 2em 0 20px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 2.8em;
+  top: 0;
+  left: 0;
+  transition: all 200ms ease-out;
+  overflow: hidden;
+}
+/* a tag hover */
+.nav-menu-items a:hover {
+  color: #34495e;
+  transition: all 200ms ease-in;
+  transform: scale(1.1);
+}
+/* Menu box look hover */
+.nav-menu .nav-menu-items:hover {
+  transition: all 200ms ease-in;
+  transform: scale(1.1);
+}
 .content {
-  grid-column: span 8 / auto;
-  background-color: blue;
+  grid-column: span 9 / auto;
 }
 
 .footer {
