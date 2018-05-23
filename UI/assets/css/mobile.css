@@ -21,6 +21,11 @@
   }
   .content {
     grid-column: span 12 / auto;
-    background-color: blue;
+  }
+  .form-side-image {
+    width: 0%;
+  }
+  .input-form {
+    margin-left: 0%;
   }
 }

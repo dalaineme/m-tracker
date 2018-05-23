@@ -83,9 +83,15 @@
   }
   /* End of New Nav CSS for tablet and mobilt */
   .content {
-    grid-column: span 9 / auto;
+    grid-column: span 12 / auto;
   }
-  .content {
+  .form-side-image {
+    width: 25%;
+  }
+  .input-form {
+    margin-left: 35%;
+  }
+  .footer {
     grid-column: span 12 / auto;
     background-color: blue;
   }
