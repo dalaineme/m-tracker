@@ -1,24 +1,20 @@
-@media (max-width: 481px) {
+@media (max-width: 768px) {
   .top-left {
-    grid-column: span 8 / auto;
+    grid-column: span 6 / auto;
     width: 70%;
-    padding-top: 15px;
   }
   /* Where the social icons are */
   .top-right {
-    grid-column: span 4 / auto;
-    padding-top: 20px;
+    grid-column: span 6 / auto;
+    padding-top: 50px;
   }
   /* Font awesome social icons space between */
   i {
-    padding: 5px;
-  }
-  .social-icons {
-    font-size: 0.8em;
+    padding: 10px;
   }
   .nav {
     grid-column: span 12 / auto;
-    background-color: red;
+    background-color: black;
   }
   .content {
     grid-column: span 12 / auto;
