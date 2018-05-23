@@ -14,7 +14,76 @@
   }
   .nav {
     grid-column: span 12 / auto;
-    background-color: black;
+    background: rgb(242, 246, 248);
+    box-shadow: 0 0 80px 0 rgba(18, 51, 160, 0.1);
+    padding: 10px 10px 0;
+    border-radius: 1%;
+  }
+  /* 
+    Unset all the Nav CSS!
+  */
+  /* ul li elements */
+  .nav-menu .nav-menu-items {
+    height: unset !important;
+    width: unset !important;
+    background: unset !important;
+    display: unset !important;
+    position: unset !important;
+    right: unset !important;
+    margin: unset !important;
+    border-radius: unset !important;
+    transition: unset !important;
+  }
+  /* Anchor tag - menu links */
+  .nav-menu-items a {
+    color: unset !important;
+    display: unset !important;
+    height: unset !important;
+    width: unset !important;
+    padding: unset !important;
+    text-decoration: unset !important;
+    font-size: unset !important;
+    line-height: unset !important;
+    top: unset !important;
+    left: unset !important;
+    transition: unset !important;
+    overflow: unset !important;
+  }
+  /* a tag hover */
+  .nav-menu-items a:hover {
+    color: unset !important;
+    transition: unset !important;
+    transform: unset !important;
+  }
+  /* Menu box look hover */
+  .nav-menu .nav-menu-items:hover {
+    transition: unset !important;
+    transform: unset !important;
+  }
+  /* 
+    End of Unsetting all the Nav CSS!
+  */
+  /* New Nav CSS for tablet and mobilt */
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  li {
+    float: left;
+    padding-right: 10px;
+    font-size: 12px;
+  }
+  li a {
+    display: block;
+    color: white;
+    text-align: left;
+    text-decoration: none;
+  }
+  /* End of New Nav CSS for tablet and mobilt */
+  .content {
+    grid-column: span 9 / auto;
   }
   .content {
     grid-column: span 12 / auto;
