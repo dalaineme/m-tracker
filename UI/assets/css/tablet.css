@@ -93,6 +93,5 @@
   }
   .footer {
     grid-column: span 12 / auto;
-    background-color: blue;
   }
 }
