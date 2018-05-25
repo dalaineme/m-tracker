@@ -4,7 +4,10 @@ html {
   font-family: "Acme", serif;
   min-height: 100%;
 }
-
+a {
+  text-decoration: none;
+  color: #2980b9;
+}
 /* CSS Grid initial setup */
 .grid {
   display: grid;
@@ -118,6 +121,11 @@ i:hover {
 */
 .content {
   grid-column: span 9 / auto;
+  min-height: 400px;
+}
+.youtube-vid {
+  width: 100%;
+  height: 350px;
 }
 .content-wrapper {
   width: 100%;
