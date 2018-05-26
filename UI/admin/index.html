@@ -133,6 +133,66 @@
         </div>
       </div>
       <!-- End of request-->
+      <!-- Start of request-->
+      <div class="request-wrapper">
+        <div class="request-top">
+          <div class="request-top-left">
+            <i class="far fa-calendar request-icons"></i>
+            MONDAY, JULY 22
+          </div>
+          <div class="request-top-right">
+            <i class="fas fa-user request-icons"></i>
+            Eunice Mwai
+          </div>
+        </div>
+        <div class="request-mid">
+          <div class="request-mid-left">
+            <i class="fas fa-toolbox request-icons"></i>
+            BROKEN DOOR AT THE FOOD COURT ENTRANCE
+          </div>
+          <div class="request-mid-right">
+            <span class="status-approved">APPROVED</span>
+          </div>
+        </div>
+        <div class="request-body" id="request-body1">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it...
+            <button class="submit" onclick="moreDetails1()">More Details
+              <i class="fas fa-chevron-circle-down"></i>
+            </button>
+          </p>
+        </div>
+        <div class="more-details" id="more-details1" style="display:none;">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur dolorem eaque, dolor ut ea
+            a expedita culpa tenetur illo quod distinctio necessitatibus esse? Iste quaerat ut reprehenderit. Maxime, rem
+            officia.
+          </p>
+          <div class="more-details-action">
+            <div class="more-details-action-top">
+              <label for="">
+                <i class="fas fa-envelope"></i>
+                Your Feedback
+              </label>
+              <textarea>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem assumenda deserunt possimus totam, facere, rerum odio deleniti ratione alias aliquam corporis non impedit, eum eius sint neque ipsum fugiat accusantium.
+              </textarea>
+            </div>
+            <div class="more-details-action-submit">
+              <button class="submit">Resolve</button>
+            </div>
+          </div>
+          <div class="more-details-action-footer">
+            <button class="submit" onclick="moreDetails1()">
+              Close
+              <i class="far fa-window-close"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- End of request-->
       <div class="load-more">
         <p>Load More...</p>
       </div>
@@ -145,6 +205,17 @@
     function moreDetails() {
       var x = document.getElementById("more-details");
       var y = document.getElementById("request-body");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "none";
+      } else {
+        x.style.display = "none";
+        y.style.display = "block";
+      }
+    }
+    function moreDetails1() {
+      var x = document.getElementById("more-details1");
+      var y = document.getElementById("request-body1");
       if (x.style.display === "none") {
         x.style.display = "block";
         y.style.display = "none";
