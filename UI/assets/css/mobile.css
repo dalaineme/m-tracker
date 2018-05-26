@@ -58,5 +58,10 @@
     padding: 1px;
     font-size: 10px;
   }
+  .more-details-action-footer button {
+    width: 80px;
+    padding: 1px;
+    font-size: 10px;
+  }
   /* End of Request */
 }
