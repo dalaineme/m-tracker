@@ -91,6 +91,29 @@
   .input-form {
     margin-left: 35%;
   }
+  /* Start of Request */
+  .request-wrapper {
+    width: 98%;
+    font-size: 14px;
+  }
+  .request-body-p {
+    font-size: 12px;
+  }
+  .request-body-p button {
+    width: 80px;
+    padding: 2px;
+    font-size: 12px;
+  }
+  .load-more {
+    border-radius: 1%;
+    border-width: 1px;
+    border-radius: 1%;
+    margin-bottom: 30px;
+  }
+  .load-more p {
+    font-size: 12px;
+  }
+  /* End of Request */
   .footer {
     grid-column: span 12 / auto;
   }

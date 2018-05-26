@@ -257,12 +257,12 @@ hr {
   font-size: 14px;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
-.request-body-p a {
+.request-body-p button {
   background-color: #3498db;
-  padding-left: 10px;
-  padding-right: 10px;
-  color: #fff;
-  border-radius: 5%;
+  width: 100px;
+  padding: 2px;
+  font-size: 14px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
 }
 .load-more {
   width: 100px;
