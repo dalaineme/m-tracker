@@ -1,4 +1,7 @@
 @media (max-width: 868px) {
+  html {
+    font-size: 12px;
+  }
   .top-left {
     grid-column: span 6 / auto;
     width: 70%;
@@ -100,7 +103,7 @@
     font-size: 12px;
   }
   .request-body-p button {
-    width: 80px;
+    width: 90px;
     padding: 2px;
     font-size: 12px;
   }
@@ -117,6 +120,19 @@
     width: 80px;
     padding: 2px;
     font-size: 12px;
+  }
+  .more-details-action-bottom label {
+    font-size: 12px;
+  }
+  .more-details-action-submit button {
+    width: 100%;
+    padding: 8px 14px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px rgba(15, 28, 73, 0.419);
+    box-shadow: 2px 2px 2px 0 rgba(15, 28, 73, 0.076);
+    border-radius: 2px;
+    font-size: 14px;
   }
   /* End of Request */
   .footer {

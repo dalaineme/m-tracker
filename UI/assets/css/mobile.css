@@ -63,5 +63,8 @@
     padding: 1px;
     font-size: 10px;
   }
+  .more-details-action-bottom label {
+    font-size: 10px;
+  }
   /* End of Request */
 }
