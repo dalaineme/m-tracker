@@ -144,7 +144,11 @@ i:hover {
   box-shadow: 10px 10px 10px 0 rgba(15, 28, 73, 0.063);
   border-radius: 1%;
 }
-input {
+input[type="text"],
+input[type="email"],
+input[type="phone"],
+input[type="password"],
+input[type="number"] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -315,6 +319,68 @@ hr {
   transition: unset !important;
   transform: unset !important;
 }
+.more-details-action {
+  width: 100%;
+  margin: auto;
+  min-height: 100px;
+  border: solid rgba(15, 28, 73, 0.022);
+  border-radius: 1%;
+  border-width: 2px;
+  border-radius: 1%;
+  box-shadow: 0 0 80px 0 rgba(15, 28, 73, 0.172);
+  margin-bottom: 10px;
+}
+.more-details-action-top {
+  width: 100%;
+  text-align: center;
+}
+.more-details-action-bottom {
+  width: 100%;
+  text-align: center;
+  border: solid rgba(15, 28, 73, 0.022);
+  border-radius: 1%;
+  border-width: 2px;
+  border-radius: 1%;
+  box-shadow: 0 0 80px 0 rgba(15, 28, 73, 0.172);
+  margin-bottom: 10px;
+}
+.more-details-action-top i {
+  padding-bottom: 0;
+  padding-top: 20px;
+  padding-right: 0;
+}
+.more-details-action-top textarea {
+  width: 90%;
+  height: 100px;
+  margin: auto;
+  margin-top: 10px;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 2px rgba(15, 28, 73, 0.419);
+  box-shadow: 5px 5px 5px 0 rgba(15, 28, 73, 0.076);
+  border-radius: 4px;
+  font-size: 14px;
+  color: #34495e;
+  font-family: "Acme";
+  box-sizing: border-box;
+}
+.options-container {
+  display: block;
+  position: relative;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+}
+.options-container i {
+  padding: 0;
+}
+.more-details-action-submit {
+  width: 90%;
+  margin: auto;
+}
+
 /* End of Request */
 /*
   End of Main content 
