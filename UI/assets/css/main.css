@@ -145,6 +145,7 @@ i:hover {
   border-radius: 1%;
 }
 input[type="text"],
+input[type="date"],
 input[type="email"],
 input[type="phone"],
 input[type="password"],
@@ -384,7 +385,47 @@ hr {
   width: 90%;
   margin: auto;
 }
-
+.filter {
+  padding: 10px;
+  width: 96%;
+  margin: auto;
+  border-radius: 1%;
+  background-color: #dfe6e9;
+  margin-bottom: 20px;
+}
+.filter > div {
+  flex: 1; /*grow*/
+}
+.show-filter {
+  text-align: right;
+}
+.hide-filter {
+  text-align: right;
+}
+.btn-filter {
+  background-color: #3498db;
+  width: 150px;
+  padding: 2px;
+  font-size: 14px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+.btn-filter i {
+  padding: 8px;
+}
+.filter-form {
+  display: flex;
+  border: 2px rgba(15, 28, 73, 0.419);
+  box-shadow: 5px 5px 5px 0 rgba(15, 28, 73, 0.124);
+  border-radius: 4px;
+  background-color: #ecf0f1;
+}
+.filter-form > div {
+  flex: 1; /*grow*/
+  padding: 10px;
+}
+.filter-right button i {
+  padding: 0 5px 0 5px;
+}
 /* End of Request */
 /*
   End of Main content 
