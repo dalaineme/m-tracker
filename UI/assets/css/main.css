@@ -177,6 +177,110 @@ input {
   transition: all 200ms ease-in;
   transform: scale(1.05);
 }
+.logged-user {
+  padding: 10px;
+  width: 90%;
+  height: 20px;
+  text-align: right;
+}
+hr {
+  height: 12px;
+  border: 0;
+  box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.124);
+}
+/* Start of Request */
+.request-wrapper {
+  padding: 10px;
+  width: 80%;
+  margin: auto;
+  min-height: 100px;
+  border: solid rgba(15, 28, 73, 0.022);
+  border-radius: 1%;
+  border-width: 2px;
+  border-radius: 1%;
+  box-shadow: 0 0 80px 0 rgba(15, 28, 73, 0.172);
+  background-color: rgba(15, 28, 73, 0.049);
+  margin-bottom: 20px;
+}
+.request-top-left {
+  width: 30%;
+  float: left;
+}
+.request-top-right {
+  margin-left: 35%;
+  text-align: right;
+}
+.request-mid-left {
+  width: 80%;
+  float: left;
+}
+.request-mid-right {
+  margin-left: 80%;
+  text-align: right;
+  padding-bottom: 10px;
+}
+.status-approved {
+  background-color: rgba(31, 221, 21, 0.707);
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+}
+.status-rejected {
+  background-color: rgba(221, 21, 21, 0.631);
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+}
+.status-pending {
+  background-color: rgba(221, 158, 21, 0.707);
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+}
+.status-resolved {
+  background-color: rgba(21, 134, 221, 0.707);
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+}
+.request-icons {
+  padding: 5px;
+}
+.request-body {
+  border-radius: 1%;
+  background-color: #ecf0f1;
+  margin-bottom: 0;
+  padding: 5px;
+}
+.request-body-p {
+  margin: 0;
+  font-size: 14px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+.request-body-p a {
+  background-color: #3498db;
+  padding-left: 10px;
+  padding-right: 10px;
+  color: #fff;
+  border-radius: 5%;
+}
+.load-more {
+  width: 100px;
+  margin: auto;
+  text-align: center;
+  border-radius: 1%;
+  border-width: 2px;
+  border-radius: 1%;
+  box-shadow: 0 0 80px 0 rgba(15, 28, 73, 0.398);
+  background-color: rgba(15, 29, 73, 0.707);
+  margin-bottom: 50px;
+}
+.load-more p {
+  padding: 10px;
+  margin: 0;
+  color: #fff;
+}
+/* End of Request */
 /*
   End of Main content 
 */
