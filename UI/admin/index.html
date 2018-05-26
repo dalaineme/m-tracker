@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Google fonts -->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Acme">
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
+  <!-- Core  CSS file -->
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <!-- Tablet version -->
+  <link rel="stylesheet" href="../assets/css/tablet.css">
+  <!-- Mobile version -->
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <title>Admin | Maintenance Tracker</title>
+</head>
+
+<body>
+  <div class="grid">
+    <!-- Start of Header with logo-->
+    <div class="top-left">
+      <a href="index.html">
+        <img class="logo" src="../assets/images/logo.png" width="100%" alt="Maintenance Tracker">
+      </a>
+    </div>
+    <!-- End of Header with logo-->
+    <!-- Start of Header with Social Icons-->
+    <div class="top-right">
+      <a class="social-icons" href="">
+        <i class="fab fa-facebook-f top-icons"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-twitter top-icons"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-google-plus-g top-icons"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-slack-hash top-icons"></i>
+      </a>
+    </div>
+    <!-- End of Header with Social Icons-->
+    <div class="nav">
+      <ul class="nav-menu">
+        <li class="nav-menu-items active">
+          <a href="#">
+            <i class="fas fa-home"></i>Requests</a>
+        </li>
+        <li class="nav-menu-items">
+          <a href="../login.html">
+            <i class="fas fa-sign-in-alt"></i>
+            Log out</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card content">
+      <div class="logged-user">Logged in as Admin</div>
+      <hr>
+      <h3>Maintenance Requests.</h3>
+      <!-- Start of request-->
+      <div class="request-wrapper">
+        <div class="request-top">
+          <div class="request-top-left">
+            <i class="far fa-calendar request-icons"></i>
+            FRIDAY, JULY 20
+          </div>
+          <div class="request-top-right">
+            <i class="fas fa-user request-icons"></i>
+            Mike Musalia
+          </div>
+        </div>
+        <div class="request-mid">
+          <div class="request-mid-left">
+            <i class="fas fa-toolbox request-icons"></i>
+            BROKEN DOOR AT THE FOOD COURT ENTRANCE
+          </div>
+          <div class="request-mid-right">
+            <span class="status-pending">PENDING</span>
+          </div>
+        </div>
+        <div class="request-body">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it...
+            <button class="submit">More Details</button>
+          </p>
+        </div>
+      </div>
+      <!-- End of request-->
+
+      <div class="load-more">
+        <p>Load More...</p>
+      </div>
+    </div>
+    <footer class="footer">&copy; Copyright &nbsp;
+      <a href="https://github.com/dcDalin">@dc_dalin</a>
+    </footer>
+  </div>
+</body>
+
+</html>
