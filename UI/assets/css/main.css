@@ -259,10 +259,18 @@ hr {
 }
 .request-body-p button {
   background-color: #3498db;
-  width: 100px;
+  width: 120px;
   padding: 2px;
   font-size: 14px;
   font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+.request-body-p button i {
+  padding: 0;
+  transition: unset !important;
+}
+.request-body-p button i:hover {
+  transition: unset !important;
+  transform: unset !important;
 }
 .load-more {
   width: 100px;
@@ -279,6 +287,33 @@ hr {
   padding: 10px;
   margin: 0;
   color: #fff;
+}
+.more-details {
+  border-radius: 1%;
+  background-color: #ecf0f1;
+  margin-bottom: 0;
+  padding: 5px;
+  min-height: 100px;
+}
+.more-details-action-footer {
+  width: 100px;
+  margin: auto;
+  text-align: center;
+}
+.more-details-action-footer button {
+  background-color: #e74c3c;
+  width: 100px;
+  padding: 2px;
+  font-size: 14px;
+  font-family: "Trebuchet MS", Helvetica, sans-serif;
+}
+.more-details-action-footer button i {
+  padding: 0;
+  transition: unset !important;
+}
+.more-details button i:hover {
+  transition: unset !important;
+  transform: unset !important;
 }
 /* End of Request */
 /*

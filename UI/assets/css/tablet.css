@@ -113,6 +113,11 @@
   .load-more p {
     font-size: 12px;
   }
+  .more-details-action-footer button {
+    width: 80px;
+    padding: 2px;
+    font-size: 12px;
+  }
   /* End of Request */
   .footer {
     grid-column: span 12 / auto;
