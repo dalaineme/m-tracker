@@ -134,6 +134,19 @@
     border-radius: 2px;
     font-size: 14px;
   }
+  .filter-right button {
+    font-size: 12px;
+  }
+  .filter-form {
+    display: unset !important;
+  }
+  .filter-form > div {
+    flex: unset !important;
+    padding: unset !important;
+  }
+  .filter-left {
+    flex: 1;
+  }
   /* End of Request */
   .footer {
     grid-column: span 12 / auto;
