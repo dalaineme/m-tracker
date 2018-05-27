@@ -19,7 +19,7 @@
   <title>Login | Maintenance Tracker</title>
 </head>
 
-<body>
+<body onload="showInfo()">
   <div class="grid">
     <!-- Start of Header with logo-->
     <div class="top-left">
@@ -91,6 +91,11 @@
     <!-- End of Footer -->
   </div>
   <script src="assets/js/login.js"></script>
+  <script>
+    function showInfo() {
+      alert("To log in as an admin use the email: 'admin@admin.com', password doesn't matter :)");
+    }
+  </script>
 </body>
 
 </html>
