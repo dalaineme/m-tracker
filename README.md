@@ -4,7 +4,7 @@
 
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
-**TL;DR** [View a live demo of the UI](https://dalaineme.github.io/m-tracker) **or** [Check out the Pivotal Tracker Board.](https://www.pivotaltracker.com/n/projects/2173228)
+**TL;DR** [View a live demo of the UI](https://dalaineme.github.io/m-tracker/) **or** [Check out the Pivotal Tracker Board.](https://www.pivotaltracker.com/n/projects/2173228)
 
 #### Log in as Admin
 
