@@ -17,17 +17,17 @@ Maintenance Tracker App is an application that provides users with the ability t
 ## UI Pages
 
 * **Admin Pages**
-  * Admin can login
-  * Admin can view all maintenance/repair requests.
-  * Admin can filter maintenance/repair requests.
-  * Admin can approve/reject maintenance/repair requests.
-  * Admin can resolve active maintenance/repair requests.
+  * [Admin can login.](https://dalaineme.github.io/m-tracker/UI/login.html)
+  * [Admin can view all maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
+  * [Admin can filter maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
+  * [Admin can approve/reject maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
+  * [Admin can resolve active maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
 * **User Pages**
-  * A user can Signup.
-  * A user can Login.
-  * A user can make maintenance/repair requests.
-  * A user can view their maintenance/repair requests.
-  * A user can view feedback.
+  * [A user can Signup.](https://dalaineme.github.io/m-tracker/UI/signup.html)
+  * [A user can Login.](https://dalaineme.github.io/m-tracker/UI/login.html)
+  * [A user can make maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
+  * [A user can view their maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
+  * [A user can view feedback.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
 
 ## Getting Started
 
