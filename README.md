@@ -8,7 +8,9 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 #### Log in as Admin
 
-> Email: **admin@admin.com** > **Any random password will work**
+> Email: **admin@admin.com**
+
+> **Any random password will work**
 
 #### :computer: Desktop, Tablet and :iphone: Mobile Responsive
 
