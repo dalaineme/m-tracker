@@ -60,6 +60,41 @@
     <div class="card content">
       <div class="logged-user">Logged in as Mike Musalia</div>
       <hr>
+      <div class="filter" id="show-the-filter">
+        <div class="show-filter">
+          <button class="submit btn-filter" onclick="showFilter()">
+            <i class="fas fa-plus"></i>
+            Make a Request
+          </button>
+        </div>
+      </div>
+      <div class="filter" id="hide-the-filter" style="display:none;">
+        <div class="hide-filter">
+          <button class="submit btn-filter" onclick="showFilter()">
+            <i class="far fa-times-circle"></i>
+            Close
+          </button>
+        </div>
+        <div class="filter-form request">
+          <div class="filter-left">
+            <label for="">Request Title</label>
+            <input type="text">
+          </div>
+          <div class="filter-mid">
+            <label for="">Request Description</label>
+            <textarea name=""></textarea>
+          </div>
+          <div class="filter-right">
+            <label for="">
+              <br>
+            </label>
+            <button class="submit">
+              Submit Request
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr>
       <h3>My Requests.</h3>
       <!-- Start of request-->
       <div class="request-wrapper">
