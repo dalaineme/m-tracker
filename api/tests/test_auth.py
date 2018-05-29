@@ -103,6 +103,36 @@ class TestAuthEndpoint(unittest.TestCase):
         self.assertEqual(result["message"], "Fail! Weak password.")
         self.assertEqual(response.status_code, 400)
 
+    def test_registered_user_login(self):
+        """ Test for login of registered-user login """
+        data = {
+            "email": "email@add.com",
+            "password": "aaaAAA111"
+        }
+        response = self.app.post('/api/v1/auth/login',
+                                 data=json.dumps(data),
+                                 content_type="application/json")
+        result = json.loads(response.data)
+        self.assertEqual(result["status"], "ok")
+        self.assertEqual(result["message"], "Success! You are now logged in.")
+        self.assertTrue(result["token"])
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_failure(self):
+        """ Test for failed login """
+        data = {
+            "email": "email@add.com",
+            "password": "aaaAAAs111"
+        }
+        response = self.app.post('/api/v1/auth/login',
+                                 data=json.dumps(data),
+                                 content_type="application/json")
+        result = json.loads(response.data)
+        self.assertEqual(result["status"], "fail")
+        self.assertEqual(result["message"],
+                         "Fail! Wrong email and or password.")
+        self.assertEqual(response.status_code, 202)
+
 
 if __name__ == "__main__":
     unittest.main()
