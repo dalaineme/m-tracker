@@ -1,15 +1,42 @@
 #! /api/server/__init__.py
 # -*- coding: utf-8 -*-
+"""This is the core module
 
-"""This module instanciates flask
+This module does imports flask framework, initializes it and passes the
+initialized flask object to various modules and extensions.
 """
 
-from flask import Flask, jsonify
+# the os module provides a portable way of using operating system dependent
+# functionality
+import os
 
+# python microframework
+from flask import Flask
+
+# provides bcrypt hashing utilities for our application
+from flask_bcrypt import Bcrypt
+
+# making cross-origin AJAX possible
+from flask_cors import CORS
+
+# instanciate Flask
 APP = Flask(__name__)
 
+# initialize the Flask-Cors extension with default arguments in order
+# to allow CORS for all domains on all routes
+CORS(APP)
 
-@APP.route('/')
-def index():
-    """Home route"""
-    return jsonify({'message': 'working'})
+# os.getenv -> return the value of the environment variable
+APP_SETTINGS = os.getenv(
+    'APP_SETTINGS',
+    'api.server.config.DevelopmentConfig'
+)
+# retreiving config stored in separate files (config.py)
+APP.config.from_object(APP_SETTINGS)
+
+# pass flask app object to Bcrypt
+BCRYPT = Bcrypt(APP)
+
+# import auth blueprint and register it
+from api.server.auth.views import AUTH_BLUEPRINT
+APP.register_blueprint(AUTH_BLUEPRINT)
