@@ -10,7 +10,7 @@ from flask.views import MethodView
 from marshmallow import ValidationError
 
 from api.server.auth.schema import UserSchema
-from api.server.models import User
+from api.server.models import save
 
 # Create a blueprint
 AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/v1/auth')
@@ -48,16 +48,20 @@ class RegisterAPI(MethodView):
             return make_response(jsonify(response_object)), 422
 
         # if no validation errors
-        user = User(
-            first_name=post_data.get('first_name'),
-            last_name=post_data.get('last_name'),
-            email=post_data.get('email'),
-            password=post_data.get('password')
-        ).save()
-
+        # Get input data as dictionary
+        data = {
+            "first_name": post_data.get('first_name'),
+            "last_name": post_data.get('last_name'),
+            "email": post_data.get('email'),
+            "password": post_data.get('password')
+        }
+        # save the data into a list
+        save(data)
+        # return response
         response_object = {
-            'status': 'success',
-            'message': 'Successfully registered.'
+            "status": 'success',
+            "message": "Account for '{}' has been created.".format(
+                data["email"])
         }
         return make_response(jsonify(response_object)), 201
 

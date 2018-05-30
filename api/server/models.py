@@ -9,6 +9,7 @@ from werkzeug.security import generate_password_hash
 
 # Users
 USERS_LIST = []
+USERS_COUNTER = 0
 
 
 class User(object):  # pylint: disable=too-few-public-methods
@@ -21,10 +22,12 @@ class User(object):  # pylint: disable=too-few-public-methods
         self.email = email
         self.password = password
 
-    def set_password(self, password):
-        """Generate encrypted password"""
-        self.password = generate_password_hash(password)
 
-    def save(self):
-        """User instance appending"""
-        USERS_LIST.append(self)
+def save(data):
+    """User instance appending"""
+    data['user_id'] = len(USERS_LIST) + 1
+    data['password'] = generate_password_hash(data['password'])
+    data['first_name'] = data['first_name'].title()
+    data['last_name'] = data['last_name'].title()
+    # save to list
+    USERS_LIST.append(data)
