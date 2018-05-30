@@ -14,7 +14,7 @@ from api.tests.base import BaseTestCase
 def register_user(self, first_name, last_name, email, password):
     """Register user method"""
     return self.client.post(
-        '/auth/v1/register',
+        '/v1/auth/register',
         data=json.dumps(dict(
             first_name=first_name,
             last_name=last_name,
@@ -28,7 +28,7 @@ def register_user(self, first_name, last_name, email, password):
 def login_user(self, email, password):
     """Login user method"""
     return self.client.post(
-        '/auth/v1/login',
+        '/v1/auth/login',
         data=json.dumps(dict(
             email=email,
             password=password
