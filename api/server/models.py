@@ -2,8 +2,13 @@
 # -*- coding: utf-8 -*-
 """Contains the schema for the auth endpoint
 
-Marshmallow validation with wtforms
+Use data structures for storage
 """
+
+from werkzeug.security import generate_password_hash
+
+# Users
+USERS_LIST = []
 
 
 class User(object):  # pylint: disable=too-few-public-methods
@@ -15,3 +20,11 @@ class User(object):  # pylint: disable=too-few-public-methods
         self.last_name = last_name
         self.email = email
         self.password = password
+
+    def set_password(self, password):
+        """Generate encrypted password"""
+        self.password = generate_password_hash(password)
+
+    def save(self):
+        """User instance appending"""
+        USERS_LIST.append(self)

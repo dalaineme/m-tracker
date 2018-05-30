@@ -10,6 +10,7 @@ from flask.views import MethodView
 from marshmallow import ValidationError
 
 from api.server.auth.schema import UserSchema
+from api.server.models import User
 
 # Create a blueprint
 AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/v1/auth')
@@ -47,7 +48,12 @@ class RegisterAPI(MethodView):
             return make_response(jsonify(response_object)), 422
 
         # if no validation errors
-        # check if user already exists - check their email address
+        user = User(
+            first_name=post_data.get('first_name'),
+            last_name=post_data.get('last_name'),
+            email=post_data.get('email'),
+            password=post_data.get('password')
+        ).save()
 
         response_object = {
             'status': 'success',
