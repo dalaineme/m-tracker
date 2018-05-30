@@ -10,4 +10,4 @@ script:
   - py.test --cov=api/server
 
 after_success:
-  - "coveralls"
+  - coveralls
