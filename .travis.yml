@@ -11,8 +11,7 @@ install:
 script:
   - py.test -v
   - py.test --cov=api/server
-  - coveralls
 
 
 after_success:
-  - "coveralls"
+ - coveralls
