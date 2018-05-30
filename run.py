@@ -2,7 +2,11 @@
 # -*- coding: utf-8 -*-
 """Entry point of the app
 
-Runs the app in debug mode
+Runs the app in specified exported mode
 """
+
+# import the APP used to instanciate flask
 from api.server import APP
-APP.run(debug=True)
+
+# run the app
+APP.run()
