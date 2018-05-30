@@ -109,6 +109,7 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertEqual(response.status_code, 200)
 
     def test_login_failure(self):
+        """Wrong login credentials"""
         with self.client:
             # registered user login
             response = login_user(self, 'joe@gmail.com', 'aaaAAA111')
