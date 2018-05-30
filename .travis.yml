@@ -5,9 +5,14 @@ python:
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
+  - pip install pytest pytest-cov
 
 script:
+  - py.test -v
   - py.test --cov=api/server
+  - coveralls
+
 
 after_success:
-  - coveralls
+  - "coveralls"
