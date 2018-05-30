@@ -14,7 +14,7 @@ from api.tests.conftest import BaseTestCase
 def register_user(self, first_name, last_name, email, password):
     """Register user method"""
     return self.client.post(
-        '/v1/auth/register',
+        '/api/v1/auth/register',
         data=json.dumps(dict(
             first_name=first_name,
             last_name=last_name,
@@ -40,6 +40,7 @@ def login_user(self, email, password):
 class TestAuthEndpoint(BaseTestCase):
     """Class that handles Auth Endpoint test"""
 
+    # Registration tests
     def test_successful_registration(self):
         """ Test for user registration """
         with self.client:
@@ -56,7 +57,7 @@ class TestAuthEndpoint(BaseTestCase):
         """ Test empty dictionary """
         with self.client:
             input_data = {}
-            response = self.client.post('/v1/auth/register',
+            response = self.client.post('/api/v1/auth/register',
                                         data=json.dumps(input_data),
                                         content_type="application/json")
             data = json.loads(response.data.decode())
@@ -65,7 +66,6 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 400)
 
-    @pytest.mark.skip("We'll execute this test later")
     def test_existing_user_registration(self):
         """Test if an already existing user tries to register"""
         register_user(self, 'Some', 'Name', 'another@gmail.com', 'aaaAAA111')
@@ -74,8 +74,9 @@ class TestAuthEndpoint(BaseTestCase):
                 self, 'Dalin', 'Oluoch', 'another@gmail.com', 'aaaAAA111')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'fail')
-            self.assertTrue(data['message'] == 'Email exists, login instead.')
-            self.assertTrue(data['errors'])
+            self.assertTrue(
+                data['message'] ==
+                "Sorry, email 'another@gmail.com' already exists.")
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 202)
 
@@ -90,7 +91,6 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 422)
 
-    @pytest.mark.skip("We'll execute this test later")
     def test_invalid_email(self):
         """Test if user enters the wrong email"""
         with self.client:
@@ -98,11 +98,10 @@ class TestAuthEndpoint(BaseTestCase):
                 self, 'Dalin', 'Oluoch', 'anothergmail.com', 'aaaAAA111')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'fail')
-            self.assertTrue(data['message'] == 'Sorry your email is invalid.')
+            self.assertTrue(data['message'] == 'Validation errors.')
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.status_code, 422)
 
-    @pytest.mark.skip("We'll execute this test later")
     def test_password_strength(self):
         """Test if user enters strong password"""
         with self.client:
@@ -110,10 +109,11 @@ class TestAuthEndpoint(BaseTestCase):
                 self, 'Dalin', 'Oluoch', 'anothergmail.com', 'asdfasdf')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'fail')
-            self.assertTrue(data['message'] == 'Sorry your password is weak.')
+            self.assertTrue(data['message'] == 'Validation errors.')
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.status_code, 422)
 
+    # Login Tests
     @pytest.mark.skip("We'll execute this test later")
     def test_registered_user_login(self):
         """ Test for login of registered-user login """

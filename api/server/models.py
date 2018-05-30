@@ -9,7 +9,6 @@ from werkzeug.security import generate_password_hash
 
 # Users
 USERS_LIST = []
-USERS_COUNTER = 0
 
 
 class User(object):  # pylint: disable=too-few-public-methods
@@ -31,3 +30,11 @@ def save(data):
     data['last_name'] = data['last_name'].title()
     # save to list
     USERS_LIST.append(data)
+
+
+def check_email(search_email):
+    """Check if email exists in USERS_LIST"""
+    for find_email in USERS_LIST:
+        if find_email['email'] == search_email:
+            return True
+    return False
