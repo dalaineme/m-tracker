@@ -78,7 +78,7 @@ class TestAuthEndpoint(BaseTestCase):
                 data['message'] ==
                 "Sorry, email 'another@gmail.com' already exists.")
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 202)
+            self.assertEqual(response.status_code, 400)
 
     def test_empty_fields(self):
         """Test user has empty fields"""
@@ -116,8 +116,12 @@ class TestAuthEndpoint(BaseTestCase):
     # Login Tests
     def test_registered_user_login(self):
         """ Test for login of registered-user login """
+        # register a user
+        register_user(self, 'some', 'name', 'another@gmail.com', 'aaaAAA111')
+
+        # test logging in registered user
         with self.client:
-            response = login_user(self, 'joe@gmail.com', 'aaaAAA111')
+            response = login_user(self, 'another@gmail.com', 'aaaAAA111')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
             self.assertTrue(data['message'] == 'Successfully logged in.')
@@ -125,17 +129,35 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
 
-    @pytest.mark.skip("We'll execute this test later")
-    def test_login_failure(self):
-        """Wrong login credentials"""
+    def test_unregistered_user_login(self):
+        """ Test for login of a not registered-user"""
         with self.client:
-            # registered user login
-            response = login_user(self, 'joe@gmail.com', 'aaaAAA111')
+            response = login_user(self, 'another@gmail.com', 'aaaAAA111')
             data = json.loads(response.data.decode())
-            self.assertTrue(data['status'] == 'error')
-            self.assertTrue(data['message'] == 'Wrong email and or password.')
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(
+                data['message'] ==
+                "Sorry, email 'another@gmail.com' does not exist.")
+            # self.assertTrue(data['auth_token'])
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 202)
+            self.assertEqual(response.status_code, 400)
+
+    def test_login_failure(self):
+        """Wrong login credentials
+
+        Wrong password
+        """
+        # register a user
+        register_user(self, 'some', 'name', 'the@user.com', 'aaaAAA111')
+
+        # test logging in failure of a registered user - wrong password
+        with self.client:
+            response = login_user(self, 'the@user.com', 'Pa4s283dDI!')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['message'] == "Wrong login credentials.")
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
 
     def test_invalid_email_login(self):
         """ Test for invalid email while logging in"""

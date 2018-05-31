@@ -10,7 +10,7 @@ from flask.views import MethodView
 from marshmallow import ValidationError
 
 from api.server.auth.schema import UserSchema, LoginSchema
-from api.server.models import save, check_email
+from api.server.models import save, check_email, login
 
 # Create a blueprint
 AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
@@ -56,7 +56,7 @@ class RegisterAPI(MethodView):
                 'message': "Sorry, email '{}' already exists.".format(
                     input_email)
             }
-            return make_response(jsonify(response_object)), 202
+            return make_response(jsonify(response_object)), 400
         # if no validation errors
         # Get input data as dictionary
         data = {
@@ -97,11 +97,36 @@ class LoginAPI(MethodView):
             }
             return make_response(jsonify(response_object)), 422
 
-        response_object = {
-            "status": 'success',
-            "message": "Successfully logged in."
+        # Get email
+        input_email = post_data.get('email')
+        # check if email exists
+        if not check_email(input_email):
+            response_object = {
+                'status': 'fail',
+                'message': "Sorry, email '{}' does not exist.".format(
+                    input_email)
+            }
+            return make_response(jsonify(response_object)), 400
+
+        # If no validation errors
+        # Get input data as dictionary
+        data = {
+            "email": post_data.get('email'),
+            "password": post_data.get('password')
         }
-        return make_response(jsonify(response_object)), 200
+        # If login is successful
+        if login(data):
+            response_object = {
+                "status": 'success',
+                "message": "Successfully logged in."
+            }
+            return make_response(jsonify(response_object)), 200
+        # Failed login - password
+        response_object = {
+            "status": 'fail',
+            "message": "Wrong login credentials."
+        }
+        return make_response(jsonify(response_object)), 422
 
 
 # define API resources
