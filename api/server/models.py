@@ -23,6 +23,16 @@ class User(object):  # pylint: disable=too-few-public-methods
         self.password = password
 
 
+class Request(object):  # pylint: disable=too-few-public-methods
+    """Request model for storing user requests"""
+
+    def __init__(self, title, description):
+        self.title = title
+        self.description = description
+        self.email = ''
+
+
+# Helper methods
 def save(data):
     """User instance appending"""
     data['user_id'] = len(USERS_LIST) + 1

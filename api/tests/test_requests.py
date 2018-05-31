@@ -39,13 +39,35 @@ class TestRequestEndpoint(BaseTestCase):
         """Test for successful request submission"""
         with self.client:
             response = create_request(
-                self, 'The title', 'The description', 'user@mail.co')
+                self,
+                "This is the request title. Short and descriptive",
+                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to.",
+                "user@mail.co"
+            )
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
             self.assertTrue(data['message'] ==
                             'Request successfully sent to the admin.')
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 201)
+
+    def test_validation_errors(self):
+        """Test for presence of validation error
+
+        This case short body length
+        """
+        with self.client:
+            response = create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                "Body goes here",
+                "user@mail.co"
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['message'] == 'Validation errors.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
 
     @pytest.mark.skip("We'll execute this test later")
     def test_empty_fields(self):
