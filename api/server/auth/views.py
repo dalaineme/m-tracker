@@ -8,15 +8,15 @@ This module contains various routes for the auth endpoint
 from flask import Blueprint, request, make_response, jsonify
 from flask.views import MethodView
 from marshmallow import ValidationError
-from flask_jwt_extended import (create_access_token)
+from flask_jwt_extended import (create_access_token, jwt_required, get_raw_jwt)
 
 from api.server.auth.schema import UserSchema, LoginSchema
-from api.server.models import save, check_email, login
+from api.server.models import save, check_email, login, BLACKLIST
 
 # Create a blueprint
 AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/users')
 
-# Instanciate marshmallow
+# Instanciate marshmallow shemas
 USER_SCHEMA = UserSchema()
 LOGIN_SCHEMA = LoginSchema()
 
@@ -132,9 +132,24 @@ class LoginAPI(MethodView):
         return make_response(jsonify(response_object)), 422
 
 
+class LogoutAPI(MethodView):
+    """User Logout resource"""
+    @jwt_required
+    def post(self):  # pylint: disable=R0201
+        """Send POST method to logout endpoint"""
+        jti = get_raw_jwt()['jti']
+        BLACKLIST.add(jti)
+        response_object = {
+            "status": 'success',
+            "message": "You have successfully logged out."
+        }
+        return make_response(jsonify(response_object)), 200
+
+
 # define API resources
 REGISTRATION_VIEW = RegisterAPI.as_view('register_api')
 LOGIN_VIEW = LoginAPI.as_view('login_api')
+LOGOUT_VIEW = LogoutAPI.as_view('logout_api')
 
 # add rules for auth enpoints
 AUTH_BLUEPRINT.add_url_rule(
@@ -145,5 +160,10 @@ AUTH_BLUEPRINT.add_url_rule(
 AUTH_BLUEPRINT.add_url_rule(
     '/login',
     view_func=LOGIN_VIEW,
+    methods=['POST']
+)
+AUTH_BLUEPRINT.add_url_rule(
+    '/logout',
+    view_func=LOGOUT_VIEW,
     methods=['POST']
 )

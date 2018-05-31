@@ -8,6 +8,8 @@ from api.server import APP, BCRYPT
 
 # Users
 USERS_LIST = []
+# Blacklist Tokens
+BLACKLIST = set()
 
 
 class User(object):  # pylint: disable=too-few-public-methods
