@@ -7,6 +7,7 @@ from flask_testing import TestCase
 import pytest
 
 from api.server import APP
+from api.server.models import USERS_LIST
 
 
 class BaseTestCase(TestCase):
@@ -22,4 +23,5 @@ class BaseTestCase(TestCase):
         pass
 
     def tearDown(self):
-        pass
+        """Delete everything from user list after each test"""
+        USERS_LIST.clear()

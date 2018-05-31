@@ -40,7 +40,7 @@ class UserSchema(Schema):
                        message="Last name should be between 3 and 15"),
                 Regexp(
                     '^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,]{1,20}$',
-                    message="Invalid first name"
+                    message="Invalid last name"
                 ),
             ]
         )
@@ -70,3 +70,25 @@ class UserSchema(Schema):
     def make_user(self, data):  # pylint: disable=R0201
         """Receives dictionary of deserialized data"""
         return User(**data)
+
+
+class LoginSchema(Schema):
+    """Login schema"""
+    email = fields.Email(
+        required=True,
+        validate=from_wtforms(
+            [Length(min=8, max=50,
+                    message="Email should be between 8 and 50 characters")]
+        )
+    )
+    password = fields.Str(
+        required=True,
+        validate=from_wtforms(
+            [
+                Length(
+                    min=8, max=20,
+                    message="Password should be between 8 and 20 characters"
+                ),
+            ]
+        )
+    )
