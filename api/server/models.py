@@ -8,6 +8,10 @@ from api.server import APP, BCRYPT
 
 # Users
 USERS_LIST = []
+
+# Reqeusts
+REQUESTS_LIST = []
+
 # Blacklist Tokens
 BLACKLIST = set()
 
@@ -43,6 +47,13 @@ def save(data):
     data['last_name'] = data['last_name'].title()
     # save to list
     USERS_LIST.append(data)
+
+
+def save_request(data):
+    """Add request to list"""
+    data['user_id'] = len(REQUESTS_LIST) + 1
+    # save to list
+    REQUESTS_LIST.append(data)
 
 
 def check_email(search_email):

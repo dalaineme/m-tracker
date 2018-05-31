@@ -8,7 +8,12 @@ This module contains various routes for the request endpoint
 from flask import Blueprint, request, make_response, jsonify
 from flask.views import MethodView
 from marshmallow import ValidationError
+from flask_jwt_extended import (
+    jwt_required, get_jwt_identity
+)
+
 from api.server.request.schema import RequestSchema
+from api.server.models import save_request
 
 # Create a blueprint
 REQUEST_BLUEPRINT = Blueprint('request', __name__, url_prefix='/api/v1/users/')
@@ -19,9 +24,9 @@ REQUEST_SCHEMA = RequestSchema()
 
 class RequestsAPI(MethodView):
     """User Logout resource"""
-
+    @jwt_required
     def post(self):  # pylint: disable=R0201
-        """Send GET method to logout endpoint"""
+        """Send GET method to requests endpoint"""
 
         # get the post data
         post_data = request.get_json()
@@ -38,6 +43,18 @@ class RequestsAPI(MethodView):
                 'errors': err.messages
             }
             return make_response(jsonify(response_object)), 422
+
+        # If no validation errors
+        current_user = get_jwt_identity()
+        # Get input data as dictionary
+        data = {
+            "title": post_data.get('title'),
+            "description": post_data.get('description'),
+            "email": current_user
+        }
+        # save the data into a list
+        save_request(data)
+        # return response
         response_object = {
             "status": 'success',
             "message": "Request successfully sent to the admin."
