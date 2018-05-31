@@ -137,6 +137,26 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 202)
 
+    def test_invalid_email_login(self):
+        """ Test for invalid email while logging in"""
+        with self.client:
+            response = login_user(self, 'joegmail.com', 'aaaAAA111')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['message'] == 'Validation errors.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
+
+    def test_short_password_login(self):
+        """ Test for minimum length password"""
+        with self.client:
+            response = login_user(self, 'joe@gmail.com', 'aA111')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['message'] == 'Validation errors.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
+
 
 if __name__ == "__main__":
     unittest.main()

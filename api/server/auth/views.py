@@ -9,7 +9,7 @@ from flask import Blueprint, request, make_response, jsonify
 from flask.views import MethodView
 from marshmallow import ValidationError
 
-from api.server.auth.schema import UserSchema
+from api.server.auth.schema import UserSchema, LoginSchema
 from api.server.models import save, check_email
 
 # Create a blueprint
@@ -17,6 +17,7 @@ AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 
 # Instanciate marshmallow
 USER_SCHEMA = UserSchema()
+LOGIN_SCHEMA = LoginSchema()
 
 
 class RegisterAPI(MethodView):
@@ -81,7 +82,20 @@ class LoginAPI(MethodView):
     def post(self):  # pylint: disable=R0201
         """post method"""
         # get the post data
-        request.get_json()
+        post_data = request.get_json()
+
+        # load input to the marshmallow schema
+        try:
+            LOGIN_SCHEMA.load(post_data)
+
+        # return error object case there is any
+        except ValidationError as err:
+            response_object = {
+                'status': 'fail',
+                'message': 'Validation errors.',
+                'errors': err.messages
+            }
+            return make_response(jsonify(response_object)), 422
 
         response_object = {
             "status": 'success',
