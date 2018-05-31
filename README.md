@@ -1,6 +1,6 @@
 ![logo](https://user-images.githubusercontent.com/36375214/40588957-3674c082-61ee-11e8-9f24-197d6e2a33a7.png)
 
-[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/Naereen/ama) [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://bitbucket.org/lbesson/ansi-colors) ![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://GitHub.com/Naereen/ama) [![Maintenance](https://img.shields.io/badge/Maintained%3F-no-red.svg)](https://bitbucket.org/lbesson/ansi-colors) [![Build Status](https://travis-ci.org/dalaineme/m-tracker.svg?branch=develop-api)](https://travis-ci.org/dalaineme/m-tracker) [![Coverage Status](https://coveralls.io/repos/github/dalaineme/m-tracker/badge.svg?branch=develop-api)](https://coveralls.io/github/dalaineme/m-tracker?branch=develop-api) ![Open Source Love](https://badges.frapsoft.com/os/mit/mit.svg?v=102)
 
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
