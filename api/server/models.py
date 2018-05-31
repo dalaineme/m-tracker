@@ -56,6 +56,13 @@ def save_request(data):
     REQUESTS_LIST.append(data)
 
 
+def all_user_requests(user_email):
+    """Method to gett all user request based on their email"""
+    for request in REQUESTS_LIST:
+        if request['email'] == user_email:
+            return request
+
+
 def check_email(search_email):
     """Check if email exists in USERS_LIST"""
     for find_email in USERS_LIST:

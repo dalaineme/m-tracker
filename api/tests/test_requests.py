@@ -82,11 +82,32 @@ class TestRequestEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 204)
 
-    @pytest.mark.skip("We'll execute this test later")
-    def test_get_all_requests(self):
+    def test_fail_get_all_requests(self):
         """Test if user can get all requests"""
-        response = self.client.get('/api/v1/auth/requests')
-        self.assertEqual(response.status_code, 200)
+        access_token = create_access_token('test@user.com')
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.get('/api/v1/users/requests', headers=headers)
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_successful_get_all_requests(self):
+        """Test for successful request submission"""
+        with self.client:
+            create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to.",
+                "user@mail.co"
+            )
+            access_token = create_access_token('test@user.com')
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.get(
+                '/api/v1/users/requests', headers=headers)
+            self.assertEqual(response.status_code, 200)
 
     @pytest.mark.skip("We'll execute this test later")
     def test_get_request_by_id(self):

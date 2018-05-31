@@ -13,7 +13,7 @@ from flask_jwt_extended import (
 )
 
 from api.server.request.schema import RequestSchema
-from api.server.models import save_request
+from api.server.models import save_request, all_user_requests
 
 # Create a blueprint
 REQUEST_BLUEPRINT = Blueprint('request', __name__, url_prefix='/api/v1/users/')
@@ -26,7 +26,7 @@ class RequestsAPI(MethodView):
     """User Logout resource"""
     @jwt_required
     def post(self):  # pylint: disable=R0201
-        """Send GET method to requests endpoint"""
+        """Send POST method to requests endpoint"""
 
         # get the post data
         post_data = request.get_json()
@@ -61,6 +61,27 @@ class RequestsAPI(MethodView):
         }
         return make_response(jsonify(response_object)), 201
 
+    @jwt_required
+    def get(self):  # pylint: disable=R0201
+        """Send GET method to requests endpoint"""
+        # get current email
+        current_user = get_jwt_identity()
+        if all_user_requests(current_user):
+            get_data = all_user_requests(current_user)
+            # return response
+            response_object = {
+                "status": 'success',
+                "requests": get_data
+            }
+            return make_response(jsonify(response_object)), 200
+        # if empty
+        # return response
+        response_object = {
+            "status": 'fail',
+            "message": "You have no requests."
+        }
+        return make_response(jsonify(response_object)), 400
+
 
 # define API resources
 REQUESTS_VIEW = RequestsAPI.as_view('requests_api')
@@ -69,5 +90,5 @@ REQUESTS_VIEW = RequestsAPI.as_view('requests_api')
 REQUEST_BLUEPRINT.add_url_rule(
     '/requests',
     view_func=REQUESTS_VIEW,
-    methods=['POST']
+    methods=['POST', 'GET']
 )
