@@ -6,7 +6,6 @@ Contains basic tests for registration, login and logout
 
 import json
 import unittest
-import pytest
 
 from api.tests.conftest import BaseTestCase
 

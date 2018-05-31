@@ -4,8 +4,7 @@
 
 Use data structures for storage
 """
-
-from werkzeug.security import check_password_hash, generate_password_hash
+from api.server import APP, BCRYPT
 
 # Users
 USERS_LIST = []
@@ -25,7 +24,9 @@ class User(object):  # pylint: disable=too-few-public-methods
 def save(data):
     """User instance appending"""
     data['user_id'] = len(USERS_LIST) + 1
-    data['password'] = generate_password_hash(data['password'])
+    data['password'] = BCRYPT.generate_password_hash(
+        data['password'], APP.config.get('BCRYPT_LOG_ROUNDS')
+    ).decode()
     data['first_name'] = data['first_name'].title()
     data['last_name'] = data['last_name'].title()
     # save to list
@@ -51,8 +52,8 @@ def login(data):
     """Login method"""
     # Get user dictionary, assign it to variable
     logging_user_details = check_email_for_login(data['email'])
-    if check_password_hash(
-            logging_user_details['password'], data['password']):
+    if BCRYPT.check_password_hash(logging_user_details['password'],
+                                  data['password']):
         # compare password input to saved password
         return True
     return False

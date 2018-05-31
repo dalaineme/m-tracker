@@ -40,7 +40,7 @@ class UserSchema(Schema):
                        message="Last name should be between 3 and 15"),
                 Regexp(
                     '^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,]{1,20}$',
-                    message="Invalid first name"
+                    message="Invalid last name"
                 ),
             ]
         )
