@@ -6,7 +6,8 @@ Runs the app in specified exported mode
 """
 
 # import the APP used to instanciate flask
-from api.server import APP
 
-# run the app
-APP.run()
+from api.server import main
+
+if __name__ == '__main__':
+    main()

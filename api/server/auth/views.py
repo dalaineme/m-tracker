@@ -55,7 +55,7 @@ class RegisterAPI(MethodView):
                 'message': "Sorry, email '{}' already exists.".format(
                     input_email)
             }
-            return make_response(jsonify(response_object)), 202
+            return make_response(jsonify(response_object)), 400
         # if no validation errors
         # Get input data as dictionary
         data = {

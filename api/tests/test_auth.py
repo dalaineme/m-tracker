@@ -78,7 +78,7 @@ class TestAuthEndpoint(BaseTestCase):
                 data['message'] ==
                 "Sorry, email 'another@gmail.com' already exists.")
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 202)
+            self.assertEqual(response.status_code, 400)
 
     def test_empty_fields(self):
         """Test user has empty fields"""
