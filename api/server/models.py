@@ -4,6 +4,7 @@
 
 Use data structures for storage
 """
+import datetime
 from api.server import APP, BCRYPT
 
 # Users
@@ -51,16 +52,17 @@ def save(data):
 
 def save_request(data):
     """Add request to list"""
-    data['user_id'] = len(REQUESTS_LIST) + 1
+    data['request_id'] = len(REQUESTS_LIST) + 1
+    data['date_created'] = datetime.datetime.now()
     # save to list
     REQUESTS_LIST.append(data)
 
 
 def all_user_requests(user_email):
     """Method to gett all user request based on their email"""
-    for request in REQUESTS_LIST:
-        if request['email'] == user_email:
-            return request
+    request = [
+        request for request in REQUESTS_LIST if request["email"] == user_email]
+    return request
 
 
 def check_email(search_email):
