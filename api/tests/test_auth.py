@@ -6,7 +6,7 @@ Contains basic tests for registration, login and logout
 
 import json
 import unittest
-
+from flask_jwt_extended import (create_access_token)
 from api.tests.conftest import BaseTestCase
 
 
@@ -176,6 +176,22 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(data['message'] == 'Validation errors.')
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 422)
+
+    # Test logout
+    def test_successful_logout(self):
+        """ Test logout headers token """
+        with self.client:
+            access_token = create_access_token('test@user.com')
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.post(
+                '/api/v1/users/logout', headers=headers)
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'success')
+            self.assertTrue(data['message'] ==
+                            'You have successfully logged out.')
+            self.assertEqual(response.status_code, 200)
 
 
 if __name__ == "__main__":
