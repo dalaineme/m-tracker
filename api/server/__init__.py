@@ -41,6 +41,10 @@ APP.config.from_object(APP_SETTINGS)
 BCRYPT = Bcrypt(APP)
 JWT = JWTManager(APP)
 
-# import auth blueprint and register it
+# import auth blueprintS
 from api.server.auth.views import AUTH_BLUEPRINT
+from api.server.request.views import REQUEST_BLUEPRINT
+
+# Register Blueprints
 APP.register_blueprint(AUTH_BLUEPRINT)
+APP.register_blueprint(REQUEST_BLUEPRINT)
