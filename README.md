@@ -55,7 +55,7 @@ Launch the UI by opening **_index.html_**.
 * [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
 * [JavaScript](https://developer.mozilla.org/bm/docs/Web/JavaScript/)
 
-[![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/dalaineme)
+[![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/dalaineme) [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 **Dalin Oluoch** :feelsgood:
 
 ## License
