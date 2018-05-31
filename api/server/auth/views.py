@@ -14,7 +14,7 @@ from api.server.auth.schema import UserSchema, LoginSchema
 from api.server.models import save, check_email, login
 
 # Create a blueprint
-AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
+AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/users')
 
 # Instanciate marshmallow
 USER_SCHEMA = UserSchema()

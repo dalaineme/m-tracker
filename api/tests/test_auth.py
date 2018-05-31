@@ -13,7 +13,7 @@ from api.tests.conftest import BaseTestCase
 def register_user(self, first_name, last_name, email, password):
     """Register user method"""
     return self.client.post(
-        '/api/v1/auth/register',
+        '/api/v1/users/register',
         data=json.dumps(dict(
             first_name=first_name,
             last_name=last_name,
@@ -27,7 +27,7 @@ def register_user(self, first_name, last_name, email, password):
 def login_user(self, email, password):
     """Login user method"""
     return self.client.post(
-        '/api/v1/auth/login',
+        '/api/v1/users/login',
         data=json.dumps(dict(
             email=email,
             password=password
@@ -56,7 +56,7 @@ class TestAuthEndpoint(BaseTestCase):
         """ Test empty dictionary """
         with self.client:
             input_data = {}
-            response = self.client.post('/api/v1/auth/register',
+            response = self.client.post('/api/v1/users/register',
                                         data=json.dumps(input_data),
                                         content_type="application/json")
             data = json.loads(response.data.decode())
@@ -124,7 +124,7 @@ class TestAuthEndpoint(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
             self.assertTrue(data['message'] == 'Successfully logged in.')
-            # self.assertTrue(data['auth_token'])
+            self.assertTrue(data['token'])
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 200)
 
@@ -137,7 +137,6 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(
                 data['message'] ==
                 "Sorry, email 'another@gmail.com' does not exist.")
-            # self.assertTrue(data['auth_token'])
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 400)
 
