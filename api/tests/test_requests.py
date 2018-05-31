@@ -8,31 +8,38 @@ Contains basic tests for registration, login and logout
 import json
 import unittest
 import pytest
+from flask_jwt_extended import (create_access_token)
 
 from api.tests.conftest import BaseTestCase
 
 
-def create_request(self, title, description):
+def create_request(self, title, description, user_email):
     """New request"""
+    access_token = create_access_token('test@user.com')
+    headers = {
+        'Authorization': 'Bearer {}'.format(access_token)
+    }
+
     return self.client.post(
-        '/api/v1/request',
+        '/api/v1/users/requests',
         data=json.dumps(dict(
-            first_name=title,
-            last_name=description
+            title=title,
+            description=description,
+            user_email=user_email
         )),
         content_type='application/json',
+        headers=headers
     )
 
 
 class TestRequestEndpoint(BaseTestCase):
     """Class that handles Request Endpoint test"""
 
-    @pytest.mark.skip("We'll execute this test later")
     def test_successful_request(self):
         """Test for successful request submission"""
         with self.client:
             response = create_request(
-                self, 'The title', 'The description')
+                self, 'The title', 'The description', 'user@mail.co')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
             self.assertTrue(data['message'] ==
@@ -45,7 +52,7 @@ class TestRequestEndpoint(BaseTestCase):
         """Test request has empty fields"""
         with self.client:
             response = create_request(
-                self, '', 'The description')
+                self, '', 'The description', '')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'error')
             self.assertTrue(data['message'] ==
@@ -72,7 +79,7 @@ class TestRequestEndpoint(BaseTestCase):
         """Test for successful request update"""
         with self.client:
             response = create_request(
-                self, 'The New title', 'The description')
+                self, 'The New title', 'The description', 'email@mail.com')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
             self.assertTrue(data['message'] ==
