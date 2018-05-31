@@ -16,6 +16,9 @@ from flask import Flask
 # provides bcrypt hashing utilities for our application
 from flask_bcrypt import Bcrypt
 
+# TOKEN
+from flask_jwt_extended import JWTManager
+
 # making cross-origin AJAX possible
 from flask_cors import CORS
 
@@ -36,6 +39,7 @@ APP.config.from_object(APP_SETTINGS)
 
 # pass flask app object to Bcrypt
 BCRYPT = Bcrypt(APP)
+JWT = JWTManager(APP)
 
 # import auth blueprint and register it
 from api.server.auth.views import AUTH_BLUEPRINT

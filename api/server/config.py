@@ -11,6 +11,7 @@ BASEDIR = os.path.abspath(os.path.dirname(__file__))
 class BaseConfig:  # pylint: disable=too-few-public-methods
     """Base configuration."""
     SECRET_KEY = os.getenv('SECRET_KEY', 'TheSecretKey')
+    JWT_SECRET_KEY = os.getenv('SECRET_KEY', 'TheSecretKey')
     DEBUG = False
     BCRYPT_LOG_ROUNDS = 13
 

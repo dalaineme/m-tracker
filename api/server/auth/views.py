@@ -8,6 +8,7 @@ This module contains various routes for the auth endpoint
 from flask import Blueprint, request, make_response, jsonify
 from flask.views import MethodView
 from marshmallow import ValidationError
+from flask_jwt_extended import (create_access_token)
 
 from api.server.auth.schema import UserSchema, LoginSchema
 from api.server.models import save, check_email, login
@@ -116,9 +117,11 @@ class LoginAPI(MethodView):
         }
         # If login is successful
         if login(data):
+            access_token = create_access_token(identity=data["email"])
             response_object = {
                 "status": 'success',
-                "message": "Successfully logged in."
+                "message": "Successfully logged in.",
+                "token": access_token
             }
             return make_response(jsonify(response_object)), 200
         # Failed login - password
