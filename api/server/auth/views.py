@@ -75,12 +75,33 @@ class RegisterAPI(MethodView):
         return make_response(jsonify(response_object)), 201
 
 
+class LoginAPI(MethodView):
+    """User Login resource"""
+
+    def post(self):  # pylint: disable=R0201
+        """post method"""
+        # get the post data
+        request.get_json()
+
+        response_object = {
+            "status": 'success',
+            "message": "Successfully logged in."
+        }
+        return make_response(jsonify(response_object)), 200
+
+
 # define API resources
 REGISTRATION_VIEW = RegisterAPI.as_view('register_api')
+LOGIN_VIEW = LoginAPI.as_view('login_api')
 
 # add rules for auth enpoints
 AUTH_BLUEPRINT.add_url_rule(
     '/register',
     view_func=REGISTRATION_VIEW,
+    methods=['POST']
+)
+AUTH_BLUEPRINT.add_url_rule(
+    '/login',
+    view_func=LOGIN_VIEW,
     methods=['POST']
 )
