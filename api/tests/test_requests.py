@@ -8,31 +8,42 @@ Contains basic tests for registration, login and logout
 import json
 import unittest
 import pytest
+from flask_jwt_extended import (create_access_token)
 
 from api.tests.conftest import BaseTestCase
 
 
-def create_request(self, title, description):
+def create_request(self, title, description, user_email):
     """New request"""
+    access_token = create_access_token('test@user.com')
+    headers = {
+        'Authorization': 'Bearer {}'.format(access_token)
+    }
+
     return self.client.post(
-        '/api/v1/request',
+        '/api/v1/users/requests',
         data=json.dumps(dict(
-            first_name=title,
-            last_name=description
+            title=title,
+            description=description,
+            user_email=user_email
         )),
         content_type='application/json',
+        headers=headers
     )
 
 
 class TestRequestEndpoint(BaseTestCase):
     """Class that handles Request Endpoint test"""
 
-    @pytest.mark.skip("We'll execute this test later")
     def test_successful_request(self):
         """Test for successful request submission"""
         with self.client:
             response = create_request(
-                self, 'The title', 'The description')
+                self,
+                "This is the request title. Short and descriptive",
+                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to.",
+                "user@mail.co"
+            )
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
             self.assertTrue(data['message'] ==
@@ -40,12 +51,30 @@ class TestRequestEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 201)
 
+    def test_validation_errors(self):
+        """Test for presence of validation error
+
+        This case short body length
+        """
+        with self.client:
+            response = create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                "Body goes here",
+                "user@mail.co"
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['message'] == 'Validation errors.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
+
     @pytest.mark.skip("We'll execute this test later")
     def test_empty_fields(self):
         """Test request has empty fields"""
         with self.client:
             response = create_request(
-                self, '', 'The description')
+                self, '', 'The description', '')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'error')
             self.assertTrue(data['message'] ==
@@ -53,11 +82,32 @@ class TestRequestEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 204)
 
-    @pytest.mark.skip("We'll execute this test later")
-    def test_get_all_requests(self):
+    def test_fail_get_all_requests(self):
         """Test if user can get all requests"""
-        response = self.client.get('/api/v1/auth/requests')
-        self.assertEqual(response.status_code, 200)
+        access_token = create_access_token('test@user.com')
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.get('/api/v1/users/requests', headers=headers)
+
+        self.assertEqual(response.status_code, 400)
+
+    def test_successful_get_all_requests(self):
+        """Test for successful request submission"""
+        with self.client:
+            create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to.",
+                "user@mail.co"
+            )
+            access_token = create_access_token('test@user.com')
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.get(
+                '/api/v1/users/requests', headers=headers)
+            self.assertEqual(response.status_code, 200)
 
     @pytest.mark.skip("We'll execute this test later")
     def test_get_request_by_id(self):
@@ -72,7 +122,7 @@ class TestRequestEndpoint(BaseTestCase):
         """Test for successful request update"""
         with self.client:
             response = create_request(
-                self, 'The New title', 'The description')
+                self, 'The New title', 'The description', 'email@mail.com')
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
             self.assertTrue(data['message'] ==
