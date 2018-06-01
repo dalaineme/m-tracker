@@ -38,10 +38,13 @@ class TestRequestEndpoint(BaseTestCase):
     def test_successful_request(self):
         """Test for successful request submission"""
         with self.client:
+            description = ("The description. This is the description. "
+                           "The description. This is the description. "
+                           "The description. This is the description. ")
             response = create_request(
                 self,
                 "This is the request title. Short and descriptive",
-                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to.",
+                description,
                 "user@mail.co"
             )
             data = json.loads(response.data.decode())
@@ -92,13 +95,16 @@ class TestRequestEndpoint(BaseTestCase):
 
         self.assertEqual(response.status_code, 400)
 
-    def test_successful_get_all_requests(self):
+    def test_successful_getall_requests(self):
         """Test for successful request submission"""
         with self.client:
+            description = ("The description. This is the description. "
+                           "The description. This is the description. "
+                           "The description. This is the description. ")
             create_request(
                 self,
                 "This is the request title. Short and descriptive",
-                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to.",
+                description,
                 "user@mail.co"
             )
             access_token = create_access_token('test@user.com')
@@ -108,6 +114,46 @@ class TestRequestEndpoint(BaseTestCase):
             response = self.client.get(
                 '/api/v1/users/requests', headers=headers)
             self.assertEqual(response.status_code, 200)
+
+    def test_get_request_byid(self):
+        """Test getting a users request by id"""
+        with self.client:
+            description = ("The description. This is the description. "
+                           "The description. This is the description. "
+                           "The description. This is the description. ")
+            create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                description,
+                "user@mail.co"
+            )
+            access_token = create_access_token('test@user.com')
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.get(
+                '/api/v1/users/requests/1', headers=headers)
+            self.assertEqual(response.status_code, 200)
+
+    def test_get_request_byid_fail(self):
+        """Test getting a users request by id"""
+        with self.client:
+            description = ("The description. This is the description. "
+                           "The description. This is the description. "
+                           "The description. This is the description. ")
+            create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                description,
+                "user@mail.co"
+            )
+            access_token = create_access_token('test@user.com')
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.get(
+                '/api/v1/users/requests/1234234', headers=headers)
+            self.assertEqual(response.status_code, 404)
 
     @pytest.mark.skip("We'll execute this test later")
     def test_get_request_by_id(self):

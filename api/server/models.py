@@ -65,6 +65,15 @@ def all_user_requests(user_email):
     return request
 
 
+def get_request_by_id(user_email, request_id):
+    """Method to update a previous request"""
+    # call the all requests method
+    dicts = all_user_requests(user_email)
+    result = next(
+        (item for item in dicts if item["request_id"] == request_id), False)
+    return result
+
+
 def check_email(search_email):
     """Check if email exists in USERS_LIST"""
     for find_email in USERS_LIST:
