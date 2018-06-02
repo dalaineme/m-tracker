@@ -8,4 +8,5 @@ Runs the app in specified exported mode
 from api.server import APP
 
 # run the app
-APP.run()
+# APP.run()
+APP.run(host='0.0.0.0')
