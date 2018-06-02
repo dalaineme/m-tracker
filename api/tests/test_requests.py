@@ -211,6 +211,30 @@ class TestRequestEndpoint(BaseTestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_delete_noexist(self):
+        """Test deleting a request which does not exist"""
+
+        access_token = create_access_token('test@user.com')
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.delete(
+            '/api/v1/users/requests/123382311', headers=headers)
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_successful_delete(self):
+        """Test success deleting a request"""
+
+        access_token = create_access_token('test@user.com')
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.delete(
+            '/api/v1/users/requests/1', headers=headers)
+
+        self.assertEqual(response.status_code, 200)
+
     @pytest.mark.skip("We'll execute this test later")
     def test_get_request_by_id(self):
         """Test if user can get request by id"""
