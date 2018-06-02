@@ -8,7 +8,7 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 **Alternatively**
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/db37933ddba8804541dd)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/afda743e107c8de4c444)
 
 #### Log in as Admin in the UI
 
