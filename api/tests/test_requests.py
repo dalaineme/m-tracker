@@ -187,6 +187,30 @@ class TestRequestEndpoint(BaseTestCase):
                 '/api/v1/users/requests', headers=headers)
             self.assertEqual(response.status_code, 200)
 
+    def test_get_no_id(self):
+        """Test for getting request which id donesn't exist"""
+
+        access_token = create_access_token('anotheruser@user.com')
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.get(
+            '/api/v1/users/requests/2334', headers=headers)
+
+        self.assertEqual(response.status_code, 404)
+
+    def test_request_exist(self):
+        """Test for existing request by specific id"""
+
+        access_token = create_access_token('test@user.com')
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.get(
+            '/api/v1/users/requests/1', headers=headers)
+
+        self.assertEqual(response.status_code, 200)
+
     @pytest.mark.skip("We'll execute this test later")
     def test_get_request_by_id(self):
         """Test if user can get request by id"""
