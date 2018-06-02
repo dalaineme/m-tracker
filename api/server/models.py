@@ -82,6 +82,13 @@ def modify_user_request(user_email, request_id, title, description):
     result['date_updated'] = datetime.datetime.now()
 
 
+def delete_user_request(user_email, request_id):
+    """Method that deletes a user request by id"""
+    result = get_request_by_id(user_email, request_id)
+    # remove from list
+    REQUESTS_LIST.remove(result)
+
+
 def check_email(search_email):
     """Check if email exists in USERS_LIST"""
     for find_email in USERS_LIST:
