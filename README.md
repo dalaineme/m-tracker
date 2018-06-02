@@ -6,9 +6,14 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 **TL;DR** [View a live demo of the UI](https://dalaineme.github.io/m-tracker/) **or** [Check out the Pivotal Tracker Board](https://www.pivotaltracker.com/n/projects/2173228) **or** [Check out the heroku link.](https://dc-the-m-tracker.herokuapp.com)
 
-#### Log in as Admin
+**Alternatively**
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/db37933ddba8804541dd)
 
-> Email: **admin@admin.com** > **Any random password will work**
+#### Log in as Admin in the UI
+
+> Email: **admin@admin.com**
+
+> **Any random password will work**
 
 #### :computer: Desktop, Tablet and :iphone: Mobile Responsive
 
