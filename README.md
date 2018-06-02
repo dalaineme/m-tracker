@@ -4,7 +4,7 @@
 
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
-**TL;DR** [View a live demo of the UI](https://dalaineme.github.io/m-tracker/) **or** [Check out the Pivotal Tracker Board.](https://www.pivotaltracker.com/n/projects/2173228)
+**TL;DR** [View a live demo of the UI](https://dalaineme.github.io/m-tracker/) **or** [Check out the Pivotal Tracker Board](https://www.pivotaltracker.com/n/projects/2173228) **or** [Check out the heroku link.](https://dc-the-m-tracker.herokuapp.com)
 
 #### Log in as Admin
 
@@ -28,6 +28,19 @@ Maintenance Tracker App is an application that provides users with the ability t
   * [A user can make maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
   * [A user can view their maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
   * [A user can view feedback.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
+
+## API Endpoints
+
+| Endpoint                      | Functionality             | HTTP method |
+| ----------------------------- | ------------------------- | ----------- |
+| /api/v1/users/register        | Register a user           | POST        |
+| /api/v1/users/login           | Log in a user             | POST        |
+| /api/v1/logout                | Log out a user            | POST        |
+| /api/v1/requests              | Create a request          | POST        |
+| /api/v1/requests              | Get all users reqeusts    | GET         |
+| /api/v1/requests/_request_id_ | Get request by request_id | GET         |
+| /api/v1/requests/_request_id_ | Edit a request            | PUT         |
+| /api/v1/requests/_request_id_ | Delete a request          | DELETE      |
 
 ## Getting Started
 
@@ -56,7 +69,8 @@ Launch the UI by opening **_index.html_**.
 * [JavaScript](https://developer.mozilla.org/bm/docs/Web/JavaScript/)
 
 [![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/dalaineme) [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
-**Dalin Oluoch** :feelsgood:
+
+* **Dalin Oluoch** :feelsgood:
 
 ## License
 
