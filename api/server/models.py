@@ -74,6 +74,14 @@ def get_request_by_id(user_email, request_id):
     return result
 
 
+def modify_user_request(user_email, request_id, title, description):
+    """Method that modifies a request"""
+    result = get_request_by_id(user_email, request_id)
+    result['title'] = title
+    result['description'] = description
+    result['date_updated'] = datetime.datetime.now()
+
+
 def check_email(search_email):
     """Check if email exists in USERS_LIST"""
     for find_email in USERS_LIST:
