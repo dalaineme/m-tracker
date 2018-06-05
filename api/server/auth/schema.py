@@ -5,10 +5,9 @@
 Marshmallow validation with wtforms
 """
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields
 from marshmallow_validators.wtforms import from_wtforms
 from wtforms.validators import Length, Regexp
-from api.server.models import User
 
 PASS_REG = r"^(?=.*\d)(?=.*[a-zA-Z]).{8,20}$"
 
@@ -61,33 +60,6 @@ class UserSchema(Schema):
                 Regexp(
                     PASS_REG,
                     message="Weak password"
-                ),
-            ]
-        )
-    )
-
-    @post_load
-    def make_user(self, data):  # pylint: disable=R0201
-        """Receives dictionary of deserialized data"""
-        return User(**data)
-
-
-class LoginSchema(Schema):
-    """Login schema"""
-    email = fields.Email(
-        required=True,
-        validate=from_wtforms(
-            [Length(min=8, max=50,
-                    message="Email should be between 8 and 50 characters")]
-        )
-    )
-    password = fields.Str(
-        required=True,
-        validate=from_wtforms(
-            [
-                Length(
-                    min=8, max=20,
-                    message="Password should be between 8 and 20 characters"
                 ),
             ]
         )

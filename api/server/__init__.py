@@ -43,8 +43,10 @@ JWT = JWTManager(APP)
 
 # import auth blueprintS
 from api.server.auth.views import AUTH_BLUEPRINT
-from api.server.request.views import REQUEST_BLUEPRINT
+from api.server.users.views import USERS_BLUEPRINT
+from api.server.admin.views import ADMIN_BLUEPRINT
 
 # Register Blueprints
 APP.register_blueprint(AUTH_BLUEPRINT)
-APP.register_blueprint(REQUEST_BLUEPRINT)
+APP.register_blueprint(USERS_BLUEPRINT)
+APP.register_blueprint(ADMIN_BLUEPRINT)
