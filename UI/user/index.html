@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Google fonts -->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Acme">
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
+  <!-- Core  CSS file -->
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <!-- Tablet version -->
+  <link rel="stylesheet" href="../assets/css/tablet.css">
+  <!-- Mobile version -->
+  <link rel="stylesheet" href="../assets/css/mobile.css">
+  <title>User | Maintenance Tracker</title>
+</head>
+
+<body>
+  <div class="grid">
+    <!-- Start of Header with logo-->
+    <div class="top-left">
+      <a href="index.html">
+        <img class="logo" src="../assets/images/logo.png" width="100%" alt="Maintenance Tracker">
+      </a>
+    </div>
+    <!-- End of Header with logo-->
+    <!-- Start of Header with Social Icons-->
+    <div class="top-right">
+      <a class="social-icons" href="">
+        <i class="fab fa-facebook-f top-icons"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-twitter top-icons"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-google-plus-g top-icons"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-slack-hash top-icons"></i>
+      </a>
+    </div>
+    <!-- End of Header with Social Icons-->
+    <div class="nav">
+      <ul class="nav-menu">
+        <li class="nav-menu-items active">
+          <a href="#">
+            <i class="fas fa-home"></i>My Requests</a>
+        </li>
+        <li class="nav-menu-items">
+          <a href="../login.html">
+            <i class="fas fa-sign-in-alt"></i>
+            Log out</a>
+        </li>
+      </ul>
+    </div>
+    <div class="card content">
+      <div class="logged-user">Logged in as Mike Musalia</div>
+      <hr>
+      <div class="filter" id="show-the-filter">
+        <div class="show-filter">
+          <button class="submit btn-filter" onclick="showFilter()">
+            <i class="fas fa-plus"></i>
+            Make a Request
+          </button>
+        </div>
+      </div>
+      <div class="filter" id="hide-the-filter" style="display:none;">
+        <div class="hide-filter">
+          <button class="submit btn-filter" onclick="showFilter()">
+            <i class="far fa-times-circle"></i>
+            Close
+          </button>
+        </div>
+        <div class="filter-form request">
+          <div class="filter-left">
+            <label for="">Request Title</label>
+            <input type="text">
+          </div>
+          <div class="filter-mid">
+            <label for="">Request Description</label>
+            <textarea name=""></textarea>
+          </div>
+          <div class="filter-right">
+            <label for="">
+              <br>
+            </label>
+            <button class="submit">
+              Submit Request
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <h3>My Requests.</h3>
+      <!-- Start of request-->
+      <div class="request-wrapper">
+        <div class="request-top">
+          <div class="request-top-left">
+            <i class="far fa-calendar request-icons"></i>
+            FRIDAY, JULY 20
+          </div>
+          <div class="request-top-right">
+            <i class="fas fa-user request-icons"></i>
+            Mike Musalia
+          </div>
+        </div>
+        <div class="request-mid">
+          <div class="request-mid-left">
+            <i class="fas fa-toolbox request-icons"></i>
+            BROKEN DOOR AT THE FOOD COURT ENTRANCE
+          </div>
+          <div class="request-mid-right">
+            <span class="status-pending">PENDING</span>
+          </div>
+        </div>
+        <div class="request-body" id="request-body">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it...
+            <button class="submit" onclick="moreDetails()">More Details
+              <i class="fas fa-chevron-circle-down"></i>
+            </button>
+          </p>
+        </div>
+        <div class="more-details" id="more-details" style="display:none;">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur dolorem eaque, dolor ut ea
+            a expedita culpa tenetur illo quod distinctio necessitatibus esse? Iste quaerat ut reprehenderit. Maxime, rem
+            officia.
+          </p>
+          <div class="more-details-action-footer">
+            <button class="submit" onclick="moreDetails()">
+              Close
+              <i class="far fa-window-close"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- End of request-->
+      <!-- Start of request-->
+      <div class="request-wrapper">
+        <div class="request-top">
+          <div class="request-top-left">
+            <i class="far fa-calendar request-icons"></i>
+            MONDAY, JULY 22
+          </div>
+          <div class="request-top-right">
+            <i class="fas fa-user request-icons"></i>
+            Mike Musalia
+          </div>
+        </div>
+        <div class="request-mid">
+          <div class="request-mid-left">
+            <i class="fas fa-toolbox request-icons"></i>
+            BROKEN DOOR AT THE FOOD COURT ENTRANCE
+          </div>
+          <div class="request-mid-right">
+            <span class="status-approved">APPROVED</span>
+          </div>
+        </div>
+        <div class="request-body" id="request-body1">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it...
+            <button class="submit" onclick="moreDetails1()">More Details
+              <i class="fas fa-chevron-circle-down"></i>
+            </button>
+          </p>
+        </div>
+        <div class="more-details" id="more-details1" style="display:none;">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur dolorem eaque, dolor ut ea
+            a expedita culpa tenetur illo quod distinctio necessitatibus esse? Iste quaerat ut reprehenderit. Maxime, rem
+            officia.
+          </p>
+          <div class="more-details-action">
+            <div class="more-details-action-top">
+              <label for="">
+                <i class="fas fa-envelope"></i>
+                Admin Feedback
+              </label>
+              <textarea>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem assumenda deserunt possimus totam, facere, rerum odio deleniti ratione alias aliquam corporis non impedit, eum eius sint neque ipsum fugiat accusantium.
+              </textarea>
+            </div>
+          </div>
+          <div class="more-details-action-footer">
+            <button class="submit" onclick="moreDetails1()">
+              Close
+              <i class="far fa-window-close"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- End of request-->
+      <!-- Start of request-->
+      <div class="request-wrapper">
+        <div class="request-top">
+          <div class="request-top-left">
+            <i class="far fa-calendar request-icons"></i>
+            FRIDAY, JULY 20
+          </div>
+          <div class="request-top-right">
+            <i class="fas fa-user request-icons"></i>
+            Mike Musalia
+          </div>
+        </div>
+        <div class="request-mid">
+          <div class="request-mid-left">
+            <i class="fas fa-toolbox request-icons"></i>
+            BROKEN DOOR AT THE FOOD COURT ENTRANCE
+          </div>
+          <div class="request-mid-right">
+            <span class="status-pending">PENDING</span>
+          </div>
+        </div>
+        <div class="request-body">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it...
+            <button class="submit">More Details
+              <i class="fas fa-chevron-circle-down"></i>
+            </button>
+          </p>
+        </div>
+      </div>
+      <!-- End of request-->
+      <!-- Start of request-->
+      <div class="request-wrapper">
+        <div class="request-top">
+          <div class="request-top-left">
+            <i class="far fa-calendar request-icons"></i>
+            FRIDAY, JULY 20
+          </div>
+          <div class="request-top-right">
+            <i class="fas fa-user request-icons"></i>
+            Mike Musalia
+          </div>
+        </div>
+        <div class="request-mid">
+          <div class="request-mid-left">
+            <i class="fas fa-toolbox request-icons"></i>
+            BROKEN DOOR AT THE FOOD COURT ENTRANCE
+          </div>
+          <div class="request-mid-right">
+            <span class="status-resolved">RESOLVED</span>
+          </div>
+        </div>
+        <div class="request-body">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it...
+            <button class="submit">More Details
+              <i class="fas fa-chevron-circle-down"></i>
+            </button>
+          </p>
+        </div>
+      </div>
+      <!-- End of request-->
+      <!-- Start of request-->
+      <div class="request-wrapper">
+        <div class="request-top">
+          <div class="request-top-left">
+            <i class="far fa-calendar request-icons"></i>
+            FRIDAY, JULY 20
+          </div>
+          <div class="request-top-right">
+            <i class="fas fa-user request-icons"></i>
+            Mike Musalia
+          </div>
+        </div>
+        <div class="request-mid">
+          <div class="request-mid-left">
+            <i class="fas fa-toolbox request-icons"></i>
+            BROKEN DOOR AT THE FOOD COURT ENTRANCE
+          </div>
+          <div class="request-mid-right">
+            <span class="status-pending">PENDING</span>
+          </div>
+        </div>
+        <div class="request-body">
+          <p class="request-body-p">
+            The door at the Food Court is in bad shape. It can not lock and has already caused injuries to a number of people. Kindly
+            look into it...
+            <button class="submit">More Details
+              <i class="fas fa-chevron-circle-down"></i>
+            </button>
+          </p>
+        </div>
+      </div>
+      <!-- End of request-->
+      <div class="load-more">
+        <p>Load More...</p>
+      </div>
+    </div>
+    <footer class="footer">&copy; Copyright &nbsp;
+      <a href="https://github.com/dcDalin">@dc_dalin</a>
+    </footer>
+  </div>
+  <script>
+    function moreDetails() {
+      var x = document.getElementById("more-details");
+      var y = document.getElementById("request-body");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "none";
+      } else {
+        x.style.display = "none";
+        y.style.display = "block";
+      }
+    }
+    function moreDetails1() {
+      var x = document.getElementById("more-details1");
+      var y = document.getElementById("request-body1");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "none";
+      } else {
+        x.style.display = "none";
+        y.style.display = "block";
+      }
+    }
+    function showFilter() {
+      var x = document.getElementById("show-the-filter");
+      var y = document.getElementById("hide-the-filter");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "none";
+      } else {
+        x.style.display = "none";
+        y.style.display = "block";
+      }
+    }
+  </script>
+</body>
+
+</html>

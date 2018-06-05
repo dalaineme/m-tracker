@@ -1,0 +1,70 @@
+@media (max-width: 481px) {
+  .top-left {
+    grid-column: span 8 / auto;
+    width: 70%;
+    padding-top: 15px;
+  }
+  /* Where the social icons are */
+  .top-right {
+    grid-column: span 4 / auto;
+    padding-top: 20px;
+  }
+  /* Font awesome social icons space between */
+  i {
+    padding: 5px;
+  }
+  .social-icons {
+    font-size: 0.8em;
+  }
+  .nav {
+    grid-column: span 12 / auto;
+  }
+  .content {
+    grid-column: span 12 / auto;
+  }
+  .form-side-image {
+    width: 0%;
+  }
+  .input-form {
+    margin-left: 0%;
+  }
+  /* Start of Request */
+  .request-wrapper {
+    width: 98%;
+    font-size: 12px;
+  }
+  .request-top-left {
+    width: unset !important;
+    float: unset !important;
+  }
+  .request-top-right {
+    margin-left: unset !important;
+    text-align: unset !important;
+  }
+  .request-mid-left {
+    width: unset !important;
+    float: unset !important;
+  }
+  .request-mid-right {
+    margin-left: unset !important;
+    text-align: unset !important;
+    padding-bottom: unset !important;
+  }
+  .request-body-p {
+    font-size: 10px;
+  }
+  .request-body-p button {
+    width: 80px;
+    padding: 1px;
+    font-size: 10px;
+  }
+  .more-details-action-footer button {
+    width: 80px;
+    padding: 1px;
+    font-size: 10px;
+  }
+  .more-details-action-bottom label {
+    font-size: 10px;
+  }
+  /* End of Request */
+}

@@ -1,0 +1,154 @@
+@media (max-width: 868px) {
+  html {
+    font-size: 12px;
+  }
+  .top-left {
+    grid-column: span 6 / auto;
+    width: 70%;
+  }
+  /* Where the social icons are */
+  .top-right {
+    grid-column: span 6 / auto;
+    padding-top: 50px;
+  }
+  /* Font awesome social icons space between */
+  i {
+    padding: 10px;
+  }
+  .nav {
+    grid-column: span 12 / auto;
+    background: rgb(242, 246, 248);
+    box-shadow: 0 0 80px 0 rgba(18, 51, 160, 0.1);
+    padding: 10px 10px 0;
+    border-radius: 1%;
+  }
+  /* 
+    Unset all the Nav CSS!
+  */
+  /* ul li elements */
+  .nav-menu .nav-menu-items {
+    height: unset !important;
+    width: unset !important;
+    background: unset !important;
+    display: unset !important;
+    position: unset !important;
+    right: unset !important;
+    margin: unset !important;
+    border-radius: unset !important;
+    transition: unset !important;
+  }
+  /* Anchor tag - menu links */
+  .nav-menu-items a {
+    color: unset !important;
+    display: unset !important;
+    height: unset !important;
+    width: unset !important;
+    padding: unset !important;
+    text-decoration: unset !important;
+    font-size: unset !important;
+    line-height: unset !important;
+    top: unset !important;
+    left: unset !important;
+    transition: unset !important;
+    overflow: unset !important;
+  }
+  /* a tag hover */
+  .nav-menu-items a:hover {
+    color: unset !important;
+    transition: unset !important;
+    transform: unset !important;
+  }
+  /* Menu box look hover */
+  .nav-menu .nav-menu-items:hover {
+    transition: unset !important;
+    transform: unset !important;
+  }
+  /* 
+    End of Unsetting all the Nav CSS!
+  */
+  /* New Nav CSS for tablet and mobilt */
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  li {
+    float: left;
+    padding-right: 10px;
+    font-size: 12px;
+  }
+  li a {
+    display: block;
+    color: white;
+    text-align: left;
+    text-decoration: none;
+  }
+  /* End of New Nav CSS for tablet and mobilt */
+  .content {
+    grid-column: span 12 / auto;
+  }
+  .form-side-image {
+    width: 25%;
+  }
+  .input-form {
+    margin-left: 35%;
+  }
+  /* Start of Request */
+  .request-wrapper {
+    width: 98%;
+    font-size: 14px;
+  }
+  .request-body-p {
+    font-size: 12px;
+  }
+  .request-body-p button {
+    width: 90px;
+    padding: 2px;
+    font-size: 12px;
+  }
+  .load-more {
+    border-radius: 1%;
+    border-width: 1px;
+    border-radius: 1%;
+    margin-bottom: 30px;
+  }
+  .load-more p {
+    font-size: 12px;
+  }
+  .more-details-action-footer button {
+    width: 80px;
+    padding: 2px;
+    font-size: 12px;
+  }
+  .more-details-action-bottom label {
+    font-size: 12px;
+  }
+  .more-details-action-submit button {
+    width: 100%;
+    padding: 8px 14px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px rgba(15, 28, 73, 0.419);
+    box-shadow: 2px 2px 2px 0 rgba(15, 28, 73, 0.076);
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .filter-right button {
+    font-size: 12px;
+  }
+  .filter-form {
+    display: unset !important;
+  }
+  .filter-form > div {
+    flex: unset !important;
+    padding: unset !important;
+  }
+  .filter-left {
+    flex: 1;
+  }
+  /* End of Request */
+  .footer {
+    grid-column: span 12 / auto;
+  }
+}

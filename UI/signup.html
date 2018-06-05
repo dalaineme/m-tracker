@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Google fonts -->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Acme">
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+    crossorigin="anonymous">
+  <!-- Core  CSS file -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <!-- Tablet version -->
+  <link rel="stylesheet" href="assets/css/tablet.css">
+  <!-- Mobile version -->
+  <link rel="stylesheet" href="assets/css/mobile.css">
+  <title>Signup | Maintenance Tracker</title>
+</head>
+
+<body>
+  <div class="grid">
+    <!-- Start of Header with logo-->
+    <div class="top-left">
+      <a href="index.html">
+        <img class="logo" src="assets/images/logo.png" width="100%" alt="Maintenance Tracker">
+      </a>
+    </div>
+    <!-- End of Header with logo-->
+    <!-- Start of Header with Social Icons-->
+    <div class="top-right">
+      <a class="social-icons" href="">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-google-plus-g"></i>
+      </a>
+      <a class="social-icons" href="">
+        <i class="fab fa-slack-hash"></i>
+      </a>
+    </div>
+    <!-- End of Header with Social Icons-->
+    <!-- Start of Nav -->
+    <div class="nav card">
+      <ul class="nav-menu">
+        <li class="nav-menu-items">
+          <a href="index.html">
+            <i class="fas fa-home"></i>Home</a>
+        </li>
+        <li class="nav-menu-items">
+          <a href="login.html">
+            <i class="fas fa-sign-in-alt"></i>
+            Login</a>
+        </li>
+        <li class="nav-menu-items active">
+          <a href="#">
+            <i class="fas fa-user-plus"></i>
+            Signup</a>
+        </li>
+      </ul>
+    </div>
+    <!-- End of Nav -->
+    <!-- Start of Main content -->
+    <div class="card content">
+      <div class="content-wrapper">
+        <div class="form-side-image">
+          <img width="100%" src="assets/images/repair.png" alt="">
+        </div>
+        <div class="input-form">
+          <h2>Create your account.</h2>
+          <form method="post" id="signup-form">
+            <input type="text" id="first_name" name="first_name" placeholder="First Name" required>
+            <input type="text" id="last_name" name="last_name" placeholder="Last Name" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <input type="password" id="cpassword" name="cpassword" placeholder="Confirm Password" required>
+            <button class="submit">Signup</button>
+            <p>Have an account?
+              <a href="login.html">Login instead.</a>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- End of Main content -->
+    <!-- Start of Footer content -->
+    <footer class="footer">&copy; Copyright &nbsp;
+      <a href="https://github.com/dcDalin">@dc_dalin</a>
+    </footer>
+    <!-- End of Footer -->
+  </div>
+  <script src="assets/js/signup.js"></script>
+</body>
+
+</html>
