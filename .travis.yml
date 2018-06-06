@@ -7,7 +7,7 @@ service:
   - postgresql
 
 before_install:
-  - export APP_SETTINGS="project.server.config.TestingConfig"
+  - export APP_SETTINGS="api.server.config.TestingConfig"
   - export SECRET_KEY="justatest"
 
 install:
@@ -17,6 +17,5 @@ install:
 
 before_script:
   - psql -c "CREATE DATABASE mtracker;" -U postgres
-  - psql -c "CREATE DATABASE mtracker_test;" -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
 
