@@ -1,0 +1,23 @@
+language: python
+
+python:
+  - "3.6"
+
+service:
+  - postgresql
+
+before_install:
+  - export APP_SETTINGS="project.server.config.TestingConfig"
+  - export SECRET_KEY="justatest"
+
+install:
+  - pip install -r requirements.txt
+  - source example.env
+  - pip install --editable .
+
+before_script:
+  - psql -c "CREATE DATABASE postgres;" -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
+  - mtracker create db
+  - mtracker create schema
+  - mtracker create test-schema
