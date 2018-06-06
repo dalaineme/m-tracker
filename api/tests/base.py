@@ -5,6 +5,7 @@
 from flask_testing import TestCase
 
 from api.server import APP
+from db_conn import truncate_tables
 
 
 class BaseTestCase(TestCase):
@@ -18,4 +19,5 @@ class BaseTestCase(TestCase):
         pass
 
     def tearDown(self):
-        pass
+        """Code that is executed after each test"""
+        truncate_tables()
