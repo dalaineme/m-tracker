@@ -16,6 +16,7 @@ install:
   - pip install --editable .
 
 before_script:
+  - psql -c "CREATE DATABASE mtracker;" -U postgres
   - psql -c "CREATE DATABASE mtracker_test;" -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
   - mtracker create test-schema
