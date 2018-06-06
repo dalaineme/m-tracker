@@ -24,3 +24,11 @@ before_script:
   - pip install --editable .
   - mtracker create db
   - mtracker create test-schema
+
+script:
+  - nosetests --exe -v
+  - nosetests --exe --with-coverage --cover-package=api/server
+  - coveralls
+
+after_success:
+  - "coveralls"
