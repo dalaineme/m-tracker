@@ -22,18 +22,18 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 ## UI Pages
 
-* **Admin Pages**
-  * [Admin can login.](https://dalaineme.github.io/m-tracker/UI/login.html)
-  * [Admin can view all maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
-  * [Admin can filter maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
-  * [Admin can approve/reject maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
-  * [Admin can resolve active maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
-* **User Pages**
-  * [A user can Signup.](https://dalaineme.github.io/m-tracker/UI/signup.html)
-  * [A user can Login.](https://dalaineme.github.io/m-tracker/UI/login.html)
-  * [A user can make maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
-  * [A user can view their maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
-  * [A user can view feedback.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
+- **Admin Pages**
+  - [Admin can login.](https://dalaineme.github.io/m-tracker/UI/login.html)
+  - [Admin can view all maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
+  - [Admin can filter maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
+  - [Admin can approve/reject maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
+  - [Admin can resolve active maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/admin/index.html)
+- **User Pages**
+  - [A user can Signup.](https://dalaineme.github.io/m-tracker/UI/signup.html)
+  - [A user can Login.](https://dalaineme.github.io/m-tracker/UI/login.html)
+  - [A user can make maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
+  - [A user can view their maintenance/repair requests.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
+  - [A user can view feedback.](https://dalaineme.github.io/m-tracker/UI/user/index.html)
 
 ## API Endpoints
 
@@ -66,17 +66,59 @@ Change directory into the Project folder.
 $ cd m-tracker
 ```
 
+Create a virtual environment
+
+```sh
+$ python3.6 -m venv venv
+```
+
+Activate the Virtual Environment
+
+```sh
+$ source venv/bin/activate
+```
+
+Install the dependencies
+
+```sh
+$ pip install -r requirements.txt
+```
+
+Export the environment variables
+
+```sh
+$ source .env
+```
+
+Activate the CLI
+
+```sh
+$ pip install --editable .
+```
+
+Run the CLI
+
+```sh
+$ mtracker
+```
+
+Start the Server
+
+```sh
+$ python run.py
+```
+
 Launch the UI by opening **_index.html_**.
 
 ## Built With
 
-* [HTML](https://www.w3.org/html/) - The Scripting language used.
-* [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
-* [JavaScript](https://developer.mozilla.org/bm/docs/Web/JavaScript/)
+- [HTML](https://www.w3.org/html/) - The Scripting language used.
+- [CSS](https://www.w3.org/Style/CSS/Overview.en.html)
+- [JavaScript](https://developer.mozilla.org/bm/docs/Web/JavaScript/)
 
 [![ForTheBadge built-with-love](http://ForTheBadge.com/images/badges/built-with-love.svg)](https://github.com/dalaineme) [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)
 
-* **Dalin Oluoch** :feelsgood:
+- **Dalin Oluoch** :feelsgood:
 
 ## License
 
