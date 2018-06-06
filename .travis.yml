@@ -6,16 +6,9 @@ python:
 service:
   - postgresql
 
-before_install:
-  - export APP_SETTINGS="api.server.config.TestingConfig"
-  - export SECRET_KEY="justatest"
-
 install:
   - pip install -r requirements.txt
-  - source example.env
-  - pip install --editable .
-
-before_script:
   - psql -c "CREATE DATABASE test_db;" -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
-
+  - source example.env
+  - pip install --editable .
