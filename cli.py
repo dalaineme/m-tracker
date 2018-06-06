@@ -74,3 +74,43 @@ def create_db():
         raise SystemExit(
             "Failed to setup Postgres environment.\n{0}".format(sys.exc_info())
         )
+
+
+@create.command('schema')
+def create_schema():
+    """Creates SQL Schema."""
+    # Populate Main DB
+    try:
+        main_conn = connect(**DB_CONNECT)
+        main_conn.autocommit = True
+        with main_conn.cursor() as cursor:
+            cursor.execute(open("schema.sql", "r").read())
+        main_conn.close()
+        click.secho('  SUCCESS!  ', bg='green', fg='white', bold=True)
+        click.secho("Schema populated successfully",
+                    bg='white', fg='black', bold=True)
+    except psycopg2.Error:
+        click.secho('  SORRY!  ', bg='red', fg='white', bold=True)
+        raise SystemExit(
+            "Failed to load schema.\n{0}".format(sys.exc_info())
+        )
+
+
+@create.command('test-schema')
+def create_test_schema():
+    """Creates SQL Schema for Test DB."""
+    # Populate Test Main DB
+    try:
+        test_conn = connect(**TEST_DB_CONNECT)
+        test_conn.autocommit = True
+        with test_conn.cursor() as cursor:
+            cursor.execute(open("schema.sql", "r").read())
+        test_conn.close()
+        click.secho('  SUCCESS!  ', bg='green', fg='white', bold=True)
+        click.secho("Test Schema populated successfully",
+                    bg='white', fg='black', bold=True)
+    except psycopg2.Error:
+        click.secho('  SORRY!  ', bg='red', fg='white', bold=True)
+        raise SystemExit(
+            "Failed to load test schema.\n{0}".format(sys.exc_info())
+        )
