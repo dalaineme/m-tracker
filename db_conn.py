@@ -19,17 +19,15 @@ class DbConn(object):
     """Database Creation Class"""
 
     def __init__(self):
-        self.conn = ""
-        self.cursor = ""
-
-    def connect(self):
-        """Connect to db"""
+        """Constructor method"""
         self.conn = connect(**CONNECT_CREDS)
-        self.conn.autocommit = True
-        self.cursor = self.conn.cursor()
-        return self.cursor
+        self.cur = self.conn.cursor()
 
-    def close_conn(self):
-        """Close connections"""
-        self.cursor.close()
+    def query(self, query):
+        """Query execution method"""
+        self.cur.execute(query)
+
+    def close(self):
+        """Close Connection"""
+        self.cur.close()
         self.conn.close()
