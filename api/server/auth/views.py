@@ -58,7 +58,7 @@ class SignupAPI(MethodView):
             response_object = {
                 "status": "fail",
                 "msg": "Sorry! Email '{}' already exists.".format(
-                    input_email),
+                    input_email)
             }
             return make_response(jsonify(response_object)), 400
 
@@ -78,68 +78,70 @@ class SignupAPI(MethodView):
         }
         return make_response(jsonify(response_object)), 201
 
-    class LoginAPI(MethodView):
-        """User Login resource"""
 
-        def post(self):  # pylint: disable=R0201
-            """post method"""
-            # get the post data
-            post_data = request.get_json()
+class LoginAPI(MethodView):
+    """User Login resource"""
 
-            # load input to the marshmallow schema
-            try:
-                LOGIN_SCHEMA.load(post_data)
+    def post(self):  # pylint: disable=R0201
+        """post method"""
+        # get the post data
+        post_data = request.get_json()
 
-            # return error object case there is any
-            except ValidationError as err:
-                response_object = {
-                    'status': 'fail',
-                    'message': 'Validation errors.',
-                    'errors': err.messages
-                }
-                return make_response(jsonify(response_object)), 422
+        # load input to the marshmallow schema
+        try:
+            LOGIN_SCHEMA.load(post_data)
 
-            # Get email
-            input_email = post_data.get('email')
-            # check if email exists
-            if not email_exists(input_email):
-                response_object = {
-                    'status': 'fail',
-                    'message': "Sorry, email '{}' does not exist.".format(
-                        input_email)
-                }
-                return make_response(jsonify(response_object)), 400
-
-            # If no validation errors
-            # Get input data as dictionary
-
-            input_email = post_data.get('email'),
-            input_password = post_data.get('password')
-
-            # If login is successful
-            if login_user():
-                access_token = create_access_token(identity=input_email)
-                response_object = {
-                    "status": 'success',
-                    "message": "Successfully logged in.",
-                    "token": access_token
-                }
-                return make_response(jsonify(response_object)), 200
-            # Failed login - password
+        # return error object case there is any
+        except ValidationError as err:
             response_object = {
-                "status": 'fail',
-                "message": "Wrong login credentials."
+                'status': 'fail',
+                'msg': 'Validation errors.',
+                'errors': err.messages
             }
             return make_response(jsonify(response_object)), 422
+
+        # Store input in variables
+        input_email = post_data.get('email')
+        input_password = post_data.get('password')
+        # check if email exists
+        if not email_exists(input_email):
+            response_object = {
+                'status': 'fail',
+                'msg': "Sorry, email '{}' does not exist.".format(
+                    input_email)
+            }
+            return make_response(jsonify(response_object)), 400
+
+        # If no validation errors
+        # If login is successful
+        if login_user(input_email, input_password):
+            access_token = create_access_token(identity=input_email)
+            response_object = {
+                "status": 'success',
+                "msg": "Successfully logged in.",
+                "token": access_token
+            }
+            return make_response(jsonify(response_object)), 200
+        # Failed login - password
+        response_object = {
+            "status": 'fail',
+            "msg": "Invalid login credentials."
+        }
+        return make_response(jsonify(response_object)), 422
 
 
 # define API resources
 SIGNUP_VIEW = SignupAPI.as_view('signup_api')
-
+LOGIN_VIEW = LoginAPI.as_view('login_api')
 
 # add rules for auth enpoints
 AUTH_BLUEPRINT.add_url_rule(
     '/signup',
     view_func=SIGNUP_VIEW,
+    methods=['POST']
+)
+AUTH_BLUEPRINT.add_url_rule(
+    '/login',
+    view_func=LOGIN_VIEW,
     methods=['POST']
 )
