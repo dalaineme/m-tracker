@@ -24,6 +24,7 @@ before_script:
   
   - pip install --editable .
   - mtracker create db
+  - mtracker create schema
   - mtracker create test-schema
 
 script:
