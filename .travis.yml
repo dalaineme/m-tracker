@@ -7,6 +7,7 @@ service:
   - postgresql
 
 before_install:
+  - psql -c "CREATE DATABASE mtracker_test;" -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
   - export PGUSER="postgres"
   - export PGDATABASE="mtracker"
@@ -21,9 +22,7 @@ install:
 before_script:
   
   - pip install --editable .
-  - mtracker create db
   - mtracker create test-schema
-  - mtracker create schema
 
 script:
   - nosetests --exe -v

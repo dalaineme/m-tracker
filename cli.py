@@ -28,7 +28,7 @@ DB_CONNECT = {
 }
 TEST_DB_CONNECT = {
     "host": APP.config.get('DATABASE_HOST'),
-    "database": TEST_DB,
+    "database": "mtracker_test",
     "user": APP.config.get('DATABASE_USER'),
     "password": APP.config.get('DATABASE_PASS')
 }
