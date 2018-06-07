@@ -7,7 +7,6 @@ service:
   - postgresql
 
 before_install:
-  - psql -c "CREATE DATABASE postgres;" -U postgres
   - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
   - export PGUSER="postgres"
   - export PGDATABASE="mtracker"
