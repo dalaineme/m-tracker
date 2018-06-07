@@ -23,6 +23,7 @@ install:
 before_script:
   
   - pip install --editable .
+  - mtracker create db
   - mtracker create test-schema
   - mtracker create schema
 
