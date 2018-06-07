@@ -7,6 +7,7 @@ This module contains various routes for the auth endpoint
 from flask import Blueprint, make_response, jsonify, request
 from flask.views import MethodView
 
+from api.server.auth.models import signup_user
 from api.server.helpers import json_fetch_all
 
 # Create a blueprint
@@ -33,6 +34,9 @@ class SignupAPI(MethodView):
         input_last_name = post_data.get('last_name')
         input_email = post_data.get('email')
         input_password = post_data.get('password')
+
+        signup_user(input_first_name, input_last_name,
+                    input_email, input_password)
         # return response
         response_object = {
             "status": 'success',

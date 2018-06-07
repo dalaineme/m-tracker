@@ -4,6 +4,7 @@
 
 This module contains functions that abstract the common DB usage
 """
+import sys
 import json
 import psycopg2
 from db_conn import DbConn
@@ -12,20 +13,22 @@ from db_conn import DbConn
 def json_fetch_all(query):
     """Retrieve all data as JSON"""
     try:
-        DB_CONN = DbConn()
-        DB_CONN.cur.execute(query)
-        result = json.dumps(DB_CONN.cur.fetchall(), indent=2)
-        DB_CONN.close()
+        db_conn = DbConn()
+        db_conn.cur.execute(query)
+        result = json.dumps(db_conn.cur.fetchall(), indent=2)
+        db_conn.close()
         return result
     except psycopg2.Error:
         return False
 
 
-def run_query(query):
+def run_query(query, inputs):
     """Run queries"""
     try:
-        DB_CONN = DbConn()
-        DB_CONN.cur.execute(query)
+        db_conn = DbConn()
+        db_conn.cur.execute(query, inputs)
+        db_conn.conn.commit()
+        db_conn.close()
         return True
     except psycopg2.Error:
         return False
