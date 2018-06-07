@@ -7,6 +7,7 @@ This module contains various routes for the auth endpoint
 from flask import Blueprint, make_response, jsonify, request
 from flask.views import MethodView
 
+from api.server.helpers import json_fetch_all
 
 # Create a blueprint
 AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
@@ -46,6 +47,11 @@ class SignupAPI(MethodView):
         }
         return make_response(jsonify(response_object)), 201
 
+    def get(self):
+        """Test GET method"""
+        result = json_fetch_all("SELECT * FROM tbl_users")
+        return result
+
 
 # define API resources
 SIGNUP_VIEW = SignupAPI.as_view('signup_api')
@@ -55,5 +61,5 @@ SIGNUP_VIEW = SignupAPI.as_view('signup_api')
 AUTH_BLUEPRINT.add_url_rule(
     '/signup',
     view_func=SIGNUP_VIEW,
-    methods=['POST']
+    methods=['POST', 'GET']
 )
