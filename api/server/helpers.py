@@ -34,6 +34,7 @@ def run_query(query, inputs):
 
 
 def get_query(query, inputs):
+    """Get results"""
     try:
         db_conn = DbConn()
         db_conn.cur.execute(query, (inputs,))

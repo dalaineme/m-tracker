@@ -8,7 +8,7 @@ from flask import Blueprint, make_response, jsonify, request
 from flask.views import MethodView
 from marshmallow import ValidationError
 
-from api.server.auth.models import signup_user
+from api.server.auth.models import signup_user, email_exists
 from api.server.helpers import json_fetch_all
 from api.server.auth.schema import UserSchema
 
@@ -51,6 +51,13 @@ class SignupAPI(MethodView):
         input_last_name = post_data.get('last_name')
         input_email = post_data.get('email')
         input_password = post_data.get('password')
+
+        if email_exists(input_email):
+            response_object = {
+                "status": "fail",
+                "msg": "Sorry! Email exists"
+            }
+            return make_response(jsonify(response_object)), 404
 
         signup_user(input_first_name, input_last_name,
                     input_email, input_password)

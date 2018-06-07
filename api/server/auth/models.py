@@ -17,23 +17,21 @@ def signup_user(first_name, last_name, email, password):
     first_name = first_name.title()
     last_name = last_name.title()
     # query and the user inputs
-    query = u"INSERT INTO tbl_users (first_name, last_name, email, password, user_level) VALUES (%s, %s, %s, %s, %s);"
+    query = (u"INSERT INTO tbl_users (first_name, last_name, email, password, "
+             "user_level) VALUES (%s, %s, %s, %s, %s);")
     inputs = first_name, last_name, email, hash_password, "User"
     # run query
     run_query(query, inputs)
 
 
-# def email_exists():
-#     """Chek if the user email exists"""
-#     # SQL query
-#     query = u"SELECT * FROM tbl_users WHERE email = %s AND user_level = %s"
-#     inputs = "mcdalinoluoch@gmail.com", "User"
-#     all_users = get_query(query, inputs)
+def email_exists(input_email):
+    """Chek if the user email exists"""
+    # SQL query
+    query = u"SELECT * FROM tbl_users WHERE email = %s;"
+    inputs = input_email
+    all_users = get_query(query, inputs)
 
-#     for find_email in all_users:
-#         if find_email['email'] == inputs:
-#             return "True"
-#     return "False"
-
-
-# print(email_exists())
+    for find_email in all_users:
+        if find_email['email'] == inputs:
+            return True
+    return False
