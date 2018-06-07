@@ -75,6 +75,60 @@ class SignupAPI(MethodView):
         }
         return make_response(jsonify(response_object)), 201
 
+    class LoginAPI(MethodView):
+        """User Login resource"""
+
+            def post(self):  # pylint: disable=R0201
+                """post method"""
+                # get the post data
+                post_data = request.get_json()
+
+                # load input to the marshmallow schema
+                try:
+                    LOGIN_SCHEMA.load(post_data)
+
+                # return error object case there is any
+                except ValidationError as err:
+                    response_object = {
+                        'status': 'fail',
+                        'message': 'Validation errors.',
+                        'errors': err.messages
+                    }
+                    return make_response(jsonify(response_object)), 422
+
+                # Get email
+                input_email = post_data.get('email')
+                # check if email exists
+                if not check_email(input_email):
+                    response_object = {
+                        'status': 'fail',
+                        'message': "Sorry, email '{}' does not exist.".format(
+                            input_email)
+                    }
+                    return make_response(jsonify(response_object)), 400
+
+                # If no validation errors
+                # Get input data as dictionary
+                data = {
+                    "email": post_data.get('email'),
+                    "password": post_data.get('password')
+                }
+                # If login is successful
+                if login(data):
+                    access_token = create_access_token(identity=data["email"])
+                    response_object = {
+                        "status": 'success',
+                        "message": "Successfully logged in.",
+                        "token": access_token
+                    }
+                    return make_response(jsonify(response_object)), 200
+                # Failed login - password
+                response_object = {
+                    "status": 'fail',
+                    "message": "Wrong login credentials."
+                }
+                return make_response(jsonify(response_object)), 422
+
 
 # define API resources
 SIGNUP_VIEW = SignupAPI.as_view('signup_api')
