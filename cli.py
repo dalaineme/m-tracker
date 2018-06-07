@@ -12,7 +12,7 @@ from api.server import APP
 
 # Common variables
 MAIN_DB = APP.config.get('DATABASE_NAME')
-TEST_DB = APP.config.get('DATABASE_NAME') + "_test"
+TEST_DB = APP.config.get('DATABASE_NAME')
 DEFAULT_DB = "postgres"
 INITIAL_CONNECT = {
     "host": APP.config.get('DATABASE_HOST'),
@@ -28,7 +28,7 @@ DB_CONNECT = {
 }
 TEST_DB_CONNECT = {
     "host": APP.config.get('DATABASE_HOST'),
-    "database": TEST_DB,
+    "database": "mtracker_test",
     "user": APP.config.get('DATABASE_USER'),
     "password": APP.config.get('DATABASE_PASS')
 }

@@ -1,9 +1,8 @@
 # db_con.py
 """This module connects to the database"""
 
-import sys
-import psycopg2
 from psycopg2 import connect
+from psycopg2.extras import RealDictCursor
 
 from api.server import APP
 
@@ -21,7 +20,7 @@ class DbConn(object):
     def __init__(self):
         """Constructor method"""
         self.conn = connect(**CONNECT_CREDS)
-        self.cur = self.conn.cursor()
+        self.cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
     def query(self, query):
         """Query execution method"""
