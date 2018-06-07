@@ -63,3 +63,25 @@ class UserSchema(Schema):
             ]
         )
     )
+
+
+class LoginSchema(Schema):
+    """Login schema"""
+    email = fields.Email(
+        required=True,
+        validate=from_wtforms(
+            [Length(min=8, max=50,
+                    message="Email should be between 8 and 50 characters")]
+        )
+    )
+    password = fields.Str(
+        required=True,
+        validate=from_wtforms(
+            [
+                Length(
+                    min=8, max=20,
+                    message="Password should be between 8 and 20 characters"
+                ),
+            ]
+        )
+    )

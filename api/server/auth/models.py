@@ -24,6 +24,11 @@ def signup_user(first_name, last_name, email, password):
     run_query(query, inputs)
 
 
+def login_user():
+    """Log in user function"""
+    pass
+
+
 def email_exists(input_email):
     """Chek if the user email exists"""
     # SQL query
