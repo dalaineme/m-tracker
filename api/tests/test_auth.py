@@ -25,6 +25,18 @@ def register_user(self, first_name, last_name, email, password):
     )
 
 
+def login_user(self, email, password):
+    """Login user method"""
+    return self.client.post(
+        URL_PREFIX + "login",
+        data=json.dumps(dict(
+            email=email,
+            password=password
+        )),
+        content_type='application/json',
+    )
+
+
 class TestAuthEndpoint(BaseTestCase):
     """Class that handles Auth Endpoint test"""
 
@@ -106,3 +118,71 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 422)
             truncate_tables()
+
+    # Login Tests
+    def test_registered_user_login(self):
+        """ Test for login of registered-user login """
+        # register a user
+        register_user(self, 'some', 'name', 'another@gmail.com', 'aaaAAA111')
+
+        # test logging in registered user
+        with self.client:
+            response = login_user(self, 'another@gmail.com', 'aaaAAA111')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'success')
+            self.assertTrue(data['msg'] == 'Successfully logged in.')
+            self.assertTrue(data['token'])
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 200)
+            truncate_tables()
+
+    def test_unregistered_user_login(self):
+        """ Test for login of a not registered-user"""
+        with self.client:
+            response = login_user(self, 'another@gmail.com', 'aaaAAA111')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(
+                data['msg'] ==
+                "Sorry, email 'another@gmail.com' does not exist.")
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 400)
+            truncate_tables()
+
+    def test_login_failure(self):
+        """Wrong login credentials
+        Wrong password
+        """
+        # register a user
+        register_user(self, 'some', 'name', 'the@user.com', 'aaaAAA111')
+
+        # test logging in failure of a registered user - wrong password
+        with self.client:
+            response = login_user(self, 'the@user.com', 'Pa4s283dDI!')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['msg'] == "Invalid login credentials.")
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
+            truncate_tables()
+
+    def test_invalid_email_login(self):
+        """ Test for invalid email while logging in"""
+        with self.client:
+            response = login_user(self, 'joegmail.com', 'aaaAAA111')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['msg'] == 'Validation errors.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
+            truncate_tables()
+
+    def test_short_password_login(self):
+        """ Test for minimum length password"""
+        with self.client:
+            response = login_user(self, 'joe@gmail.com', 'aA111')
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['msg'] == 'Validation errors.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
