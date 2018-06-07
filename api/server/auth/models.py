@@ -1,11 +1,10 @@
 #! /api/server/models.py
 # -*- coding: utf-8 -*-
 """This is the auth modules
-
 This module contains functions that are used in the auth endpoint
 """
 from api.server import APP, BCRYPT
-from api.server.helpers import run_query
+from api.server.helpers import run_query, get_query
 
 
 def signup_user(first_name, last_name, email, password):
@@ -22,3 +21,19 @@ def signup_user(first_name, last_name, email, password):
     inputs = first_name, last_name, email, hash_password, "User"
     # run query
     run_query(query, inputs)
+
+
+# def email_exists():
+#     """Chek if the user email exists"""
+#     # SQL query
+#     query = u"SELECT * FROM tbl_users WHERE email = %s AND user_level = %s"
+#     inputs = "mcdalinoluoch@gmail.com", "User"
+#     all_users = get_query(query, inputs)
+
+#     for find_email in all_users:
+#         if find_email['email'] == inputs:
+#             return "True"
+#     return "False"
+
+
+# print(email_exists())

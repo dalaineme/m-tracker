@@ -5,7 +5,7 @@
 from flask_testing import TestCase
 
 from api.server import APP
-from db_conn import truncate_tables
+from api.server.helpers import truncate_tables
 
 
 class BaseTestCase(TestCase):

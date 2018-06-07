@@ -4,7 +4,6 @@
 
 This module contains functions that abstract the common DB usage
 """
-import sys
 import json
 import psycopg2
 from db_conn import DbConn
@@ -34,8 +33,19 @@ def run_query(query, inputs):
         return False
 
 
+def get_query(query, inputs):
+    try:
+        db_conn = DbConn()
+        db_conn.cur.execute(query, (inputs,))
+        result = db_conn.cur.fetchall()
+        db_conn.close()
+        return result
+    except psycopg2.Error:
+        return False
+
+
 def truncate_tables():
     """Truncate all the tables"""
     db_instance = DbConn()
-    db_instance.query("TRUNCATE tbl_users;")
+    db_instance.query("TRUNCATE tbl_users CASCADE;")
     db_instance.close()
