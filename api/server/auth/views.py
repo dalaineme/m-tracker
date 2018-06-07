@@ -6,12 +6,17 @@ This module contains various routes for the auth endpoint
 
 from flask import Blueprint, make_response, jsonify, request
 from flask.views import MethodView
+from marshmallow import ValidationError
 
 from api.server.auth.models import signup_user
 from api.server.helpers import json_fetch_all
+from api.server.auth.schema import UserSchema
 
 # Create a blueprint
 AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
+
+# Instanciate marshmallow shemas
+USER_SCHEMA = UserSchema()
 
 
 class SignupAPI(MethodView):
@@ -29,6 +34,18 @@ class SignupAPI(MethodView):
                 'msg': 'No input data provided.'
             }
             return make_response(jsonify(response_object)), 400
+
+        try:
+            USER_SCHEMA.load(post_data)
+
+        # return error object case there is any
+        except ValidationError as err:
+            response_object = {
+                'status': 'fail',
+                'msg': 'Validation errors.',
+                'errors': err.messages
+            }
+            return make_response(jsonify(response_object)), 422
         # Store user input in variables
         input_first_name = post_data.get('first_name')
         input_last_name = post_data.get('last_name')
