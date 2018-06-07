@@ -43,10 +43,3 @@ def get_query(query, inputs):
         return result
     except psycopg2.Error:
         return False
-
-
-def truncate_tables():
-    """Truncate all the tables"""
-    db_instance = DbConn()
-    db_instance.query("TRUNCATE tbl_users CASCADE;")
-    db_instance.close()

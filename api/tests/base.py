@@ -1,11 +1,25 @@
 # api/tests/base.py
 """This is the base test module"""
 
-
+import sys
 from flask_testing import TestCase
-
+import psycopg2
 from api.server import APP
-from api.server.helpers import truncate_tables
+from db_conn import DbConn
+
+
+def truncate_tables():
+    """Truncate all the tables"""
+    db_instance = DbConn()
+    db_instance.conn.autocommit = True
+    try:
+        with db_instance.conn.cursor() as cursor:
+            cursor.execute("TRUNCATE tbl_users CASCADE;")
+            db_instance.conn.close()
+    except psycopg2.Error:
+        raise SystemExit(
+            "Failed to load schema.\n{0}".format(sys.exc_info())
+        )
 
 
 class BaseTestCase(TestCase):
@@ -20,4 +34,4 @@ class BaseTestCase(TestCase):
 
     def tearDown(self):
         """Code that is executed after each test"""
-        truncate_tables()
+        pass

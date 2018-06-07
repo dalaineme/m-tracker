@@ -9,7 +9,6 @@ from flask.views import MethodView
 from marshmallow import ValidationError
 
 from api.server.auth.models import signup_user, email_exists
-from api.server.helpers import json_fetch_all
 from api.server.auth.schema import UserSchema
 
 # Create a blueprint
@@ -55,9 +54,10 @@ class SignupAPI(MethodView):
         if email_exists(input_email):
             response_object = {
                 "status": "fail",
-                "msg": "Sorry! Email exists"
+                "msg": "Sorry! Email '{}' already exists.".format(
+                    input_email),
             }
-            return make_response(jsonify(response_object)), 404
+            return make_response(jsonify(response_object)), 400
 
         signup_user(input_first_name, input_last_name,
                     input_email, input_password)
@@ -75,11 +75,6 @@ class SignupAPI(MethodView):
         }
         return make_response(jsonify(response_object)), 201
 
-    def get(self):
-        """Test GET method"""
-        result = json_fetch_all("SELECT * FROM tbl_users")
-        return result
-
 
 # define API resources
 SIGNUP_VIEW = SignupAPI.as_view('signup_api')
@@ -89,5 +84,5 @@ SIGNUP_VIEW = SignupAPI.as_view('signup_api')
 AUTH_BLUEPRINT.add_url_rule(
     '/signup',
     view_func=SIGNUP_VIEW,
-    methods=['POST', 'GET']
+    methods=['POST']
 )
