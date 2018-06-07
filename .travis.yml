@@ -7,22 +7,20 @@ service:
   - postgresql
 
 before_install:
-  - psql -c "CREATE DATABASE mtracker_test;" -U postgres
-  - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
-  - export PGUSER="postgres"
-  - export PGDATABASE="mtracker_test"
-  - export PGPASSWORD="password"
   - export APP_SETTINGS="api.server.config.TestingConfig"
-  - export SECRET_KEY="justatest"
-
+  - export SECRET_KEY="this_is_the_secret_key"
+  - export PGDATABASE="mtracker_test"
+  - export PGUSER="postgres"
+  - export PGPASSWORD="password"
 
 install:
   - pip install -r requirements.txt
+  - pip install coveralls
 
 before_script:
-  
-  - pip install --editable .
-  - mtracker create test-schema
+  - psql -c 'create database mtracker_test;' -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
+  - python migrate.py
 
 script:
   - nosetests --exe -v
