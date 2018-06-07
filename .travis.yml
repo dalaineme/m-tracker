@@ -11,7 +11,7 @@ before_install:
   - psql -c "ALTER USER postgres WITH PASSWORD 'password';" -U postgres
   - export APP_SETTINGS="api.server.config.TestingConfig"
   - export SECRET_KEY="this_is_the_secret_key"
-  - export PGDATABASE="mtracker_test"
+  - export PGDATABASE="mtracker"
   - export PGUSER="postgres"
   - export PGPASSWORD="password"
 
