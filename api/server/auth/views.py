@@ -63,7 +63,7 @@ class SignupAPI(MethodView):
             return make_response(jsonify(response_object)), 400
 
         signup_user(input_first_name, input_last_name,
-                    input_email, input_password)
+                    input_email, input_password, "User")
         # return response
         response_object = {
             "status": 'success',
@@ -114,20 +114,27 @@ class LoginAPI(MethodView):
 
         # If no validation errors
         # If login is successful
-        if login_user(input_email, input_password):
-            access_token = create_access_token(identity=input_email)
+        user_info = login_user(input_email, input_password)
+        if not user_info:
+            # Failed login - password
             response_object = {
-                "status": 'success',
-                "msg": "Successfully logged in.",
-                "token": access_token
+                "status": 'fail',
+                "msg": "Invalid login credentials."
             }
-            return make_response(jsonify(response_object)), 200
-        # Failed login - password
-        response_object = {
-            "status": 'fail',
-            "msg": "Invalid login credentials."
+            return make_response(jsonify(response_object)), 422
+        # Create a UserObject for tokens
+        user = {
+            "user_id": user_info["user_id"],
+            "user_level": user_info["user_level"]
         }
-        return make_response(jsonify(response_object)), 422
+        access_token = create_access_token(identity=user)
+        response_object = {
+            "status": 'success',
+            "user_level": user_info["user_level"],
+            "msg": "Successfully logged in.",
+            "token": access_token
+        }
+        return make_response(jsonify(response_object)), 200
 
 
 # define API resources

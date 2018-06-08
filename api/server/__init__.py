@@ -17,7 +17,10 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 
 # TOKEN
-from flask_jwt_extended import JWTManager
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity, get_jwt_claims
+)
 
 # making cross-origin AJAX possible
 from flask_cors import CORS
@@ -40,6 +43,19 @@ APP.config.from_object(APP_SETTINGS)
 # pass flask app object to Bcrypt
 BCRYPT = Bcrypt(APP)
 JWT = JWTManager(APP)
+
+
+@JWT.user_claims_loader
+def add_claims_to_access_token(user):
+    """Function that will be called whenever create_access_token is used"""
+    return {'role': user["user_level"]}
+
+
+@JWT.user_identity_loader
+def user_identity_lookup(user):
+    """Define token identity"""
+    return user["user_id"]
+
 
 # import auth blueprints
 from api.server.auth.views import AUTH_BLUEPRINT  # noqa  # pylint: disable=C0413
