@@ -14,10 +14,9 @@ CREATE TABLE tbl_users
 );
 CREATE TABLE tbl_requests
 (
-	request_id INTEGER NOT NULL,
+	request_id SERIAL PRIMARY KEY,
 	request_title VARCHAR(255) NOT NULL,
 	request_description VARCHAR(255) NOT NULL,
 	created_by INTEGER,
-	PRIMARY KEY (request_id),
 	FOREIGN KEY(created_by) REFERENCES tbl_users (user_id)
 );

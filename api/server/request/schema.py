@@ -4,10 +4,9 @@
 Marshmallow validation with wtforms
 """
 
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields
 from marshmallow_validators.wtforms import from_wtforms
 from wtforms.validators import Length
-from api.server.models import Request
 
 
 class RequestSchema(Schema):
@@ -35,11 +34,6 @@ class RequestSchema(Schema):
         )
     )
     email = fields.Email()
-
-    @post_load
-    def make_user(self, data):  # pylint: disable=R0201
-        """Receives dictionary of deserialized data"""
-        return Request(**data)
 
 
 class ModifyRequestSchema(Schema):

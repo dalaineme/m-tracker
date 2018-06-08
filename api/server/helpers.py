@@ -4,7 +4,6 @@
 
 This module contains functions that abstract the common DB usage
 """
-import sys
 import json
 import psycopg2
 from db_conn import DbConn
@@ -31,9 +30,7 @@ def run_query(query, inputs):
         db_instance.close()
         return True
     except psycopg2.Error:
-        raise SystemExit(
-            "Failed to setup Postgres environment.\n{0}".format(sys.exc_info())
-        )
+        return False
 
 
 def get_query(query, inputs):
