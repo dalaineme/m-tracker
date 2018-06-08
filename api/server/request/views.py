@@ -66,21 +66,14 @@ class RequestsAPI(MethodView):
         """Send GET method to requests endpoint"""
         # get current user id
         user_id = get_jwt_identity()
-        if all_user_requests(user_id):
-            get_data = all_user_requests(user_id)
-            # return response
-            response_object = {
-                "status": 'success',
-                "requests": get_data
-            }
-            return make_response(jsonify(response_object)), 200
-        # if empty
+        # Get the requests
+        get_data = all_user_requests(user_id)
         # return response
         response_object = {
-            "status": 'fail',
-            "message": "You have no requests."
+            "status": 'success',
+            "requests": get_data
         }
-        return make_response(jsonify(response_object)), 400
+        return make_response(jsonify(response_object)), 200
 
 
 # define API resources
