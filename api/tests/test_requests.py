@@ -1,0 +1,76 @@
+# ! /api/tests/test_test.py
+# -*- coding: utf-8 -*-
+"""Tests for the auth endpoint
+Contains basic tests for registration, login and logout
+"""
+
+import json
+import unittest
+from flask_jwt_extended import (create_access_token)
+
+from api.tests.base import BaseTestCase, truncate_tables
+
+URL_PREFIX = "/api/v1/users/"
+
+
+def create_request(self, title, description):
+    """New request"""
+    # Create a UserObject for tokens
+    user = {
+        "user_id": "2",
+        "user_level": "User"
+    }
+    access_token = create_access_token(identity=user)
+    headers = {
+        'Authorization': 'Bearer {}'.format(access_token)
+    }
+
+    return self.client.post(
+        URL_PREFIX + 'requests',
+        data=json.dumps(dict(
+            title=title,
+            description=description
+        )),
+        content_type='application/json',
+        headers=headers
+    )
+
+
+class TestRequestEndpoint(BaseTestCase):
+    """Class that handles Request Endpoint test"""
+
+    def test_successful_request(self):
+        """Test for successful request submission"""
+        with self.client:
+            response = create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to."
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'success')
+            self.assertTrue(data['msg'] ==
+                            'Request successfully sent to the admin.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 201)
+            truncate_tables()
+
+    def test_validation_errors(self):
+        """Test for presence of validation error
+        This case short body length
+        """
+        with self.client:
+            response = create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                "Body goes here"
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['msg'] == 'Validation errors.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
+
+
+if __name__ == "__main__":
+    unittest.main()
