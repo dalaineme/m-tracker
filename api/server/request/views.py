@@ -123,17 +123,24 @@ class RequestsAPI(MethodView):
         except ValidationError as err:
             response_object = {
                 'status': 'fail',
-                'message': 'Validation errors.',
+                'msg': 'Validation errors.',
                 'errors': err.messages
             }
             return make_response(jsonify(response_object)), 422
         # Assign post data to variables
         title = post_data["title"]
         description = post_data["description"]
-        modify_user_request(user_id, request_id, title, description)
+        result = modify_user_request(user_id, request_id, title, description)
+        if result == "fail":
+            response_object = {
+                "status": 'fail',
+                "msg": "You can only modify a sent request."
+            }
+            return make_response(jsonify(response_object)), 401
+
         response_object = {
             "status": 'success',
-            "message": "Your request has been updated."
+            "msg": "Your request has been updated."
         }
         return make_response(jsonify(response_object)), 201
 

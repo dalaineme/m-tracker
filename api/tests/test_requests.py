@@ -49,6 +49,30 @@ def create_request(self, title, description):
     )
 
 
+def update_request(self, title, description, req_id):
+    """New request"""
+
+    # Create a UserObject for tokens
+    user = {
+        "user_id": "988",
+        "user_level": "User"
+    }
+    access_token = create_access_token(identity=user)
+    headers = {
+        'Authorization': 'Bearer {}'.format(access_token)
+    }
+
+    return self.client.put(
+        URL_PREFIX + 'requests/{}'.format(req_id),
+        data=json.dumps(dict(
+            title=title,
+            description=description
+        )),
+        content_type='application/json',
+        headers=headers
+    )
+
+
 class TestRequestEndpoint(BaseTestCase):
     """Class that handles Request Endpoint test"""
 
@@ -171,6 +195,99 @@ class TestRequestEndpoint(BaseTestCase):
             URL_PREFIX + 'requests/1999', headers=headers)
         self.assertEqual(response.status_code, 404)
         truncate_tables()
+
+    def test_successful_update(self):
+        """Test for successful request update"""
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered")
+        )
+        with self.client:
+            response = update_request(
+                self,
+                "This is the request title. Short and descriptive",
+                ("The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered."),
+                1
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'success')
+            self.assertTrue(data['msg'] ==
+                            'Your request has been updated.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 201)
+            truncate_tables()
+
+    def test_update_fail_status(self):
+        """Test for failed update if current status is not Sent"""
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered")
+        )
+        # Update current status to something else before testing it
+        db_instance = DbConn()
+        query = (u"UPDATE tbl_requests SET current_status = %s "
+                 " WHERE request_id = %s;")
+        inputs = 'Approved', '1'
+        db_instance.cur.execute(query, inputs)
+        db_instance.conn.commit()
+        db_instance.close()
+        with self.client:
+            response = update_request(
+                self,
+                "This is the request title. Short and descriptive",
+                ("The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered."),
+                '1'
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['msg'] ==
+                            'You can only modify a sent request.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 401)
+            truncate_tables()
+
+    def test_validation_errors_update(self):
+        """Test for validation errors while updating a request"""
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered")
+        )
+        with self.client:
+            response = update_request(
+                self,
+                "Short title",
+                ("The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be."),
+                '1'
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 422)
+            truncate_tables()
 
 
 if __name__ == "__main__":
