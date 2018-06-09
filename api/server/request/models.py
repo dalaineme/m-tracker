@@ -6,7 +6,7 @@ This module contains functions that are used in the auth endpoint
 import sys
 import psycopg2
 from db_conn import DbConn
-from api.server.helpers import json_fetch_all, get_query
+from api.server.helpers import get_query
 
 
 # def create_request(input_title, input_description, user_id):

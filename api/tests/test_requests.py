@@ -54,7 +54,10 @@ class TestRequestEndpoint(BaseTestCase):
             response = create_request(
                 self,
                 "This is the request title. Short and descriptive",
-                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to."
+                ("The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to.")
             )
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
