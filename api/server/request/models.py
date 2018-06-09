@@ -6,7 +6,7 @@ This module contains functions that are used in the auth endpoint
 import sys
 import psycopg2
 from db_conn import DbConn
-from api.server.helpers import get_query
+from api.server.helpers import get_query, run_query
 
 
 # def create_request(input_title, input_description, user_id):
@@ -64,6 +64,7 @@ def get_request_by_id(user_id, request_id):
     if result:
         request_logs = get_query(query, result["request_id"])
         response_dict = {
+            "current_status": result["current_status"],
             "request_id": result["request_id"],
             "request_title": result["request_title"],
             "request_description": result["request_description"],
@@ -72,3 +73,16 @@ def get_request_by_id(user_id, request_id):
         }
         return response_dict
     return "fail"
+
+
+def modify_user_request(user_id, request_id, title, description):
+    """Method that modifies a request"""
+    result = get_request_by_id(user_id, request_id)
+    if result["current_status"] != "Sent":
+        # You can only modify a Sent request
+        return "fail"
+    query = (u"UPDATE tbl_requests SET request_title=%s, "
+             "request_description=%s WHERE request_id=%s AND created_by=%s ;")
+    inputs = title, description, request_id, user_id
+    # run query
+    return run_query(query, inputs)
