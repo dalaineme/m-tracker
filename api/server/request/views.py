@@ -12,7 +12,7 @@ from flask_jwt_extended import (
 )
 
 from api.server.request.schema import RequestSchema, ModifyRequestSchema
-from api.server.request.models import create_request
+from api.server.request.models import create_request, all_user_requests
 
 # Create a blueprint
 REQUEST_BLUEPRINT = Blueprint('request', __name__, url_prefix='/api/v1/users/')
@@ -61,6 +61,19 @@ class RequestsAPI(MethodView):
         }
         return make_response(jsonify(response_object)), 201
 
+    @jwt_required
+    def get(self):  # pylint: disable=R0201
+        """Send GET method to requests endpoint"""
+        # get current user id
+        user_id = get_jwt_identity()
+        # Get the requests
+        get_data = all_user_requests(user_id)
+        # return response
+        response_object = {
+            "status": 'success',
+            "requests": get_data
+        }
+        return make_response(jsonify(response_object)), 200
 
 
 # define API resources

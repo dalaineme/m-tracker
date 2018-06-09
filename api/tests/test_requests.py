@@ -70,6 +70,28 @@ class TestRequestEndpoint(BaseTestCase):
             self.assertTrue(data['msg'] == 'Validation errors.')
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 422)
+            truncate_tables()
+
+    def test_successful_getall_requests(self):
+        """Test for successful request submission"""
+        with self.client:
+            create_request(
+                self,
+                "This is the request title. Short and descriptive",
+                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to."
+            )
+            # Create a UserObject for tokens
+            user = {
+                "user_id": "2",
+                "user_level": "User"
+            }
+            access_token = create_access_token(identity=user)
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.get(
+                URL_PREFIX + 'requests', headers=headers)
+            self.assertEqual(response.status_code, 200)
 
 
 if __name__ == "__main__":
