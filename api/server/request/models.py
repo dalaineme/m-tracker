@@ -9,14 +9,6 @@ from db_conn import DbConn
 from api.server.helpers import get_query, run_query
 
 
-# def create_request(input_title, input_description, user_id):
-#     """Create a new user request"""
-#     query = (u"INSERT INTO tbl_requests (request_title, request_description, "
-#              "created_by) VALUES (%s, %s, %s);")
-#     inputs = input_title, input_description, user_id
-#     # run query
-#     run_query(query, inputs)
-
 def create_request(input_title, input_description, user_id):
     """Create a new user request"""
     try:
@@ -60,7 +52,12 @@ def get_request_by_id(user_id, request_id):
     dicts = all_user_requests(user_id)
     result = next(
         (item for item in dicts if item["request_id"] == request_id), False)
-    query = ("SELECT tbl_status_logs.request_status,tbl_status_logs.date_updated, tbl_status_logs.request, tbl_requests.request_id FROM tbl_requests, tbl_status_logs WHERE tbl_status_logs.request=tbl_requests.request_id AND tbl_requests.request_id=%s;")
+    query = ("SELECT tbl_status_logs.request_status, "
+             "tbl_status_logs.date_updated, tbl_status_logs.request, "
+             "tbl_requests.request_id FROM tbl_requests, "
+             "tbl_status_logs WHERE tbl_status_logs.request "
+             " =tbl_requests.request_id AND "
+             "tbl_requests.request_id=%s;")
     if result:
         request_logs = get_query(query, result["request_id"])
         response_dict = {
@@ -84,5 +81,20 @@ def modify_user_request(user_id, request_id, title, description):
     query = (u"UPDATE tbl_requests SET request_title=%s, "
              "request_description=%s WHERE request_id=%s AND created_by=%s ;")
     inputs = title, description, request_id, user_id
+    # run query
+    return run_query(query, inputs)
+
+
+def delete_request(user_id, request_id):
+    """Method that deletes a user request by id"""
+    result = get_request_by_id(user_id, request_id)
+    if result["current_status"] == "Approved":
+        return "fail"
+    # remove from DB
+    query1 = (u"DELETE FROM tbl_status_logs WHERE request = %s;")
+    inputs1 = str(request_id)
+    run_query(query1, inputs1)
+    query = (u"DELETE FROM tbl_requests WHERE request_id=%s;")
+    inputs = str(request_id)
     # run query
     return run_query(query, inputs)
