@@ -60,9 +60,9 @@ def user_identity_lookup(user):
 # import auth blueprints
 from api.server.auth.views import AUTH_BLUEPRINT  # noqa  # pylint: disable=C0413
 from api.server.request.views import REQUEST_BLUEPRINT  # noqa  # pylint: disable=C0413
-# from api.server.admin.views import ADMIN_BLUEPRINT
+from api.server.admin.views import ADMIN_BLUEPRINT  # noqa  # pylint: disable=C0413
 
 # Register Blueprints
 APP.register_blueprint(AUTH_BLUEPRINT)
 APP.register_blueprint(REQUEST_BLUEPRINT)
-# APP.register_blueprint(ADMIN_BLUEPRINT)
+APP.register_blueprint(ADMIN_BLUEPRINT)
