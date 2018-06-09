@@ -14,8 +14,8 @@ from api.tests.base import BaseTestCase, truncate_tables
 URL_PREFIX = "/api/v1/users/"
 
 
-def create_request(self, title, description):
-    """New request"""
+def create_user():
+    """Create a user in the DB"""
     db_instance = DbConn()
     query = (u"INSERT INTO tbl_users (user_id, first_name, last_name, "
              "email, user_level, password) VALUES (%s,%s,%s,%s,%s,%s);")
@@ -23,6 +23,10 @@ def create_request(self, title, description):
     db_instance.cur.execute(query, inputs)
     db_instance.conn.commit()
     db_instance.close()
+
+
+def create_request(self, title, description):
+    """New request"""
 
     # Create a UserObject for tokens
     user = {
@@ -54,7 +58,11 @@ class TestRequestEndpoint(BaseTestCase):
             response = create_request(
                 self,
                 "This is the request title. Short and descriptive",
-                "The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to. The description. It has lengths that need to be adhered to."
+                ("The description. It has lengths that need to be adhered "
+                 "to. The description. It has lengths that need to be "
+                 "adhered to. The description. It has lengths that need to"
+                 "be adhered to. The description. It has lengths that need "
+                 "to be adhered to.")
             )
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'success')
@@ -82,8 +90,9 @@ class TestRequestEndpoint(BaseTestCase):
             truncate_tables()
 
     def test_successful_getall_requests(self):
-        """Test for successful request submission"""
+        """Test for successful requests get all"""
         with self.client:
+            create_user()
             create_request(
                 self,
                 "This is the request title. Short and descriptive",
@@ -122,6 +131,30 @@ class TestRequestEndpoint(BaseTestCase):
             response = self.client.get(
                 URL_PREFIX + 'requests', headers=headers)
             self.assertEqual(response.status_code, 404)
+            truncate_tables()
+
+    def test_request_exist(self):
+        """Test for existing request by specific id"""
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered")
+        )
+        user = {
+            "user_id": "988",
+            "user_level": "User"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.get(
+            URL_PREFIX + 'requests/1', headers=headers)
+        self.assertEqual(response.status_code, 404)
+        truncate_tables()
 
 
 if __name__ == "__main__":
