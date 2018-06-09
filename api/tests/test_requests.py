@@ -182,7 +182,6 @@ class TestRequestEndpoint(BaseTestCase):
 
     def test_request_dont_exist(self):
         """Test for non existing request by specific id"""
-        create_user()
         user = {
             "user_id": "988",
             "user_level": "User"
@@ -287,6 +286,35 @@ class TestRequestEndpoint(BaseTestCase):
             self.assertTrue(data['status'] == 'fail')
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 422)
+            truncate_tables()
+
+    def test_no_id_found(self):
+        """Test for no id found for request update"""
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered")
+        )
+        with self.client:
+            response = update_request(
+                self,
+                "This is the request title. Short and descriptive",
+                ("The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered to. "
+                 "The description. It has lengths that need to be adhered."),
+                '232377'
+            )
+            data = json.loads(response.data.decode())
+            self.assertTrue(data['status'] == 'fail')
+            self.assertTrue(data['msg'] ==
+                            'Request ID not found.')
+            self.assertTrue(response.content_type == 'application/json')
+            self.assertEqual(response.status_code, 404)
             truncate_tables()
 
 

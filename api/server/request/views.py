@@ -108,7 +108,7 @@ class RequestsAPI(MethodView):
         if specific_request == "fail":
             response_object = {
                 "status": 'fail',
-                "message": "Request ID not found."
+                "msg": "Request ID not found."
             }
             return make_response(jsonify(response_object)), 404
         # If request ID exists
