@@ -88,7 +88,7 @@ def modify_user_request(user_id, request_id, title, description):
 def delete_request(user_id, request_id):
     """Method that deletes a user request by id"""
     result = get_request_by_id(user_id, request_id)
-    if result["current_status"] != "Sent":
+    if result["current_status"] == "Approved":
         return "fail"
     # remove from DB
     query1 = (u"DELETE FROM tbl_status_logs WHERE request = %s;")

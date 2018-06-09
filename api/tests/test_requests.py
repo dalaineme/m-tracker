@@ -317,6 +317,79 @@ class TestRequestEndpoint(BaseTestCase):
             self.assertEqual(response.status_code, 404)
             truncate_tables()
 
+    def test_id_doesnt_exist(self):
+        """Test for non existing request id for deletion"""
+        user = {
+            "user_id": "988",
+            "user_level": "User"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.delete(
+            URL_PREFIX + 'requests/1999', headers=headers)
+        self.assertEqual(response.status_code, 404)
+        truncate_tables()
+
+    def test_delete_approved(self):
+        """Test failure in deleting an approved request"""
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered")
+        )
+        # Update current status to something else before testing it
+        db_instance = DbConn()
+        query = (u"UPDATE tbl_requests SET current_status = %s "
+                 " WHERE request_id = %s;")
+        inputs = 'Approved', '1'
+        db_instance.cur.execute(query, inputs)
+        db_instance.conn.commit()
+        db_instance.close()
+        with self.client:
+            user = {
+                "user_id": "988",
+                "user_level": "User"
+            }
+            access_token = create_access_token(identity=user)
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.delete(
+                URL_PREFIX + 'requests/1', headers=headers)
+            self.assertEqual(response.status_code, 403)
+            truncate_tables()
+
+    def test_successful_delete(self):
+        """Test for successful deletion of a request"""
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered to."
+             "The description. It has lengths that need to be adhered")
+        )
+        with self.client:
+            user = {
+                "user_id": "988",
+                "user_level": "User"
+            }
+            access_token = create_access_token(identity=user)
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.delete(
+                URL_PREFIX + 'requests/1', headers=headers)
+            self.assertEqual(response.status_code, 201)
+            truncate_tables()
+
 
 if __name__ == "__main__":
     unittest.main()

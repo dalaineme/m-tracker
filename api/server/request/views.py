@@ -163,8 +163,8 @@ class RequestsAPI(MethodView):
                 "status": 'fail',
                 "msg": "You can not delete an Approved request."
             }
-            return make_response(jsonify(response_object)), 401
-
+            return make_response(jsonify(response_object)), 403
+        # Successful deletion
         response_object = {
             "status": 'success',
             "msg": "Your request has been deleted."
