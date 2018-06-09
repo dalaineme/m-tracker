@@ -163,7 +163,7 @@ class TestAuthEndpoint(BaseTestCase):
             self.assertTrue(data['status'] == 'fail')
             self.assertTrue(data['msg'] == "Invalid login credentials.")
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 422)
+            self.assertEqual(response.status_code, 401)
             truncate_tables()
 
     def test_invalid_email_login(self):

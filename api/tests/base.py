@@ -14,7 +14,7 @@ def truncate_tables():
     db_instance.conn.autocommit = True
     try:
         with db_instance.conn.cursor() as cursor:
-            cursor.execute("TRUNCATE tbl_users CASCADE;")
+            cursor.execute("TRUNCATE tbl_users, tbl_requests CASCADE;")
             db_instance.conn.close()
     except psycopg2.Error:
         raise SystemExit(

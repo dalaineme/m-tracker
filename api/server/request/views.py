@@ -79,7 +79,7 @@ class RequestsAPI(MethodView):
             "status": 'fail',
             "msg": 'You have no requests.'
         }
-        return make_response(jsonify(response_object)), 200
+        return make_response(jsonify(response_object)), 404
 
 
 # define API resources
