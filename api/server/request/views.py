@@ -12,7 +12,8 @@ from flask_jwt_extended import (
 )
 
 from api.server.request.schema import RequestSchema, ModifyRequestSchema
-from api.server.request.models import create_request, all_user_requests
+from api.server.request.models import (
+    create_request, all_user_requests, get_request_by_id)
 
 # Create a blueprint
 REQUEST_BLUEPRINT = Blueprint('request', __name__, url_prefix='/api/v1/users/')
@@ -62,24 +63,41 @@ class RequestsAPI(MethodView):
         return make_response(jsonify(response_object)), 201
 
     @jwt_required
-    def get(self):  # pylint: disable=R0201
+    def get(self, request_id=None):  # pylint: disable=R0201
         """Send GET method to requests endpoint"""
-        # get current user id
-        user_id = get_jwt_identity()
-        # Get the requests
-        get_data = all_user_requests(user_id)
-        if get_data:
-            # return response
+        if not request_id:
+            # get current user id
+            user_id = get_jwt_identity()
+            # Get the requests
+            get_data = all_user_requests(user_id)
+            if get_data:
+                # return response
+                response_object = {
+                    "status": 'success',
+                    "my_requests": get_data
+                }
+                return make_response(jsonify(response_object)), 200
+            response_object = {
+                "status": 'fail',
+                "msg": 'You have no requests.'
+            }
+            return make_response(jsonify(response_object)), 404
+        else:
+            user_id = get_jwt_identity()
+            specific_request = get_request_by_id(user_id, request_id)
+            # If request id not found
+            if not specific_request:
+                response_object = {
+                    "status": 'fail',
+                    "message": "Request ID not found."
+                }
+                return make_response(jsonify(response_object)), 404
+            # If request ID exists
             response_object = {
                 "status": 'success',
-                "my_requests": get_data
+                "request": specific_request
             }
             return make_response(jsonify(response_object)), 200
-        response_object = {
-            "status": 'fail',
-            "msg": 'You have no requests.'
-        }
-        return make_response(jsonify(response_object)), 404
 
 
 # define API resources
@@ -90,4 +108,9 @@ REQUEST_BLUEPRINT.add_url_rule(
     '/requests',
     view_func=REQUESTS_VIEW,
     methods=['POST', 'GET']
+)
+REQUEST_BLUEPRINT.add_url_rule(
+    '/requests/<int:request_id>',
+    view_func=REQUESTS_VIEW,
+    methods=['GET', 'PUT', 'DELETE']
 )

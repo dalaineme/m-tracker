@@ -51,3 +51,12 @@ def all_user_requests(user_id):
              "AND tbl_requests.created_by = %s;")
     user_reqeusts = get_query(query, user_id)
     return user_reqeusts
+
+
+def get_request_by_id(user_id, request_id):
+    """Method to update a previous request"""
+    # call the all requests method
+    dicts = all_user_requests(user_id)
+    result = next(
+        (item for item in dicts if item["request_id"] == request_id), False)
+    return result
