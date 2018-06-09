@@ -13,7 +13,8 @@ from flask_jwt_extended import (
 
 from api.server.request.schema import RequestSchema, ModifyRequestSchema
 from api.server.request.models import (
-    create_request, all_user_requests, get_request_by_id, modify_user_request)
+    create_request, all_user_requests, get_request_by_id, modify_user_request,
+    delete_request)
 
 # Create a blueprint
 REQUEST_BLUEPRINT = Blueprint('request', __name__, url_prefix='/api/v1/users/')
@@ -141,6 +142,32 @@ class RequestsAPI(MethodView):
         response_object = {
             "status": 'success',
             "msg": "Your request has been updated."
+        }
+        return make_response(jsonify(response_object)), 201
+
+    @jwt_required
+    def delete(self, request_id=None):  # pylint: disable=R0201
+        """Send DELETE method to requests endpoint"""
+        user_id = get_jwt_identity()
+        specific_request = get_request_by_id(user_id, request_id)
+        # If request id not found
+        if specific_request == "fail":
+            response_object = {
+                "status": 'fail',
+                "msg": "Request ID not found."
+            }
+            return make_response(jsonify(response_object)), 404
+        result = delete_request(user_id, request_id)
+        if result == "fail":
+            response_object = {
+                "status": 'fail',
+                "msg": "You can not delete an Approved request."
+            }
+            return make_response(jsonify(response_object)), 401
+
+        response_object = {
+            "status": 'success',
+            "msg": "Your request has been deleted."
         }
         return make_response(jsonify(response_object)), 201
 
