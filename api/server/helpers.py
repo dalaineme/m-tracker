@@ -4,20 +4,21 @@
 
 This module contains functions that abstract the common DB usage
 """
+import json
 import psycopg2
 from db_conn import DbConn
 
 
-# def json_fetch_all(query):
-#     """Retrieve all data as JSON"""
-#     try:
-#         db_instance = DbConn()
-#         db_instance.cur.execute(query)
-#         result = json.dumps(db_instance.cur.fetchall(), indent=2)
-#         db_instance.close()
-#         return result
-#     except psycopg2.Error:
-#         return False
+def json_fetch_all(query):
+    """Retrieve all data as JSON"""
+    try:
+        db_instance = DbConn()
+        db_instance.cur.execute(query)
+        result = json.dumps(db_instance.cur.fetchall(), indent=2)
+        db_instance.close()
+        return result
+    except psycopg2.Error:
+        return False
 
 
 def run_query(query, inputs):

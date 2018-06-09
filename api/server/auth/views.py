@@ -118,11 +118,11 @@ class LoginAPI(MethodView):
         if not user_info:
             # Failed login - password
             response_object = {
-                "status": 'fail',
+                "status": 422,
                 "msg": "Invalid login credentials."
             }
             return make_response(jsonify(response_object)), 422
-        # Create a UserObject for tokens
+        # Create a UserObject for tokens422
         user = {
             "user_id": user_info["user_id"],
             "user_level": user_info["user_level"]

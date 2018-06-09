@@ -68,10 +68,16 @@ class RequestsAPI(MethodView):
         user_id = get_jwt_identity()
         # Get the requests
         get_data = all_user_requests(user_id)
-        # return response
+        if get_data:
+            # return response
+            response_object = {
+                "status": 'success',
+                "my_requests": get_data
+            }
+            return make_response(jsonify(response_object)), 200
         response_object = {
-            "status": 'success',
-            "requests": get_data
+            "status": 'fail',
+            "msg": 'You have no requests.'
         }
         return make_response(jsonify(response_object)), 200
 
