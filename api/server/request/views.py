@@ -86,7 +86,7 @@ class RequestsAPI(MethodView):
             user_id = get_jwt_identity()
             specific_request = get_request_by_id(user_id, request_id)
             # If request id not found
-            if not specific_request:
+            if specific_request == "fail":
                 response_object = {
                     "status": 'fail',
                     "message": "Request ID not found."

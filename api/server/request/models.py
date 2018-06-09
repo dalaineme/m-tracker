@@ -45,7 +45,8 @@ def all_user_requests(user_id):
     query = ("SELECT tbl_users.email, "
              "tbl_requests.request_id, "
              "tbl_requests.request_title, "
-             "tbl_requests.request_description "
+             "tbl_requests.request_description, "
+             "tbl_requests.current_status "
              "FROM tbl_users, tbl_requests "
              "WHERE tbl_users.user_id = tbl_requests.created_by "
              "AND tbl_requests.created_by = %s;")
@@ -59,4 +60,15 @@ def get_request_by_id(user_id, request_id):
     dicts = all_user_requests(user_id)
     result = next(
         (item for item in dicts if item["request_id"] == request_id), False)
-    return result
+    query = ("SELECT tbl_status_logs.request_status,tbl_status_logs.date_updated, tbl_status_logs.request, tbl_requests.request_id FROM tbl_requests, tbl_status_logs WHERE tbl_status_logs.request=tbl_requests.request_id AND tbl_requests.request_id=%s;")
+    if result:
+        request_logs = get_query(query, result["request_id"])
+        response_dict = {
+            "request_id": result["request_id"],
+            "request_title": result["request_title"],
+            "request_description": result["request_description"],
+            "my_email": result["email"],
+            "status_logs": request_logs
+        }
+        return response_dict
+    return "fail"
