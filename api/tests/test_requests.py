@@ -135,6 +135,7 @@ class TestRequestEndpoint(BaseTestCase):
 
     def test_request_exist(self):
         """Test for existing request by specific id"""
+        create_user()
         create_request(
             self,
             "This is the request title. Short and descriptive",
@@ -153,6 +154,22 @@ class TestRequestEndpoint(BaseTestCase):
         }
         response = self.client.get(
             URL_PREFIX + 'requests/1', headers=headers)
+        self.assertEqual(response.status_code, 200)
+        truncate_tables()
+
+    def test_request_dont_exist(self):
+        """Test for non existing request by specific id"""
+        create_user()
+        user = {
+            "user_id": "988",
+            "user_level": "User"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.get(
+            URL_PREFIX + 'requests/1999', headers=headers)
         self.assertEqual(response.status_code, 404)
         truncate_tables()
 
