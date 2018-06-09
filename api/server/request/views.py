@@ -13,7 +13,7 @@ from flask_jwt_extended import (
 
 from api.server.request.schema import RequestSchema, ModifyRequestSchema
 from api.server.request.models import (
-    create_request, all_user_requests, get_request_by_id)
+    create_request, all_user_requests, get_request_by_id, modify_user_request)
 
 # Create a blueprint
 REQUEST_BLUEPRINT = Blueprint('request', __name__, url_prefix='/api/v1/users/')
@@ -98,6 +98,44 @@ class RequestsAPI(MethodView):
                 "request": specific_request
             }
             return make_response(jsonify(response_object)), 200
+
+    @jwt_required
+    def put(self, request_id=None):  # pylint: disable=R0201
+        """Send PUT method to requests endpoint"""
+        user_id = get_jwt_identity()
+        specific_request = get_request_by_id(user_id, request_id)
+        # If request id not found
+        if specific_request == "fail":
+            response_object = {
+                "status": 'fail',
+                "message": "Request ID not found."
+            }
+            return make_response(jsonify(response_object)), 404
+        # If request ID exists
+        # get the post data
+        post_data = request.get_json()
+
+        # load input to the marshmallow schema
+        try:
+            MODIFY_REQUEST_SCHEMA.load(post_data)
+
+        # return error object case there is any
+        except ValidationError as err:
+            response_object = {
+                'status': 'fail',
+                'message': 'Validation errors.',
+                'errors': err.messages
+            }
+            return make_response(jsonify(response_object)), 422
+        # Assign post data to variables
+        title = post_data["title"]
+        description = post_data["description"]
+        modify_user_request(user_id, request_id, title, description)
+        response_object = {
+            "status": 'success',
+            "message": "Your request has been updated."
+        }
+        return make_response(jsonify(response_object)), 201
 
 
 # define API resources
