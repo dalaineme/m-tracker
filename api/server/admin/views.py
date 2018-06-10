@@ -1,7 +1,7 @@
 #! /api/server/admin/views.py
 # -*- coding: utf-8 -*-
 """This is the admin module
-This module contains various routes for the admin endpoint
+This module contains various routes for the admin 
 """
 from functools import wraps
 from flask import Blueprint, jsonify, make_response
