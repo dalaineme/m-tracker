@@ -1,0 +1,28 @@
+Existing User and Admin Login
+An existing user can login by providing their valid login credentials.
+    ---
+    tags:
+      - Auth Endpoint
+    summary: Logs in a user
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description:
+          Create new user
+        required: true
+        schema:
+          properties:
+            email:
+              type: string
+              description: Email address.
+              example: alice@smith.com
+              required: true
+            password:
+              type: string
+              description: User password.
+              example: aaaAAA111
+              required: true

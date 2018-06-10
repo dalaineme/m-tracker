@@ -80,7 +80,7 @@ class TestAuthEndpoint(BaseTestCase):
                 data['msg'] ==
                 "Sorry! Email 'another@gmail.com' already exists.")
             self.assertTrue(response.content_type == 'application/json')
-            self.assertEqual(response.status_code, 400)
+            self.assertEqual(response.status_code, 422)
             truncate_tables()
 
     def test_empty_fields(self):
