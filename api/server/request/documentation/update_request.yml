@@ -1,0 +1,39 @@
+User can update their requests
+A logged in user can update a request.
+The request has to have a current status of Pending.
+    ---
+    tags:
+      - Requests Endpoint
+    summary: View requests
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+        required: true
+      - in: path
+        name: request_id
+        description: Request ID
+        type: integer
+        required: true
+      - in: body
+        name: body
+        description:
+          Update Request
+        required: true
+        schema:
+          properties:
+            title:
+              type: string
+              description: Title of the Request.
+              example: The door to the computer lab is in bad shape, please look into it ASAP
+              required: true
+            description:
+              type: string
+              description: Description of the Request.
+              example: This is the description This is the description This is the description This is the description This is the description. 
+              required: true

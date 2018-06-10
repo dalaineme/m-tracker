@@ -1,0 +1,22 @@
+User can delete their requests
+A logged in user can delete a request.
+The request has to have a current status of Pending, Rejected or Resolved but not Active.
+    ---
+    tags:
+      - Requests Endpoint
+    summary: Delete Request
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+        required: true
+      - in: path
+        name: request_id
+        description: Request ID
+        type: integer
+        required: true

@@ -133,7 +133,7 @@ class LoginAPI(MethodView):
             "status": 'success',
             "user_level": user_info["user_level"],
             "msg": "Successfully logged in.",
-            "token": access_token
+            "token": "Bearer {}".format(access_token)
         }
         return make_response(jsonify(response_object)), 200
 
