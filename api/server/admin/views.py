@@ -121,7 +121,7 @@ def admin_resolve_request(request_id=None):
         # return response
         response_object = {
             "status": 'success',
-            "msg": "Request has been successfully Dissaproved.",
+            "msg": "Request has been successfully Resolved.",
             "request": result
         }
         return make_response(jsonify(response_object)), 201

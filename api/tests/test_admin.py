@@ -244,6 +244,114 @@ class TestAdminEndpoint(BaseTestCase):
         self.assertEqual(response.status_code, 403)
         truncate_tables()
 
+    # Tests for Resolving req
+    def test_no_id_resolve(self):
+        """Test for no request ID for request resolving"""
+        # Create a request
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/93837/resolve', headers=headers)
+        self.assertEqual(response.status_code, 404)
+        truncate_tables()
+
+    def test_already_resolved(self):
+        """Test if request can not be resolved as already resolved"""
+        # Create a request
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to.")
+        )
+        # Update set to Approved
+        db_instance = DbConn()
+        query = (u"UPDATE tbl_requests SET current_status = %s "
+                 "WHERE request_id=%s;")
+        inputs = 'Resolved', '1'
+        db_instance.cur.execute(query, inputs)
+        db_instance.conn.commit()
+        db_instance.close()
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/1/resolve', headers=headers)
+        self.assertEqual(response.status_code, 403)
+        truncate_tables()
+
+    def test_success_resolve(self):
+        """Test if request resolved successfully"""
+        # Create a request
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to.")
+        )
+        # Update set to Approved
+        db_instance = DbConn()
+        query = (u"UPDATE tbl_requests SET current_status = %s "
+                 "WHERE request_id=%s;")
+        inputs = 'Approved', '1'
+        db_instance.cur.execute(query, inputs)
+        db_instance.conn.commit()
+        db_instance.close()
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/1/resolve', headers=headers)
+        self.assertEqual(response.status_code, 201)
+        truncate_tables()
+
+    def test_resolve_not_approved(self):
+        """Test if a request which is not approved can not be resolved"""
+        # Create a request
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to.")
+        )
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/1/resolve', headers=headers)
+        self.assertEqual(response.status_code, 403)
+        truncate_tables()
+
 
 if __name__ == "__main__":
     unittest.main()
