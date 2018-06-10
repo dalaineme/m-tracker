@@ -9,6 +9,7 @@ from flask.views import MethodView
 from flask_jwt_extended import (
     jwt_required, get_jwt_claims
 )
+from flasgger.utils import swag_from
 from api.server.admin.models import (
     all_user_requests, approve_request, dissaprove_request, resolve_request)
 
@@ -35,6 +36,7 @@ def admin_only(admin):
 @ADMIN_BLUEPRINT.route('requests/<int:request_id>/approve', methods=['PUT'])
 @jwt_required
 @admin_only
+@swag_from('documentation/approve_request.yml', methods=['PUT'])
 def admin_approve_request(request_id=None):
     """Approve request method"""
     result = approve_request(request_id)
@@ -64,6 +66,7 @@ def admin_approve_request(request_id=None):
 @ADMIN_BLUEPRINT.route('requests/<int:request_id>/disapprove', methods=['PUT'])
 @jwt_required
 @admin_only
+@swag_from('documentation/disapprove_request.yml', methods=['PUT'])
 def admin_disapprove_request(request_id=None):
     """Approve request method"""
     result = dissaprove_request(request_id)
@@ -100,6 +103,7 @@ def admin_disapprove_request(request_id=None):
 @ADMIN_BLUEPRINT.route('requests/<int:request_id>/resolve', methods=['PUT'])
 @jwt_required
 @admin_only
+@swag_from('documentation/resolve_request.yml', methods=['PUT'])
 def admin_resolve_request(request_id=None):
     """Resolve request method"""
     result = resolve_request(request_id)
@@ -137,6 +141,7 @@ class AdminAPI(MethodView):
     """User Signup resource"""
     @jwt_required
     @admin_only
+    @swag_from('documentation/get_requests.yml', methods=['GET'])
     def get(self):  # pylint: disable=R0201
         """post method"""
 

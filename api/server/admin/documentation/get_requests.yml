@@ -1,0 +1,16 @@
+Admin can get all requests
+A logged in Admin can get all the requests made by users.
+    ---
+    tags:
+      - Admin Endpoint
+    summary: Get Requests
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+        required: true

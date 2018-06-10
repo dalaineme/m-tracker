@@ -24,6 +24,7 @@ from flask_jwt_extended import (
 
 # making cross-origin AJAX possible
 from flask_cors import CORS
+from flasgger import Swagger
 
 # instanciate Flask
 APP = Flask(__name__)
@@ -43,6 +44,23 @@ APP.config.from_object(APP_SETTINGS)
 # pass flask app object to Bcrypt
 BCRYPT = Bcrypt(APP)
 JWT = JWTManager(APP)
+SWAG = Swagger(
+    APP,
+    template={
+        "swagger": "2.0",
+        "uiversion": 2,
+        "info": {
+            "title": "M-Tracker - Docs",
+            "version": "1.0",
+        },
+        "consumes": [
+            "application/x-www-form-urlencoded",
+        ],
+        "produces": [
+            "application/json",
+        ],
+    },
+)
 
 
 @JWT.user_claims_loader

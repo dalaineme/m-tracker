@@ -8,6 +8,7 @@ from flask import Blueprint, make_response, jsonify, request
 from flask.views import MethodView
 from marshmallow import ValidationError
 from flask_jwt_extended import (create_access_token)
+from flasgger.utils import swag_from
 
 
 from api.server.auth.models import signup_user, login_user, email_exists
@@ -23,9 +24,9 @@ LOGIN_SCHEMA = LoginSchema()
 
 class SignupAPI(MethodView):
     """User Signup resource"""
-
+    @swag_from('documentation/register.yml', methods=['POST'])
     def post(self):  # pylint: disable=R0201
-        """post method"""
+        """POST method"""
         # get the post data
         post_data = request.get_json()
 
@@ -60,7 +61,7 @@ class SignupAPI(MethodView):
                 "msg": "Sorry! Email '{}' already exists.".format(
                     input_email)
             }
-            return make_response(jsonify(response_object)), 400
+            return make_response(jsonify(response_object)), 422
 
         signup_user(input_first_name, input_last_name,
                     input_email, input_password, "User")
@@ -81,7 +82,7 @@ class SignupAPI(MethodView):
 
 class LoginAPI(MethodView):
     """User Login resource"""
-
+    @swag_from('documentation/login.yml', methods=['POST'])
     def post(self):  # pylint: disable=R0201
         """post method"""
         # get the post data
@@ -132,7 +133,7 @@ class LoginAPI(MethodView):
             "status": 'success',
             "user_level": user_info["user_level"],
             "msg": "Successfully logged in.",
-            "token": access_token
+            "token": "Bearer {}".format(access_token)
         }
         return make_response(jsonify(response_object)), 200
 

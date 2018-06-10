@@ -1,0 +1,33 @@
+User can create a new request
+A logged in user can create a new request.
+    ---
+    tags:
+      - Requests Endpoint
+    summary: Create request
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+        required: true
+      - in: body
+        name: body
+        description:
+          Create new Request
+        required: true
+        schema:
+          properties:
+            title:
+              type: string
+              description: Title of the Request.
+              example: The door to the computer lab is in bad shape, please look into it ASAP
+              required: true
+            description:
+              type: string
+              description: Description of the Request.
+              example: This is the description This is the description This is the description This is the description This is the description. 
+              required: true

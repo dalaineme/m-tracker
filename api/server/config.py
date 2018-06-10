@@ -16,6 +16,10 @@ class BaseConfig:  # pylint: disable=too-few-public-methods
     DEBUG = False
     BCRYPT_LOG_ROUNDS = 13
     DATABASE_HOST = "localhost"
+    SWAGGER = {
+        "title": "Maintenance Tracker",
+        "uiversion": 2,
+    }
 
 
 class DevelopmentConfig(BaseConfig):  # pylint: disable=too-few-public-methods

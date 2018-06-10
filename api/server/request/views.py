@@ -10,6 +10,7 @@ from marshmallow import ValidationError
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity
 )
+from flasgger.utils import swag_from
 
 from api.server.request.schema import RequestSchema, ModifyRequestSchema
 from api.server.request.models import (
@@ -25,8 +26,9 @@ MODIFY_REQUEST_SCHEMA = ModifyRequestSchema()
 
 
 class RequestsAPI(MethodView):
-    """User Logout resource"""
+    """User Requests resource"""
     @jwt_required
+    @swag_from('documentation/create_request.yml', methods=['POST'])
     def post(self):  # pylint: disable=R0201
         """Send POST method to requests endpoint"""
 
@@ -64,6 +66,7 @@ class RequestsAPI(MethodView):
         return make_response(jsonify(response_object)), 201
 
     @jwt_required
+    @swag_from('documentation/view_request.yml', methods=['GET'])
     def get(self, request_id=None):  # pylint: disable=R0201
         """Send GET method to requests endpoint"""
         if not request_id:
@@ -101,6 +104,7 @@ class RequestsAPI(MethodView):
             return make_response(jsonify(response_object)), 200
 
     @jwt_required
+    @swag_from('documentation/update_request.yml', methods=['PUT'])
     def put(self, request_id=None):  # pylint: disable=R0201
         """Send PUT method to requests endpoint"""
         user_id = get_jwt_identity()
@@ -146,6 +150,7 @@ class RequestsAPI(MethodView):
         return make_response(jsonify(response_object)), 201
 
     @jwt_required
+    @swag_from('documentation/delete_request.yml', methods=['DELETE'])
     def delete(self, request_id=None):  # pylint: disable=R0201
         """Send DELETE method to requests endpoint"""
         user_id = get_jwt_identity()

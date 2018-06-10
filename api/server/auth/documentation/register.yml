@@ -1,0 +1,42 @@
+New User Signup
+A new user can create an account
+They need to provide their valid signup credentials before their new account is created.
+    ---
+    tags:
+      - Auth Endpoint
+    summary: Creates a new user
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description:
+          Create new user
+        required: true
+        schema:
+          properties:
+            first_name:
+              type: string
+              description: First name.
+              example: Alice
+            last_name:
+              type: string
+              description: Last name.
+              example: Smith
+            email:
+              type: string
+              description: Email address.
+              example: alice@smith.com
+            password:
+              type: string
+              description: User password.
+              example: aaaAAA111
+    responses:
+      201:
+        description: Successful operation
+      422:
+        description: Validation errors/Email already exists in the system
+      400:
+        description: Invalid input
