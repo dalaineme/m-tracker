@@ -48,6 +48,7 @@ def admin_approve_request(request_id=None):
         # return response
         response_object = {
             "status": 'success',
+            "msg": "Request has been successfully Approved.",
             "request": result
         }
         return make_response(jsonify(response_object)), 201
