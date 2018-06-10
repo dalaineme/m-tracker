@@ -9,7 +9,7 @@ from flask.views import MethodView
 from flask_jwt_extended import (
     jwt_required, get_jwt_claims
 )
-from api.server.admin.models import all_user_requests
+from api.server.admin.models import all_user_requests, approve_request
 
 # Create a blueprint
 ADMIN_BLUEPRINT = Blueprint('admin', __name__, url_prefix='/api/v1/')
@@ -29,6 +29,35 @@ def admin_only(admin):
             return make_response(jsonify(response_object)), 403
         return admin(*args, **kwargs)
     return wrapped
+
+
+@ADMIN_BLUEPRINT.route('requests/<int:request_id>/approve', methods=['PUT'])
+@jwt_required
+@admin_only
+def admin_approve_request(request_id=None):
+    """Approve request method"""
+    result = approve_request(request_id)
+    if result == "no_id":
+        # return response
+        response_object = {
+            "status": 'fail',
+            "msg": "Request ID not found."
+        }
+        return make_response(jsonify(response_object)), 404
+    if result:
+        # return response
+        response_object = {
+            "status": 'success',
+            "msg": "Request has been successfully Approved.",
+            "request": result
+        }
+        return make_response(jsonify(response_object)), 201
+    # If not approve
+    response_object = {
+        "status": 'fail',
+        "msg": "You can only approve a pending request"
+    }
+    return make_response(jsonify(response_object)), 401
 
 
 class AdminAPI(MethodView):
@@ -61,5 +90,5 @@ ADMIN_VIEW = AdminAPI.as_view('admin_view')
 ADMIN_BLUEPRINT.add_url_rule(
     '/requests',
     view_func=ADMIN_VIEW,
-    methods=['POST', 'GET', 'PUT']
+    methods=['GET']
 )
