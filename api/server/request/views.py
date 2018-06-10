@@ -135,7 +135,7 @@ class RequestsAPI(MethodView):
         if result == "fail":
             response_object = {
                 "status": 'fail',
-                "msg": "You can only modify a sent request."
+                "msg": "You can only modify a Pending request."
             }
             return make_response(jsonify(response_object)), 401
 

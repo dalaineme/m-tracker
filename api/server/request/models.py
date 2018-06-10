@@ -23,7 +23,7 @@ def create_request(input_title, input_description, user_id):
         print(last_insert_id)
         query2 = (u"INSERT INTO tbl_status_logs (request_status, request) "
                   "VALUES(%s,%s);")
-        inputs2 = "Sent", last_insert_id
+        inputs2 = "Pending", last_insert_id
         db_instance.cur.execute(query2, inputs2)
         db_instance.conn.commit()
     except psycopg2.Error:
@@ -75,8 +75,8 @@ def get_request_by_id(user_id, request_id):
 def modify_user_request(user_id, request_id, title, description):
     """Method that modifies a request"""
     result = get_request_by_id(user_id, request_id)
-    if result["current_status"] != "Sent":
-        # You can only modify a Sent request
+    if result["current_status"] != "Pending":
+        # You can only modify a Pending request
         return "fail"
     query = (u"UPDATE tbl_requests SET request_title=%s, "
              "request_description=%s WHERE request_id=%s AND created_by=%s ;")

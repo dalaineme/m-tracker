@@ -3,7 +3,7 @@
 """This is the admin module
 This module contains various routes for the admin endpoint
 """
-
+from functools import wraps
 from flask import Blueprint, jsonify, make_response
 from flask.views import MethodView
 from flask_jwt_extended import (
@@ -15,11 +15,11 @@ from api.server.admin.models import all_user_requests
 ADMIN_BLUEPRINT = Blueprint('admin', __name__, url_prefix='/api/v1/')
 
 
-class AdminAPI(MethodView):
-    """User Signup resource"""
-    @jwt_required
-    def get(self):  # pylint: disable=R0201
-        """post method"""
+def admin_only(admin):
+    """Admin only decorator function"""
+    @wraps(admin)
+    def wrapped(*args, **kwargs):
+        """wrapped method"""
         user_level = get_jwt_claims()["role"]
         if user_level != "Admin":
             # return response
@@ -27,6 +27,17 @@ class AdminAPI(MethodView):
                 "msg": "Insufficient access rights"
             }
             return make_response(jsonify(response_object)), 403
+        return admin(*args, **kwargs)
+    return wrapped
+
+
+class AdminAPI(MethodView):
+    """User Signup resource"""
+    @jwt_required
+    @admin_only
+    def get(self):  # pylint: disable=R0201
+        """post method"""
+
         # Get the requests
         get_data = all_user_requests()
         if get_data:
