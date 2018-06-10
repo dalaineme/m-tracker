@@ -7,6 +7,7 @@ import sys
 import psycopg2
 
 from db_conn import DbConn
+from api.server.auth.models import signup_user
 
 CONN = DbConn()
 
@@ -23,6 +24,10 @@ def main():
         raise SystemExit(
             "Failed to load schema.\n{0}".format(sys.exc_info())
         )
+
+    # Create default Admin
+    signup_user("Dalin", "Oluoch", "mcdalinoluoch@gmail.com",
+                "aaaAAA111", "Admin")
 
 
 if __name__ == "__main__":

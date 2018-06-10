@@ -256,7 +256,7 @@ class TestRequestEndpoint(BaseTestCase):
             data = json.loads(response.data.decode())
             self.assertTrue(data['status'] == 'fail')
             self.assertTrue(data['msg'] ==
-                            'You can only modify a sent request.')
+                            'You can only modify a Pending request.')
             self.assertTrue(response.content_type == 'application/json')
             self.assertEqual(response.status_code, 401)
             truncate_tables()

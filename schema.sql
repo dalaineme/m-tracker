@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS tbl_status_logs, tbl_requests, tbl_users CASCADE;
+
+DROP TYPE IF EXISTS e_user_level, e_request_status;
+
 CREATE TYPE e_user_level AS ENUM
 (
   'Admin',
@@ -5,7 +9,7 @@ CREATE TYPE e_user_level AS ENUM
 );
 CREATE TYPE e_request_status AS ENUM
 (
-  'Sent',
+  'Pending',
   'Approved',
   'Dissaproved',
   'Resolved'
@@ -24,7 +28,7 @@ CREATE TABLE tbl_requests
 	request_id SERIAL PRIMARY KEY,
 	request_title VARCHAR(255) NOT NULL,
 	request_description VARCHAR(255) NOT NULL,
-  current_status e_request_status DEFAULT 'Sent',
+  current_status e_request_status DEFAULT 'Pending',
 	created_by INTEGER,
 	FOREIGN KEY(created_by) REFERENCES tbl_users (user_id)
 );
@@ -35,4 +39,4 @@ CREATE TABLE tbl_status_logs
   date_updated timestamp without time zone default current_timestamp,
   request INTEGER,
   FOREIGN KEY(request) REFERENCES tbl_requests (request_id)
-)
+);
