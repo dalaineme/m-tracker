@@ -70,6 +70,35 @@ class TestAdminEndpoint(BaseTestCase):
         response = self.client.get(
             URL_PREFIX + 'requests', headers=headers)
         self.assertEqual(response.status_code, 403)
+        # test in approve route
+        response2 = self.client.put(
+            URL_PREFIX + 'requests/1/approve', headers=headers)
+        self.assertEqual(response2.status_code, 403)
+        truncate_tables()
+
+    def test_successful_approve(self):
+        """Test for successful admin approving a requests"""
+        # Create a request
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to.")
+        )
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/1/approve', headers=headers)
+        self.assertEqual(response.status_code, 201)
         truncate_tables()
 
 
