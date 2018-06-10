@@ -1,0 +1,22 @@
+Admin can disapprove a request
+A logged in Admin can disapprove a request.
+The request has to have a current status of Pending or Active to be disapproved.
+    ---
+    tags:
+      - Admin Endpoint
+    summary: Disapprove Request
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+        required: true
+      - in: path
+        name: request_id
+        description: Request ID
+        type: integer
+        required: true
