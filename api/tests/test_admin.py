@@ -137,6 +137,113 @@ class TestAdminEndpoint(BaseTestCase):
         self.assertEqual(response.status_code, 401)
         truncate_tables()
 
+    def test_no_id_disapprove(self):
+        """Test for no request ID for request disapproval"""
+        # Create a request
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/93837/disapprove', headers=headers)
+        self.assertEqual(response.status_code, 404)
+        truncate_tables()
+
+    def test_already_disapproved(self):
+        """Test if request can not be disapproved as already disapproved"""
+        # Create a request
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to.")
+        )
+        # Update set to Approved
+        db_instance = DbConn()
+        query = (u"UPDATE tbl_requests SET current_status = %s "
+                 "WHERE request_id=%s;")
+        inputs = 'Dissaproved', '1'
+        db_instance.cur.execute(query, inputs)
+        db_instance.conn.commit()
+        db_instance.close()
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/1/disapprove', headers=headers)
+        self.assertEqual(response.status_code, 403)
+        truncate_tables()
+
+    def test_success_disapproved(self):
+        """Test if request disapproved successfully"""
+        # Create a request
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to.")
+        )
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/1/disapprove', headers=headers)
+        self.assertEqual(response.status_code, 201)
+        truncate_tables()
+
+    def test_disapproving_resolved(self):
+        """Test if admin can not disapprove a resolved request"""
+        # Create a request
+        create_user()
+        create_request(
+            self,
+            "This is the request title. Short and descriptive",
+            ("The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to. "
+             "The description. It has lengths that need to be adhered to.")
+        )
+        # Update set to Approved
+        db_instance = DbConn()
+        query = (u"UPDATE tbl_requests SET current_status = %s "
+                 "WHERE request_id=%s;")
+        inputs = 'Resolved', '1'
+        db_instance.cur.execute(query, inputs)
+        db_instance.conn.commit()
+        db_instance.close()
+        user = {
+            "user_id": "456",
+            "user_level": "Admin"
+        }
+        access_token = create_access_token(identity=user)
+        headers = {
+            'Authorization': 'Bearer {}'.format(access_token)
+        }
+        response = self.client.put(
+            URL_PREFIX + 'requests/1/disapprove', headers=headers)
+        self.assertEqual(response.status_code, 403)
+        truncate_tables()
+
 
 if __name__ == "__main__":
     unittest.main()

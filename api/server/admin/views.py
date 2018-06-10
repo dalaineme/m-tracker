@@ -94,7 +94,7 @@ def admin_disapprove_request(request_id=None):
         "status": 'fail',
         "msg": "You can not dissaprove a Resolved request"
     }
-    return make_response(jsonify(response_object)), 401
+    return make_response(jsonify(response_object)), 403
 
 
 class AdminAPI(MethodView):
