@@ -10,7 +10,7 @@ from flask_jwt_extended import (
     jwt_required, get_jwt_claims
 )
 from api.server.admin.models import (
-    all_user_requests, approve_request, dissaprove_request)
+    all_user_requests, approve_request, dissaprove_request, resolve_request)
 
 # Create a blueprint
 ADMIN_BLUEPRINT = Blueprint('admin', __name__, url_prefix='/api/v1/')
@@ -93,6 +93,42 @@ def admin_disapprove_request(request_id=None):
     response_object = {
         "status": 'fail',
         "msg": "You can not dissaprove a Resolved request"
+    }
+    return make_response(jsonify(response_object)), 403
+
+
+@ADMIN_BLUEPRINT.route('requests/<int:request_id>/resolve', methods=['PUT'])
+@jwt_required
+@admin_only
+def admin_resolve_request(request_id=None):
+    """Resolve request method"""
+    result = resolve_request(request_id)
+    if result == "no_id":
+        # return response
+        response_object = {
+            "status": 'fail',
+            "msg": "Request ID not found."
+        }
+        return make_response(jsonify(response_object)), 404
+    if result == "already_resolved":
+        # return response
+        response_object = {
+            "status": 'fail',
+            "msg": "Request has already been Resolved."
+        }
+        return make_response(jsonify(response_object)), 403
+    if result:
+        # return response
+        response_object = {
+            "status": 'success',
+            "msg": "Request has been successfully Dissaproved.",
+            "request": result
+        }
+        return make_response(jsonify(response_object)), 201
+    # If not approve
+    response_object = {
+        "status": 'fail',
+        "msg": "You can only Resolve an Approved request"
     }
     return make_response(jsonify(response_object)), 403
 

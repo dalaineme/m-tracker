@@ -82,3 +82,29 @@ def dissaprove_request(request_id):
         if request["current_status"] == "Dissaproved":
             return "already_dissaproved"
         return False
+
+
+def resolve_request(request_id):
+    """Resolve a request method"""
+    # Get the specific request
+    requests = get_request_by_id(request_id)
+    if not requests:
+        return "no_id"
+    # Check if it's pending first of all
+    for request in requests:
+        if request["current_status"] == "Approved":
+            db_instance = DbConn()
+            query = (u"UPDATE tbl_requests SET current_status = %s "
+                     "WHERE request_id = %s")
+            inputs = "Resolved", request_id
+            db_instance.cur.execute(query, inputs)
+            db_instance.conn.commit()
+            query2 = (u"INSERT INTO tbl_status_logs (request_status, request) "
+                      "VALUES(%s,%s);")
+            inputs2 = "Resolved", request_id
+            db_instance.cur.execute(query2, inputs2)
+            db_instance.conn.commit()
+            return request
+        if request["current_status"] == "Resolved":
+            return "already_resolved"
+        return False
