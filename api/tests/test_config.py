@@ -23,7 +23,7 @@ class TestDevelopmentConfig(TestCase):
     def test_app_is_development(self):
         """Test the app development config"""
         self.assertFalse(APP.config['SECRET_KEY'] is 'my_precious')
-        self.assertTrue(APP.config['DEBUG'] is True)
+        self.assertTrue(APP.config['DEBUG'] is False)
         self.assertFalse(current_app is None)
 
 
