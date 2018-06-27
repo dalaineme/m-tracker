@@ -15,7 +15,8 @@ from flask import Flask
 
 # provides bcrypt hashing utilities for our application
 from flask_bcrypt import Bcrypt
-
+# Mail
+from flask_mail import Mail, Message
 # TOKEN
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
@@ -43,6 +44,7 @@ APP.config.from_object(APP_SETTINGS)
 
 # pass flask app object to Bcrypt
 BCRYPT = Bcrypt(APP)
+MAIL = Mail(APP)
 JWT = JWTManager(APP)
 SWAG = Swagger(
     APP,

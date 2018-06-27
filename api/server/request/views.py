@@ -11,10 +11,11 @@ from flask_jwt_extended import (
     jwt_required, get_jwt_identity
 )
 from flasgger.utils import swag_from
-
+from api.server import MAIL
+from flask_mail import Mail, Message
 from api.server.request.schema import RequestSchema, ModifyRequestSchema
 from api.server.request.models import (
-    create_request, all_user_requests, get_request_by_id, modify_user_request,
+    create_request, all_user_requests, get_request_by_id, modify_user_request, find_user_info,
     delete_request)
 
 # Create a blueprint
@@ -57,8 +58,15 @@ class RequestsAPI(MethodView):
         user_id = current_user
 
         # save the data into a list
+        the_email = find_user_info(current_user)
         create_request(input_title, input_desc, user_id)
-
+        msg = Message(
+            'New Request', sender='mcdalinoluoch@gmail.com',
+            recipients=['dalaineme@gmail.com']
+        )
+        msg.html = "<img src='https://user-images.githubusercontent.com/36375214/40588957-3674c082-61ee-11e8-9f24-197d6e2a33a7.png'><br><br><p><h2>Message from: {}</h2></p><p><h3>{}</h3></p><p><b>{}</b></p>".format(
+            the_email, input_title, input_desc)
+        MAIL.send(msg)
         response_object = {
             "status": 'success',
             "msg": "Request successfully sent to the admin."

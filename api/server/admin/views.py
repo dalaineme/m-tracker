@@ -139,9 +139,10 @@ def admin_resolve_request(request_id=None):
 
 class AdminAPI(MethodView):
     """User Signup resource"""
-    @jwt_required
-    @admin_only
-    @swag_from('documentation/get_requests.yml', methods=['GET'])
+    # @jwt_required
+    # # @admin_only
+    # @swag_from('documentation/get_requests.yml', methods=['GET'])
+
     def get(self):  # pylint: disable=R0201
         """post method"""
 

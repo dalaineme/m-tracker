@@ -9,8 +9,9 @@ from flask.views import MethodView
 from marshmallow import ValidationError
 from flask_jwt_extended import (create_access_token)
 from flasgger.utils import swag_from
+from flask_mail import Mail, Message
 
-
+from api.server import MAIL
 from api.server.auth.models import signup_user, login_user, email_exists
 from api.server.auth.schema import UserSchema, LoginSchema
 
@@ -63,6 +64,12 @@ class SignupAPI(MethodView):
             }
             return make_response(jsonify(response_object)), 422
 
+        msg = Message(
+            'Confirm Email', sender='mcdalinoluoch@gmail.com',
+            recipients=[input_email]
+        )
+        msg.body = 'Your link is SOMETHING'
+        MAIL.send(msg)
         signup_user(input_first_name, input_last_name,
                     input_email, input_password, "User")
         # return response

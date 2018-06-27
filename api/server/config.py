@@ -20,11 +20,17 @@ class BaseConfig:  # pylint: disable=too-few-public-methods
         "title": "Maintenance Tracker",
         "uiversion": 2,
     }
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_USERNAME = os.getenv("MAIL_USERNAME")
+    MAIL_PASSWORD = os.getenv("MAIL_PASSWORD")
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    MAIL_USE_TLS = False
 
 
 class DevelopmentConfig(BaseConfig):  # pylint: disable=too-few-public-methods
     """Development configuration."""
-    DEBUG = True
+    DEBUG = False
     BCRYPT_LOG_ROUNDS = 4
     DATABASE_NAME = os.getenv("PGDATABASE")
     DATABASE_USER = os.getenv("PGUSER")

@@ -98,3 +98,12 @@ def delete_request(user_id, request_id):
     inputs = str(request_id)
     # run query
     return run_query(query, inputs)
+
+
+def find_user_info(user_id):
+    """Retreive user info"""
+    query = ("SELECT * FROM tbl_users "
+             "WHERE user_id=%s;")
+    user_reqeust = get_query(query, user_id)
+    for row in user_reqeust:
+        return row["email"]
