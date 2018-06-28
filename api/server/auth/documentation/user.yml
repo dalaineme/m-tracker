@@ -1,0 +1,16 @@
+User can view their info
+A logged in user can view his/her info.
+    ---
+    tags:
+      - Auth Endpoint
+    summary: View info
+    consumes:
+      - application/json
+    produces:
+      - application/json
+    parameters:
+      - in: header
+        name: Authorization
+        description: Authorization Token
+        type: string
+        required: true

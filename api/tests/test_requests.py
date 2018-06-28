@@ -76,6 +76,24 @@ def update_request(self, title, description, req_id):
 class TestRequestEndpoint(BaseTestCase):
     """Class that handles Request Endpoint test"""
 
+    def test_get_user_info(self):
+        """Test for successful retreival of logged in user info"""
+        with self.client:
+            create_user()
+            # Create a UserObject for tokens
+            user = {
+                "user_id": "988",
+                "user_level": "User"
+            }
+            access_token = create_access_token(identity=user)
+            headers = {
+                'Authorization': 'Bearer {}'.format(access_token)
+            }
+            response = self.client.get(
+                "/api/v1/auth/user", headers=headers)
+            self.assertEqual(response.status_code, 200)
+            truncate_tables()
+
     def test_successful_request(self):
         """Test for successful request submission"""
         with self.client:

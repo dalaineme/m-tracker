@@ -10,13 +10,14 @@ from marshmallow import ValidationError
 from flask_jwt_extended import (
     jwt_required, get_jwt_identity
 )
+from flask_mail import Message
 from flasgger.utils import swag_from
 from api.server import MAIL
-from flask_mail import Mail, Message
+
 from api.server.request.schema import RequestSchema, ModifyRequestSchema
 from api.server.request.models import (
-    create_request, all_user_requests, get_request_by_id, modify_user_request, find_user_info,
-    delete_request)
+    create_request, all_user_requests, get_request_by_id, modify_user_request,
+    find_user_info, delete_request)
 
 # Create a blueprint
 REQUEST_BLUEPRINT = Blueprint('request', __name__, url_prefix='/api/v1/users/')

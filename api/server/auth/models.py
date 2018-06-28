@@ -57,3 +57,17 @@ def login_user(input_email, input_password):
         # compare password input to saved password
         return logging_user_details
     return False
+
+
+def get_user_info(user_id):
+    """Retreive user info"""
+    query = ("SELECT * FROM tbl_users "
+             "WHERE user_id=%s;")
+    user_reqeust = get_query(query, user_id)
+    for result in user_reqeust:
+        response_dict = {
+            "first_name": result["first_name"],
+            "last_name": result["last_name"],
+            "email": result["email"]
+        }
+        return response_dict

@@ -11,9 +11,12 @@ from flask_jwt_extended import (create_access_token)
 from flasgger.utils import swag_from
 from flask_mail import Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from flask_jwt_extended import (
+    jwt_required, get_jwt_identity
+)
 
 from api.server import MAIL
-from api.server.auth.models import signup_user, login_user, email_exists
+from api.server.auth.models import signup_user, login_user, email_exists, get_user_info
 from api.server.auth.schema import UserSchema, LoginSchema
 
 # Create a blueprint
@@ -163,10 +166,27 @@ class ConfirmEmail(MethodView):
         return '<h1>The token works!</h1>'
 
 
+class UserAPI(MethodView):
+    """User API"""
+    @jwt_required
+    @swag_from('documentation/user.yml', methods=['GET'])
+    def get(self):  # pylint: disable=R0201
+        """Get all user details"""
+        user_id = get_jwt_identity()
+        user_info = get_user_info(user_id)
+        response_object = {
+            "status": 'success',
+            "result": user_info
+        }
+        return make_response(jsonify(response_object)), 200
+
+
+
 # define API resources
 SIGNUP_VIEW = SignupAPI.as_view('signup_api')
 LOGIN_VIEW = LoginAPI.as_view('login_api')
 CONFIRM_EMAIL_VIEW = ConfirmEmail.as_view('comfirm_email')
+USER_VIEW = UserAPI.as_view('user_api')
 
 # add rules for auth enpoints
 AUTH_BLUEPRINT.add_url_rule(
@@ -183,5 +203,10 @@ AUTH_BLUEPRINT.add_url_rule(
     '/confirm_email/<token>',
     endpoint="confirm_email",
     view_func=CONFIRM_EMAIL_VIEW,
+    methods=['GET']
+)
+AUTH_BLUEPRINT.add_url_rule(
+    '/user',
+    view_func=USER_VIEW,
     methods=['GET']
 )
