@@ -4,7 +4,7 @@
 
 Maintenance Tracker App is an application that provides users with the ability to reach out to operations or repairs department regarding repair or maintenance requests and monitor the status of their request.
 
-**TL;DR** [View a live demo of the UI](https://dalaineme.github.io/m-tracker/) **or** [Check out the Pivotal Tracker Board](https://www.pivotaltracker.com/n/projects/2173228) **or** [Check out the heroku link.](https://dc-the-m-tracker.herokuapp.com)
+**TL;DR** [View a live demo of the UI](https://dalaineme.github.io/m-tracker/) **or** [Check out the Pivotal Tracker Board](https://www.pivotaltracker.com/n/projects/2173228) **or** [Check out the API Docs.](https://dc-the-m-tracker.herokuapp.com/apidocs/)
 
 **Alternatively**
 
@@ -37,16 +37,20 @@ Maintenance Tracker App is an application that provides users with the ability t
 
 ## API Endpoints
 
-| Endpoint                      | Functionality             | HTTP method |
-| ----------------------------- | ------------------------- | ----------- |
-| /api/v1/users/register        | Register a user           | POST        |
-| /api/v1/users/login           | Log in a user             | POST        |
-| /api/v1/logout                | Log out a user            | POST        |
-| /api/v1/requests              | Create a request          | POST        |
-| /api/v1/requests              | Get all users reqeusts    | GET         |
-| /api/v1/requests/_request_id_ | Get request by request_id | GET         |
-| /api/v1/requests/_request_id_ | Edit a request            | PUT         |
-| /api/v1/requests/_request_id_ | Delete a request          | DELETE      |
+| Endpoint                               | Functionality             | HTTP method |
+| -------------------------------------- | ------------------------- | ----------- |
+| /api/v1/auth/register                  | Register a user           | POST        |
+| /api/v1/auth/login                     | Log in a user             | POST        |
+| /api/v1/auth/logout                    | Log out a user            | POST        |
+| /api/v1/users/requests                 | Create a request          | POST        |
+| /api/v1/users/requests                 | Get all users reqeusts    | GET         |
+| /api/v1/users/requests/_request_id_    | Get request by request_id | GET         |
+| /api/v1/users/requests/_request_id_    | Edit a request            | PUT         |
+| /api/v1/users/requests/_request_id_    | Delete a request          | DELETE      |
+| /api/v1/requests/                      | Get all requests          | GET         |
+| /api/v1/requests/_request_id_ /approve | Admin Approve a request   | PUT         |
+| /api/v1/requests/_request_id_/reject   | Admin Reject a request    | PUT         |
+| /api/v1/requests/_request_id_/resolve  | Admin Resolve a request   | PUT         |
 
 ## Getting Started
 
