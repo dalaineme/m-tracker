@@ -26,11 +26,13 @@ class BaseConfig:  # pylint: disable=too-few-public-methods
     MAIL_PORT = 465
     MAIL_USE_SSL = True
     MAIL_USE_TLS = False
+    MAIL_DEBUG = True
+    MAIL_SUPPRESS_SEND = False
 
 
 class DevelopmentConfig(BaseConfig):  # pylint: disable=too-few-public-methods
     """Development configuration."""
-    DEBUG = False
+    TESTING = False
     BCRYPT_LOG_ROUNDS = 4
     DATABASE_NAME = os.getenv("PGDATABASE")
     DATABASE_USER = os.getenv("PGUSER")

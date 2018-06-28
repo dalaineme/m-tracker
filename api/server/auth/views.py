@@ -4,12 +4,13 @@
 This module contains various routes for the auth endpoint
 """
 
-from flask import Blueprint, make_response, jsonify, request
+from flask import Blueprint, make_response, jsonify, request, url_for
 from flask.views import MethodView
 from marshmallow import ValidationError
 from flask_jwt_extended import (create_access_token)
 from flasgger.utils import swag_from
-from flask_mail import Mail, Message
+from flask_mail import Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
 from api.server import MAIL
 from api.server.auth.models import signup_user, login_user, email_exists
@@ -21,6 +22,8 @@ AUTH_BLUEPRINT = Blueprint('auth', __name__, url_prefix='/api/v1/auth')
 # Instanciate marshmallow shemas
 USER_SCHEMA = UserSchema()
 LOGIN_SCHEMA = LoginSchema()
+
+s = URLSafeTimedSerializer('Thisisasecret!')
 
 
 class SignupAPI(MethodView):
@@ -63,12 +66,14 @@ class SignupAPI(MethodView):
                     input_email)
             }
             return make_response(jsonify(response_object)), 422
-
+        token = s.dumps(input_email, salt='email-confirm')
         msg = Message(
             'Confirm Email', sender='mcdalinoluoch@gmail.com',
             recipients=[input_email]
         )
-        msg.body = 'Your link is SOMETHING'
+        link = url_for('.confirm_email',
+                       token=token, _external=True)
+        msg.body = 'Your link is {}'.format(link)
         MAIL.send(msg)
         signup_user(input_first_name, input_last_name,
                     input_email, input_password, "User")
@@ -145,9 +150,23 @@ class LoginAPI(MethodView):
         return make_response(jsonify(response_object)), 200
 
 
+class ConfirmEmail(MethodView):
+    """Confirm email"""
+
+    def get(self, token):  # pylint: disable=R0201
+        """Get method"""
+        try:
+            s.loads(
+                token, salt='email-confirm', max_age=3600)
+        except SignatureExpired:
+            return '<h1>The token is expired!</h1>'
+        return '<h1>The token works!</h1>'
+
+
 # define API resources
 SIGNUP_VIEW = SignupAPI.as_view('signup_api')
 LOGIN_VIEW = LoginAPI.as_view('login_api')
+CONFIRM_EMAIL_VIEW = ConfirmEmail.as_view('comfirm_email')
 
 # add rules for auth enpoints
 AUTH_BLUEPRINT.add_url_rule(
@@ -159,4 +178,10 @@ AUTH_BLUEPRINT.add_url_rule(
     '/login',
     view_func=LOGIN_VIEW,
     methods=['POST']
+)
+AUTH_BLUEPRINT.add_url_rule(
+    '/confirm_email/<token>',
+    endpoint="confirm_email",
+    view_func=CONFIRM_EMAIL_VIEW,
+    methods=['GET']
 )
