@@ -176,7 +176,8 @@ class UserAPI(MethodView):
         user_info = get_user_info(user_id)
         response_object = {
             "status": 'success',
-            "result": user_info
+            "result": user_info,
+            "msg": 'success'
         }
         return make_response(jsonify(response_object)), 200
 

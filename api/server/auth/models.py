@@ -68,6 +68,7 @@ def get_user_info(user_id):
         response_dict = {
             "first_name": result["first_name"],
             "last_name": result["last_name"],
-            "email": result["email"]
+            "email": result["email"],
+            "user_level": result["user_level"]
         }
         return response_dict

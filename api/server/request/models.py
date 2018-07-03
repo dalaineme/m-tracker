@@ -35,10 +35,13 @@ def all_user_requests(user_id):
     """Method to gett all user request based on their email"""
     # SQL query
     query = ("SELECT tbl_users.email, "
+             "tbl_users.first_name, "
+             "tbl_users.last_name, "
              "tbl_requests.request_id, "
              "tbl_requests.request_title, "
              "tbl_requests.request_description, "
-             "tbl_requests.current_status "
+             "tbl_requests.current_status, "
+             "to_char( tbl_requests.date_created, 'DD-MON-YYYY') "
              "FROM tbl_users, tbl_requests "
              "WHERE tbl_users.user_id = tbl_requests.created_by "
              "AND tbl_requests.created_by = %s;")
