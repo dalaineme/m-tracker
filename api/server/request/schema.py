@@ -8,6 +8,8 @@ from marshmallow import Schema, fields
 from marshmallow_validators.wtforms import from_wtforms
 from wtforms.validators import Length
 
+# Leverage WTForms il8n
+locales = ['de_DE', 'de']
 
 class RequestSchema(Schema):
     """Request schema"""
@@ -21,7 +23,7 @@ class RequestSchema(Schema):
                     max=100,
                     message="Request title should be between 20 to 50 characters"
                 ),
-            ]
+            ], locales=locales
         )
     )
     description = fields.Str(
@@ -30,7 +32,7 @@ class RequestSchema(Schema):
             [
                 Length(min=50, max=500,
                        message="Description should be between 50 to 500 characters"),
-            ]
+            ], locales=locales
         )
     )
     email = fields.Email()
@@ -47,7 +49,7 @@ class ModifyRequestSchema(Schema):
                     max=100,
                     message="Request title should be between 20 to 50 characters"
                 ),
-            ]
+            ], locales=locales
         )
     )
     description = fields.Str(
@@ -56,6 +58,6 @@ class ModifyRequestSchema(Schema):
             [
                 Length(min=50, max=500,
                        message="Description should be between 50 to 500 characters"),
-            ]
+            ], locales=locales
         )
     )

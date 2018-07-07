@@ -8,6 +8,9 @@ from marshmallow import Schema, fields
 from marshmallow_validators.wtforms import from_wtforms
 from wtforms.validators import Length, Regexp
 
+# Leverage WTForms il8n
+locales = ['de_DE', 'de']
+
 PASS_REG = r"^(?=.*\d)(?=.*[a-zA-Z]).{8,20}$"
 
 
@@ -27,7 +30,7 @@ class UserSchema(Schema):
                     '^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,]{1,20}$',
                     message="Invalid first name"
                 ),
-            ]
+            ], locales=locales
         )
     )
     last_name = fields.Str(
@@ -40,14 +43,14 @@ class UserSchema(Schema):
                     '^[^±!@£$%^&*_+§¡€#¢§¶•ªº«\\/<>?:;|=.,]{1,20}$',
                     message="Invalid last name"
                 ),
-            ]
+            ], locales=locales
         )
     )
     email = fields.Email(
         required=True,
         validate=from_wtforms(
             [Length(min=8, max=50,
-                    message="Email should be between 8 and 50")]
+                    message="Email should be between 8 and 50")], locales=locales
         )
     )
     password = fields.Str(
@@ -60,7 +63,7 @@ class UserSchema(Schema):
                     PASS_REG,
                     message="Weak password"
                 ),
-            ]
+            ], locales=locales
         )
     )
 
@@ -71,7 +74,7 @@ class LoginSchema(Schema):
         required=True,
         validate=from_wtforms(
             [Length(min=8, max=50,
-                    message="Email should be between 8 and 50 characters")]
+                    message="Email should be between 8 and 50 characters")], locales=locales
         )
     )
     password = fields.Str(
@@ -82,6 +85,6 @@ class LoginSchema(Schema):
                     min=8, max=20,
                     message="Password should be between 8 and 20 characters"
                 ),
-            ]
+            ], locales=locales
         )
     )
